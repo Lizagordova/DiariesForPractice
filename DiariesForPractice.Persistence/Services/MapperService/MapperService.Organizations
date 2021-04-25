@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DiariesForPractice.Persistence.Services.MapperService
+{
+   public partial class MapperService : MapperServiceBase
+	{
+		private void CreateOrganizationMappings()
+		{
+			AddMapping<Organization, OrganizationUdt>(cfg =>
+			{
+				cfg.CreateMap<Organization, OrganizationUdt>()
+					.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+					.ForMember(dest => dest.GroupId, opt => opt.MapFrom(src => src.GroupId))
+					.ForMember(dest => dest.SpreadSheetId, opt => opt.MapFrom(src => src.SpreadSheetId))
+					.ForMember(dest => dest.SheetName, opt => opt.MapFrom(src => src.SheetName))
+					.ForMember(dest => dest.FirstCell, opt => opt.MapFrom(src => src.FirstCell))
+					.ForMember(dest => dest.LastCell, opt => opt.MapFrom(src => src.LastCell));
+			});
+
+			AddMapping<OrganizationUdt, Organization>(cfg =>
+			{
+				cfg.CreateMap<OrganizationUdt, Organization>()
+					.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+					.ForMember(dest => dest.GroupId, opt => opt.MapFrom(src => src.GroupId))
+					.ForMember(dest => dest.SpreadSheetId, opt => opt.MapFrom(src => src.SpreadSheetId))
+					.ForMember(dest => dest.SheetName, opt => opt.MapFrom(src => src.SheetName))
+					.ForMember(dest => dest.FirstCell, opt => opt.MapFrom(src => src.FirstCell))
+					.ForMember(dest => dest.LastCell, opt => opt.MapFrom(src => src.LastCell));
+			});
+		}
+	}
+}

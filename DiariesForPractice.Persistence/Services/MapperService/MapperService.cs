@@ -6,6 +6,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
 	{
 		protected override void CreateMappings()
 		{
+			CreateOrganizationMappings();
 		}
 	}
 }

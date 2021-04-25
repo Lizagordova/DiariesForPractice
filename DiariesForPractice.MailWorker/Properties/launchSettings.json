@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "DiariesForPractice.MailWorker": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
