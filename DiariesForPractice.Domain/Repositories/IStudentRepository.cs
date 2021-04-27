@@ -8,5 +8,6 @@ namespace DiariesForPractice.Domain.Repositories
 		int AddOrUpdateStudent(Student student);
 		void AttachStudentToGroup(int studentId, int groupId);
 		List<Student> GetStudents();
+		List<Student> GetStudentsByIds(List<int> studentIds);
 	}
 }

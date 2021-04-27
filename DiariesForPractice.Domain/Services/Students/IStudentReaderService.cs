@@ -6,5 +6,6 @@ namespace DiariesForPractice.Domain.Services.Students
 	public interface IStudentReaderService
 	{
 		List<Student> GetStudents();
+		List<Student> GetStudentsByIds(List<int> studentIds);
 	}
 }

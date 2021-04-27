@@ -20,5 +20,12 @@ namespace DiariesForPractice.Persistence.Services.Students
 
 			return students;
 		}
-	}
+
+        public List<Student> GetStudentsByIds(List<int> studentIds)
+        {
+			var students = _studentRepository.GetStudentsByIds(studentIds);
+
+			return students;
+        }
+    }
 }

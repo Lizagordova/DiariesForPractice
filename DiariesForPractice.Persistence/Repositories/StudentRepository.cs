@@ -17,6 +17,7 @@ namespace DiariesForPractice.Persistence.Repositories
 		private const string AddOrUpdateStudentSp = "StudentRepository_AddOrUpdateStudent";
 		private const string GetStudentsSp = "StudentRepository_GetStudents";
 		private const string AttachStudentToGroupSp = "StudentRepository_AttachStudentToGroup";
+		private const string GetStudentsByIdsSp = "StudentRepository_GetStudentsByIds";
 		public StudentRepository(
 			MapperService mapper)
 		{
@@ -70,5 +71,28 @@ namespace DiariesForPractice.Persistence.Repositories
 
 			return param;
 		}
+
+        public List<Student> GetStudentsByIds(List<int> studentIds)
+        {
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetStudentsByIdsParam(studentIds);
+			var studentUdts = conn.Query<StudentUdt>(GetStudentsByIdsSp, param, commandType: CommandType.StoredProcedure).ToList();
+			var students = studentUdts.Select(_mapper.Map<StudentUdt, Student>).ToList();
+			DatabaseHelper.CloseConnection(conn);
+
+			return students;
+        }
+
+		private DynamicTvpParameters GetStudentsByIdsParam(List<int> studentsIds)
+        {
+			var param = new DynamicTvpParameters();
+			var tvp = new TableValuedParameter("UDT_Integer", "studentIds");
+			var udt = studentsIds.Select(sId => new IntegerUdt() { Id = sId }).ToList();
+			tvp.AddGenericList(udt);
+			param.Add(tvp);
+
+			return param;
+        }
+
 	}
 }
