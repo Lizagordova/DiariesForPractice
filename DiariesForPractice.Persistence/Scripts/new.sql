@@ -886,3 +886,97 @@ BEGIN
 			@groupId
 		);
 END
+
+CREATE PROCEDURE [OrganizationRepository_AddOrUpdateOrganization]
+	@organization [UDT_Organization] READONLY
+AS
+BEGIN
+	DECLARE @mergedIds TABLE([Id] INT);
+
+	MERGE
+	INTO [Organization] AS [dest]
+	USING @organization AS [src]
+	ON [dest].[Id] = [src].[Id]
+		OR [dest].[Name] = [src].[Name]
+	WHEN NOT MATCHED THEN
+		INSERT (
+			[Name],
+			[LegalAddress]
+		) VALUES (
+			[src].[Name],
+			[src].[LegalAddress]
+		)
+	WHEN MATCHED THEN
+		UPDATE
+		SET
+			[dest].[Name] = [src].[Name],
+			[dest].[LegalAddress] = [src].[LegalAddress]
+	OUTPUT INSERTED.ID INTO @mergedIds;
+
+	DECLARE @organizationId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+
+	SELECT @organizationId;
+END
+
+CREATE PROCEDURE [OrganizationRepository_AddOrUpdateStaff]
+	@staff [UDT_Staff] READONLY
+AS
+BEGIN
+	DECLARE @mergedIds TABLE([Id] INT);
+
+	MERGE
+	INTO [Staff] AS [dest]
+	USING @staff AS [src]
+	ON [dest].[Id] = [src].[Id]
+		OR (
+			[dest].[OrganizationId] = [src].[Name]
+			AND [dest].[FullName] = [src].[FullName]
+		)
+	WHEN NOT MATCHED THEN
+		INSERT (
+			[OrganizationId],
+			[FullName],
+			[Job],
+			[Email],
+			[Phone]
+		) VALUES (
+			[src].[OrganizationId],
+			[src].[FullName],
+			[src].[Job],
+			[src].[Email],
+			[src].[Phone]
+		)
+	WHEN MATCHED THEN
+		UPDATE
+		SET
+			[dest].[OrganizationId] = [src].[OrganizationId],
+			[dest].[FullName] = [src].[FullName],
+			[dest].[Job] = [src].[Job],
+			[dest].[Email] = [src].[Email],
+			[dest].[Phone] = [src].[Phone]
+	OUTPUT INSERTED.ID INTO @mergedIds;
+
+	DECLARE @staffId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+
+	SELECT @staffId;
+END
+
+CREATE PROCEDURE [OrganizationRepository_GetOrganizations]
+AS
+BEGIN
+	DECLARE @organizations [UDT_Organization];
+
+	INSERT
+	INTO @organizations (
+		[Id],
+		[Name],
+		[LegalAddress]
+	)
+	SELECT
+		[Id],
+		[Name],
+		[LegalAddress]
+	FROM [Organization];
+
+	SELECT * FROM @organizations;
+END
