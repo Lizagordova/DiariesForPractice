@@ -1,0 +1,93 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+		<TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+		<IsPackable>false</IsPackable>
+		<SpaRoot>client\</SpaRoot>
+		<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.13" />
+		<PackageReference Include="Reinforced.Typings" Version="1.5.9" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Don't publish the SPA source files, but do show them in the project files list -->
+		<Content Remove="$(SpaRoot)**" />
+		<Content Include="client\src\styles\custom.css" />
+		<Content Include="client\src" />
+		<None Remove="$(SpaRoot)**" />
+		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+		<None Include="client\src\components\Admin\CreationOrEditionOfStudentEntities\InstituteCreation.tsx" />
+		<None Include="client\src\components\Admin\CreationOrEditionOfStudentEntities\StudentEntityCreation.tsx" />
+		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\AddOrUpdateCafedra.tsx" />
+		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\AddOrUpdateDirection.tsx" />
+		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\AddOrUpdateGroup.tsx" />
+		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\Models\CafedraToHandle.tsx" />
+		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\Models\DirectionToHandle.tsx" />
+		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\Models\GroupToHandle.tsx" />
+		<None Include="client\src\components\Admin\Settings\Settings.tsx" />
+		<None Include="client\src\components\Admin\Settings\SettingsWindow.tsx" />
+		<None Include="client\src\components\Common\Home\Filters.tsx" />
+		<None Include="client\src\components\Common\Home\Filters\Filters.tsx" />
+		<None Include="client\src\components\Common\Home\HomePage.tsx" />
+		<None Include="client\src\components\Common\Home\Students\Student.tsx" />
+		<None Include="client\src\components\Common\Home\Students\Students.tsx" />
+		<None Include="client\src\components\Common\Main.tsx" />
+		<None Include="client\src\consts\InstituteEntity.tsx" />
+		<None Include="client\src\functions\mapper.tsx" />
+		<None Include="client\src\stores\DiariesStore.tsx" />
+		<None Include="client\src\stores\GoogleDetailsStore.tsx" />
+		<None Include="client\src\stores\InstituteDetailsStore.tsx" />
+		<None Include="client\src\stores\RootStore.tsx" />
+		<None Include="client\src\stores\StudentStore.tsx" />
+		<None Include="client\src\stores\UserStore.tsx" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
+	  <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DiariesForPractice.Domain\DiariesForPractice.Domain.csproj" />
+	  <ProjectReference Include="..\DiariesForPractice.Persistence\DiariesForPractice.Persistence.csproj" />
+	  <ProjectReference Include="..\DiariesForPractice.Worker\DiariesForPractice.Worker.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="client\src\components\User" />
+	  <Folder Include="Configuration" />
+	</ItemGroup>
+
+	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+		<!-- Ensure Node.js is installed -->
+		<Exec Command="node --version" ContinueOnError="true">
+			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+		</Exec>
+		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+	</Target>
+
+	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+
+		<!-- Include the newly-built files in the publish output -->
+		<ItemGroup>
+			<DistFiles Include="$(SpaRoot)build\**" />
+			<ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+				<RelativePath>%(DistFiles.Identity)</RelativePath>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+				<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			</ResolvedFileToPublish>
+		</ItemGroup>
+	</Target>
+
+</Project>
