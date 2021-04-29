@@ -76,6 +76,9 @@ CREATE TABLE [Diary]
 	[Path] NVARCHAR(MAX),
 	[Generated] BIT,
 	[Send] BIT,
+	[Perceived] BIT,
+	[SendDate] DATETIME2,
+	[PerceivedDate] DATETIME2,
 	[StudentId] INT REFERENCES [Student]([Id]) ON DELETE CASCADE,
 	[Comment] NVARCHAR(MAX)
 );
@@ -182,6 +185,9 @@ CREATE TYPE [UDT_Diary] AS TABLE
 	[Path] NVARCHAR(MAX),
 	[Generated] BIT,
 	[Send] BIT,
+	[Perceived] BIT,
+	[SendDate] DATETIME2,
+	[PerceivedDate] DATETIME2,
 	[Comment] NVARCHAR(MAX)
 );
 
@@ -211,6 +217,11 @@ CREATE TYPE [UDT_PracticeDetails] AS TABLE
 	[ContractNumber] NVARCHAR(100),
 	[ResponsibleForStudent] INT,
 	[SignsTheContract] INT
+);
+
+CREATE TYPE [UDT_Integer] AS TABLE
+(
+	[Id] INT
 );
 
 CREATE PROCEDURE [GoogleDetailsRepository_AddOrUpdateGoogleDetails]
@@ -775,7 +786,7 @@ BEGIN
 			[dest].[Phone] = [src].[Phone]
 	OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @studentId INT = (SELECT TOP 1 [Id] FROM @mergedIds;
+	DECLARE @studentId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
 	SELECT @studentId;
 END
@@ -845,6 +856,7 @@ BEGIN
 END
 
 CREATE PROCEDURE [DiariesRepository_GetDiaries]
+	@generated BIT = NULL
 AS
 BEGIN
 	DECLARE @diaries [UDT_Diary];
@@ -855,6 +867,9 @@ BEGIN
 		[Path],
 		[Generated],
 		[Send],
+		[Perceived],
+		[SendDate],
+		[PerceivedDate],
 		[StudentId],
 		[Comment]
 	)
@@ -863,9 +878,13 @@ BEGIN
 		[Path],
 		[Generated],
 		[Send],
+		[Perceived],
+		[SendDate],
+		[PerceivedDate],
 		[StudentId],
 		[Comment]
-	FROM [Diary];
+	FROM [Diary]
+	WHERE (@generated IS NULL OR [Generated] = @generated);
 
 	SELECT * FROM @diaries;
 END
@@ -979,4 +998,34 @@ BEGIN
 	FROM [Organization];
 
 	SELECT * FROM @organizations;
+END
+
+CREATE PROCEDURE [StudentRepository_GetStudentsByIds]
+	@studentIds [UDT_Integer] READONLY
+AS
+BEGIN
+	DECLARE @students [UDT_Student];
+
+	INSERT
+	INTO @students (
+		[Id],
+		[FirstName],
+		[SecondName],
+		[LastName],
+		[Email],
+		[Phone]
+	)
+	SELECT
+		[Id],
+		[FirstName],
+		[SecondName],
+		[LastName],
+		[Email],
+		[Phone]
+	FROM [Student]
+	WHERE [Id] IN (
+		SELECT [Id] FROM @studentIds
+	);
+
+	SELECT * FROM @students;
 END

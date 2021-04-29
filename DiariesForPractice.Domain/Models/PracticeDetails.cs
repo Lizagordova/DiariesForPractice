@@ -3,7 +3,7 @@
 	public class PracticeDetails
 	{
 		public int Id { get; set; }
-		public int StudentId { get; set; }
+		public Student Student { get; set; }
 		public int OrganizationId { get; set; }
 		public string ReportingForm { get; set; }
 		public string ContractNumber { get; set; }
