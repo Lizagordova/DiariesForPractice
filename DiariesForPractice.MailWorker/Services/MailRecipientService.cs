@@ -21,7 +21,7 @@ namespace DiariesForPractice.MailWorker.Services
         {
             var client = new Pop3Client();
             client.Connect("pop.gmail.com", 995, true);
-            client.Authenticate("elizavetagordova1@gmail.com", "Uav7bha230987");
+            client.Authenticate("elizavetagordova1@gmail.com", "uav7bha2309");//todo: это тоже лучше из конфига 
             var count = client.GetMessageCount();
             var message = client.GetMessage(count);
             Console.WriteLine(message.Headers.Subject);

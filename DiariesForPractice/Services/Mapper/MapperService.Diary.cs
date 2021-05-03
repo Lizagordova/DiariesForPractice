@@ -13,7 +13,7 @@ namespace DiariesForPractice.Services.Mapper
 			{
 				cfg.CreateMap<DiaryReadModel, Diary>()
 					.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-					.ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
+					.ForMember(dest => dest.Student, opt => opt.Ignore())
 					.ForMember(dest => dest.Send, opt => opt.MapFrom(src => src.Send))
 					.ForMember(dest => dest.Generated, opt => opt.MapFrom(src => src.Generated))
 					.ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
@@ -24,7 +24,7 @@ namespace DiariesForPractice.Services.Mapper
 			{
 				cfg.CreateMap<Diary, DiaryViewModel>()
 					.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-					.ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
+					.ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.Student.Id))
 					.ForMember(dest => dest.Send, opt => opt.MapFrom(src => src.Send))
 					.ForMember(dest => dest.Generated, opt => opt.MapFrom(src => src.Generated))
 					.ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))

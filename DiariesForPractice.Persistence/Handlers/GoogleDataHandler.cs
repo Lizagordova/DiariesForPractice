@@ -113,7 +113,7 @@ namespace DiariesForPractice.Persistence.Handlers
 				ContractNumber = data.ContractNumber,
 				ResponsibleForStudent = responsibleId,
 				SignsTheContract = signsTheContractId,
-				StudentId = studentId
+				Student = new Student() { Id = studentId }
 			};
 			_practiceEditor.AddOrUpdatePracticeDetails(practiceDetails);
 		}

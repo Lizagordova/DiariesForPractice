@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using DiariesForPractice.Domain.Models;
+using DiariesForPractice.Domain.Queries;
 using DiariesForPractice.Domain.Services.Diaries;
 using DiariesForPractice.Persistence.Services.MapperService;
 using DiariesForPractice.ReadModels;
@@ -47,7 +48,8 @@ namespace DiariesForPractice.Controllers
 		{
 			try
 			{
-				var diaries = _diariesReader.GetDiaries();
+				var query = new DiaryQuery();
+				var diaries = _diariesReader.GetDiaries(query);
 				var diaryViewModels = diaries.Select(_mapper.Map<Diary, DiaryViewModel>).ToList();
 
 				return new JsonResult(diaryViewModels);

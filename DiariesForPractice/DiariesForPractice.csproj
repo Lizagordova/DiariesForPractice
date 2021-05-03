@@ -32,6 +32,8 @@
 		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\Models\GroupToHandle.tsx" />
 		<None Include="client\src\components\Admin\Settings\Settings.tsx" />
 		<None Include="client\src\components\Admin\Settings\SettingsWindow.tsx" />
+		<None Include="client\src\components\Authorization\AuthorizationWindow.tsx" />
+		<None Include="client\src\components\Authorization\RegistrationWindow.tsx" />
 		<None Include="client\src\components\Common\Home\Filters.tsx" />
 		<None Include="client\src\components\Common\Home\Filters\Filters.tsx" />
 		<None Include="client\src\components\Common\Home\HomePage.tsx" />

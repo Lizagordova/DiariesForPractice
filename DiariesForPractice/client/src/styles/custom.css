@@ -82,6 +82,10 @@ footer {
     color: black;
 }
 
+.authInput {
+    width: 70%;
+}
+
 @media (max-width: 800px) {
     .filterButton {
         width: 80%;

@@ -48,7 +48,7 @@ namespace DiariesForPractice.MailWorker.Services
             {
                 if(diary.Send && !diary.Perceived && diary.SendTime.AddDays(ConfigurationHelper.AllowedTimeInterval) > new DateTime())
                 {
-                    neccessaryDiaries.Append(diary);
+                    neccessaryDiaries.Add(diary);
                 }
             }
 
