@@ -44,6 +44,7 @@
 		<None Include="client\src\components\Common\Home\Students\Student.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Students.tsx" />
 		<None Include="client\src\components\Common\Main.tsx" />
+		<None Include="client\src\components\Student\HomePage\HomePage.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
 		<None Include="client\src\models\MainProps.tsx" />
@@ -53,6 +54,7 @@
 		<None Include="client\src\stores\RootStore.tsx" />
 		<None Include="client\src\stores\StudentStore.tsx" />
 		<None Include="client\src\stores\UserStore.tsx" />
+		<None Include="client\src\types\AllTypes.d.ts" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -3,10 +3,9 @@ import { MainProps } from "../../models/MainProps";
 import { observer } from "mobx-react";
 import { Nav, NavItem } from "reactstrap";
 import { NavLink, Redirect, Route, Switch } from "react-router-dom";
-import { UserRole } from "../../Typings/enums/UserRole";
-import InstituteStructurePage from "./InstituteStructurePage/GroupsPage";
 import UsersPage from "./UsersPage/UsersPage";
 import HomePage from "./HomePage/HomePage";
+import InstituteStructurePage from "./InstituteStructurePage/InstituteStructurePage";
 
 @observer
 class AdminMain extends Component<MainProps> {
@@ -23,14 +22,14 @@ class AdminMain extends Component<MainProps> {
                         Главная
                     </NavLink>
                 </NavItem>
-                {this.props.store.userStore.currentUser.role === UserRole.Admin && <NavItem>
+                <NavItem>
                     <NavLink to="/users" exact className="nav-link"
                              activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
                         Пользователи
                     </NavLink>
-                </NavItem>}
+                </NavItem>
                 <NavItem>
-                    <NavLink to="/groups" exact className="nav-link" style={{fontSize: "1.5em"}}
+                    <NavLink to="/institutestructure" exact className="nav-link" style={{fontSize: "1.5em"}}
                              activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
                         Структура университета
                     </NavLink>
