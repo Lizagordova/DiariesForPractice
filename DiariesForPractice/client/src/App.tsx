@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './App.css';
-import {RootStore} from "./stores/RootStore";
-import {BrowserRouter} from "react-router-dom";
-import {observer} from "mobx-react";
+import { RootStore } from "./stores/RootStore";
+import { BrowserRouter } from "react-router-dom";
+import { observer } from "mobx-react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-social/bootstrap-social.css';
 import "./styles/custom.css";
@@ -10,6 +10,7 @@ import AuthorizationPage from "./components/Authorization/AuthorizationPage";
 import { UserViewModel } from "./Typings/viewModels/UserViewModel";
 import { UserRole } from "./Typings/enums/UserRole";
 import AdminMain from "./components/Admin/AdminMain";
+import StudentMain from "./components/Student/StudentMain";
 
 interface AppProps {
     store: RootStore;
@@ -21,9 +22,8 @@ class App extends Component<AppProps> {
         return(
             <>
                 {!store.userStore.authorized && <AuthorizationPage store={store} />}
-                {store.userStore.authorized && this.renderPageForUser()}
+                {store.userStore.authorized && this.renderPageForUser(store)}
             </>
-            
         );
     }
 
@@ -55,11 +55,11 @@ class App extends Component<AppProps> {
         );
     }
 
-    renderPageForUser() {
+    renderPageForUser(store: RootStore) {
         return (
             <>
                 <main>
-                    {this.renderMain()}
+                    {this.renderMain(store.userStore.currentUser, store)}
                 </main>
                 <footer>
                     {this.renderFooter()}
@@ -74,16 +74,11 @@ class App extends Component<AppProps> {
             <div>
                 <BrowserRouter>
                     <div className="app">
-                        <main>
-                            {this.renderMain()}
-                        </main>
-                        <footer>
-                            {this.renderFooter()}
-                        </footer>
+                        {this.renderPage(store)}
                     </div>
                 </BrowserRouter>
             </div>
-        )
+        );
     }
 }
 

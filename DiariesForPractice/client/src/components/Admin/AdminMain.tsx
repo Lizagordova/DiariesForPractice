@@ -1,11 +1,12 @@
 ﻿import React, { Component } from "react";
 import { MainProps } from "../../models/MainProps";
 import { observer } from "mobx-react";
-import {Nav, NavItem} from "reactstrap";
-import {NavLink, Redirect, Route, Switch} from "react-router-dom";
-import {UserRole} from "../../Typings/enums/UserRole";
-import HomePage from "../Common/Home/HomePage";
-import SettingsPage from "./Settings/SettingsPage";
+import { Nav, NavItem } from "reactstrap";
+import { NavLink, Redirect, Route, Switch } from "react-router-dom";
+import { UserRole } from "../../Typings/enums/UserRole";
+import InstituteStructurePage from "./InstituteStructurePage/GroupsPage";
+import UsersPage from "./UsersPage/UsersPage";
+import HomePage from "./HomePage/HomePage";
 
 @observer
 class AdminMain extends Component<MainProps> {
@@ -23,15 +24,15 @@ class AdminMain extends Component<MainProps> {
                     </NavLink>
                 </NavItem>
                 {this.props.store.userStore.currentUser.role === UserRole.Admin && <NavItem>
-                    <NavLink to="/settings" exact className="nav-link"
+                    <NavLink to="/users" exact className="nav-link"
                              activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
-                        Настройки
+                        Пользователи
                     </NavLink>
                 </NavItem>}
                 <NavItem>
-                    <NavLink to="/settings" exact className="nav-link" style={{fontSize: "1.5em"}}
+                    <NavLink to="/groups" exact className="nav-link" style={{fontSize: "1.5em"}}
                              activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
-                        Настройки
+                        Структура университета
                     </NavLink>
                 </NavItem>
             </Nav>
@@ -45,8 +46,10 @@ class AdminMain extends Component<MainProps> {
                 <Switch>
                     <Route exact path="/home"
                            render={(props) => <HomePage store={this.props.store} />} />
-                    <Route exact path="/settings"
-                           render={(props) => <SettingsPage store={this.props.store} />} />
+                    <Route exact path="/users"
+                           render={(props) => <UsersPage userStore={this.props.store.userStore} />} />
+                    <Route exact path="/institutestructure"
+                           render={(props) => <InstituteStructurePage instituteStore={this.props.store.instituteDetailsStore} />} />
                     <Redirect to="/home" />
                 </Switch>
             </>
