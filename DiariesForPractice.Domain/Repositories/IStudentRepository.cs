@@ -5,7 +5,7 @@ namespace DiariesForPractice.Domain.Repositories
 {
 	public interface IStudentRepository
 	{
-		int AddOrUpdateStudent(Student student);
+		int AddOrUpdateStudent( student);
 		void AttachStudentToGroup(int studentId, int groupId);
 		List<Student> GetStudents();
 		List<Student> GetStudentsByIds(List<int> studentIds);

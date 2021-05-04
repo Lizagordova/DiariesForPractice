@@ -1,8 +1,8 @@
 ﻿import React, { Component } from "react";
 import { RootStore } from "../../stores/RootStore";
 import { observer } from "mobx-react";
-import {makeObservable, observable} from "mobx";
-import { Input, Button } from "reactstrap";
+import { makeObservable, observable } from "mobx";
+import { Input, Button, Alert } from "reactstrap";
 
 class AuthorizationWindowProps {
     store: RootStore;
@@ -12,15 +12,28 @@ class AuthorizationWindowProps {
 class AuthorizationWindow extends Component<AuthorizationWindowProps> {
     login: string;
     password: string;
+    notAuthorized: boolean;
     
     constructor(props: AuthorizationWindowProps) {
         super(props);
         makeObservable(this, {
             login: observable,
-            password: observable
-        })
+            password: observable,
+            notAuthorized: observable
+        });
     }
 
+    renderWarnings() {
+        setTimeout(() => {
+            this.notAuthorized = false;
+        }, 6000);
+        return (
+            <Alert>
+                Неправильно введён логин или пароль
+            </Alert>
+        );
+    }
+    
     renderLoginInput() {
         return (
             <Input
@@ -42,7 +55,9 @@ class AuthorizationWindow extends Component<AuthorizationWindowProps> {
 
     renderButton() {
         return (
-            <Button>
+            <Button
+                outline color="secondary"
+                onClick={() => this.enter()}>
                 Войти
             </Button>
         );
@@ -61,6 +76,7 @@ class AuthorizationWindow extends Component<AuthorizationWindowProps> {
     render() {
         return (
             <div className="container-fluid">
+                {this.renderWarnings()}
                 {this.renderAuthorizationWindow()}
             </div>
         );
@@ -72,6 +88,16 @@ class AuthorizationWindow extends Component<AuthorizationWindowProps> {
         } else if(authorizationData === AuthorizationData.Password) {
             this.password = event.currentTarget.value;
         }
+    }
+
+    enter() {
+        let user = new UserReadModel();
+        user.login = this.login;
+        user.password = this.password;
+        this.props.store.userStore.authorize(user)
+            .then((status) => {
+                this.notAuthorized = status !== 200;
+            })
     }
 }
 

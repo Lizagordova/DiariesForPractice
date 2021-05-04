@@ -22,6 +22,7 @@
 		<Content Include="client\src" />
 		<None Remove="$(SpaRoot)**" />
 		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+		<None Include="client\src\components\Admin\AdminMain.tsx" />
 		<None Include="client\src\components\Admin\CreationOrEditionOfStudentEntities\InstituteCreation.tsx" />
 		<None Include="client\src\components\Admin\CreationOrEditionOfStudentEntities\StudentEntityCreation.tsx" />
 		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\AddOrUpdateCafedra.tsx" />
@@ -42,6 +43,7 @@
 		<None Include="client\src\components\Common\Main.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
+		<None Include="client\src\models\MainProps.tsx" />
 		<None Include="client\src\stores\DiariesStore.tsx" />
 		<None Include="client\src\stores\GoogleDetailsStore.tsx" />
 		<None Include="client\src\stores\InstituteDetailsStore.tsx" />
@@ -62,6 +64,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="client\src\components\Teacher" />
 	  <Folder Include="client\src\components\User" />
 	  <Folder Include="Configuration" />
 	</ItemGroup>
