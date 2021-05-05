@@ -34,6 +34,18 @@ namespace DiariesForPractice.Services
             AddLog(logger, exception, customMessage, logType);
         }
         
+        public void GetUsersLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = $"Не удалось получить пользователей";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateUserLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = $"Не удалось обновить пользователя";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
         private void AddLog(ILogger logger, Exception e, string customMessage, LogType logType)
         {
             logger.Log(LogLevel.Error, $"{customMessage}. Error: {e.Message}");

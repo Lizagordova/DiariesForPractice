@@ -2,13 +2,13 @@
 import { RootStore } from "../../../stores/RootStore";
 import { observer } from "mobx-react";
 
-class HomePageProps {
+class GroupPageProps {
     store: RootStore
 }
 
 @observer
-class HomePage extends Component<HomePageProps> {
-    constructor(props: HomePageProps) {
+class GroupsPage extends Component<GroupPageProps> {
+    constructor(props: GroupPageProps) {
         super(props);
     }
 
@@ -19,4 +19,4 @@ class HomePage extends Component<HomePageProps> {
     }
 }
 
-export default HomePage;
+export default GroupsPage;

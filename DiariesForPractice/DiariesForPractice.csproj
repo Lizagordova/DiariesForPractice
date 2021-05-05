@@ -25,6 +25,7 @@
 		<None Include="client\src\components\Admin\AdminMain.tsx" />
 		<None Include="client\src\components\Admin\CreationOrEditionOfStudentEntities\InstituteCreation.tsx" />
 		<None Include="client\src\components\Admin\CreationOrEditionOfStudentEntities\StudentEntityCreation.tsx" />
+		<None Include="client\src\components\Admin\GroupsPage\GroupsPage.tsx" />
 		<None Include="client\src\components\Admin\HomePage\HomePage.tsx" />
 		<None Include="client\src\components\Admin\InstituteStructurePage\GroupsPage.tsx" />
 		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\AddOrUpdateCafedra.tsx" />
@@ -35,6 +36,8 @@
 		<None Include="client\src\components\Admin\InstituteEntityCreationOrEdition\Models\GroupToHandle.tsx" />
 		<None Include="client\src\components\Admin\Settings\Settings.tsx" />
 		<None Include="client\src\components\Admin\Settings\SettingsWindow.tsx" />
+		<None Include="client\src\components\Admin\UsersPage\AddOrUpdateWindow.tsx" />
+		<None Include="client\src\components\Admin\UsersPage\User.tsx" />
 		<None Include="client\src\components\Admin\UsersPage\UsersPage.tsx" />
 		<None Include="client\src\components\Authorization\AuthorizationWindow.tsx" />
 		<None Include="client\src\components\Authorization\RegistrationWindow.tsx" />
@@ -47,6 +50,7 @@
 		<None Include="client\src\components\Student\HomePage\HomePage.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
+		<None Include="client\src\functions\translater.tsx" />
 		<None Include="client\src\models\MainProps.tsx" />
 		<None Include="client\src\stores\DiariesStore.tsx" />
 		<None Include="client\src\stores\GoogleDetailsStore.tsx" />

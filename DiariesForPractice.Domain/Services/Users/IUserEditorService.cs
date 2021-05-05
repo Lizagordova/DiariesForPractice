@@ -1,8 +1,11 @@
-﻿namespace DiariesForPractice.Domain.Services.Users
+﻿using System.Collections.Generic;
+using DiariesForPractice.Domain.Models;
+
+namespace DiariesForPractice.Domain.Services.Users
 {
     public interface IUserEditorService
     {
-        IReadOnlyCollection<int> AddOrUpdateStudents(IReadOnlyCollection<Student> students, int groupId);
-        int AddOrUpdateStudent(Student student, int groupId);
+        IReadOnlyCollection<int> AddOrUpdateUsers(IReadOnlyCollection<User> users);
+        int AddOrUpdateUser(User student);
     }
 }

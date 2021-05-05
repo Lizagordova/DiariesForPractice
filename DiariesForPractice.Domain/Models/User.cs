@@ -1,4 +1,7 @@
-﻿namespace DiariesForPractice.Domain.Models
+﻿using System.Collections.Generic;
+using DiariesForPractice.Domain.enums;
+
+namespace DiariesForPractice.Domain.Models
 {
 	public class User
 	{
@@ -9,5 +12,6 @@
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public string Token { get; set; }
+		public List<UserRole> Roles { get; set; }
 	}
 }

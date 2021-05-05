@@ -5,12 +5,14 @@ class UserStore {
     currentUser: UserViewModel = new UserViewModel();
     checkedToken: boolean;
     authorized: boolean = false;
+    users: UserViewModel[] = new Array<UserViewModel>();
 
     constructor() {
         makeObservable(this, {
             currentUser: observable,
             checkedToken: observable,
-            authorized: observable
+            authorized: observable,
+            users: observable
         });
     }
     
@@ -56,6 +58,29 @@ class UserStore {
             this.currentUser = await response.json();
             this.authorized = true;
         }
+    }
+    
+    async addOrUpdateUser(user: UserReadModel): Promise<number> {
+        const response = await fetch("/addorupdateuser", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                user//todo: опять же - не знаю, сработает ли это
+            })
+        });
+        if(response.status === 200) {
+            this.getUsers();
+        }
+        
+        return response.status;
+    }
+    
+    async getUsers() {
+        const response = await fetch("/getusers");
+  
+        this.users = await response.json();
     }
 }
 
