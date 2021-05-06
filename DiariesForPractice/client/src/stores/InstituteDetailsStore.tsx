@@ -6,6 +6,7 @@ import { GroupViewModel } from "../Typings/viewModels/GroupViewModel";
 import { CafedraViewModel } from "../Typings/viewModels/CafedraViewModel";
 import { DirectionViewModel } from "../Typings/viewModels/DirectionViewModel";
 import {InstituteReadModel} from "../Typings/readModels/InstituteReadModel";
+import {UserViewModel} from "../Typings/viewModels/UserViewModel";
 
 class InstituteDetailsStore {
     degrees: DegreeViewModel[] = new Array<DegreeViewModel>();

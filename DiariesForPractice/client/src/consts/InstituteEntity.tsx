@@ -1,4 +1,4 @@
-﻿export enum InstituteEntity {
+﻿export enum InstituteEntityType {
     Degree,
     Course,
     Cafedra,

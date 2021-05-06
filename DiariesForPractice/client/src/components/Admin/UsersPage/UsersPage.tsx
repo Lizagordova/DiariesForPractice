@@ -11,10 +11,8 @@ class UsersPageProps {
 
 @observer
 class UsersPage extends Component<UsersPageProps> {
-    
     constructor(props: UsersPageProps) {
         super(props);
-        
     }
     
     renderUsers(users: UserViewModel[]) {
