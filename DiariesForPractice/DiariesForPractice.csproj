@@ -42,13 +42,18 @@
 		<None Include="client\src\components\Admin\UsersPage\UsersPage.tsx" />
 		<None Include="client\src\components\Authorization\AuthorizationWindow.tsx" />
 		<None Include="client\src\components\Authorization\RegistrationWindow.tsx" />
+		<None Include="client\src\components\Common\AdditionalInformation.tsx" />
 		<None Include="client\src\components\Common\Home\Filters.tsx" />
 		<None Include="client\src\components\Common\Home\Filters\Filters.tsx" />
 		<None Include="client\src\components\Common\Home\HomePage.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Student.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Students.tsx" />
 		<None Include="client\src\components\Common\Main.tsx" />
+		<None Include="client\src\components\Common\UserProfile.tsx" />
 		<None Include="client\src\components\Student\HomePage\HomePage.tsx" />
+		<None Include="client\src\components\Teacher\Groups\GroupsPage.tsx" />
+		<None Include="client\src\components\Teacher\Home\HomePage.tsx" />
+		<None Include="client\src\components\Teacher\TeacherMain.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
 		<None Include="client\src\functions\translater.tsx" />
@@ -75,7 +80,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="client\src\components\Teacher" />
 	  <Folder Include="client\src\components\User" />
 	  <Folder Include="Configuration" />
 	</ItemGroup>

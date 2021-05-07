@@ -17,21 +17,38 @@ class AdminMain extends Component<MainProps> {
         return (
             <Nav tabs className="nav">
                 <NavItem>
-                    <NavLink to="/home" exact className="nav-link" style={{fontSize: "1.5em"}}
-                             activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
+                    <NavLink
+                        to="/home" 
+                        exact className="nav-link" 
+                        style={{fontSize: "1.5em"}}
+                        activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
                         Главная
                     </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink to="/users" exact className="nav-link"
-                             activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
+                    <NavLink 
+                        to="/users" 
+                        exact className="nav-link"
+                        activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
                         Пользователи
                     </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink to="/institutestructure" exact className="nav-link" style={{fontSize: "1.5em"}}
-                             activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
+                    <NavLink 
+                        to="/institutestructure" 
+                        exact className="nav-link"
+                        style={{fontSize: "1.5em"}}
+                        activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
                         Структура университета
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink
+                        to="/userprofile"
+                        exact className="nav-link"
+                        style={{fontSize: "1.5em"}}
+                        activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
+                        <i className="fas fa-user" />
                     </NavLink>
                 </NavItem>
             </Nav>

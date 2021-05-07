@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+﻿import React, { Component } from "react";
 import { MainProps } from "../../models/MainProps";
 import { observer } from "mobx-react";
 import { Nav, NavItem } from "reactstrap";
 import { NavLink, Redirect, Route, Switch } from "react-router-dom";
-import HomePage from "./HomePage/HomePage";
-import UserProfile from "../Common/UserProfile";
+import HomePage from "./Home/HomePage";
+import GroupsPage from "./Groups/GroupsPage";
 
 @observer
-class StudentMain extends Component<MainProps> {
+class TeacherMain extends Component<MainProps> {
     constructor(props: MainProps) {
         super(props);
     }
@@ -18,7 +18,7 @@ class StudentMain extends Component<MainProps> {
                 <NavItem>
                     <NavLink
                         to="/home"
-                        exact className="nav-link" 
+                        exact className="nav-link"
                         style={{fontSize: "1.5em"}}
                         activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
                         Главная
@@ -26,11 +26,11 @@ class StudentMain extends Component<MainProps> {
                 </NavItem>
                 <NavItem>
                     <NavLink
-                        to="/userprofile"
+                        to="/groups"
                         exact className="nav-link"
                         style={{fontSize: "1.5em"}}
                         activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
-                        <i className="fas fa-user" />
+                        Группы
                     </NavLink>
                 </NavItem>
             </Nav>
@@ -44,13 +44,13 @@ class StudentMain extends Component<MainProps> {
                 <Switch>
                     <Route exact path="/home"
                            render={(props) => <HomePage store={this.props.store} />} />
-                    <Route exact path="/userprofile"
-                           render={(props) => <UserProfile store={this.props.store} />} />
-                   <Redirect to="/home" />
+                    <Route exact path="/groups"
+                           render={(props) => <GroupsPage store={this.props.store} />} />
+                    <Redirect to="/home" />
                 </Switch>
             </>
         );
     }
 }
 
-export default StudentMain;
+export default TeacherMain;
