@@ -23,9 +23,6 @@
 		<None Remove="$(SpaRoot)**" />
 		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
 		<None Include="client\src\components\Admin\AdminMain.tsx" />
-		<None Include="client\src\components\Admin\CreationOrEditionOfStudentEntities\InstituteCreation.tsx" />
-		<None Include="client\src\components\Admin\CreationOrEditionOfStudentEntities\StudentEntityCreation.tsx" />
-		<None Include="client\src\components\Admin\GroupsPage\GroupsPage.tsx" />
 		<None Include="client\src\components\Admin\HomePage\HomePage.tsx" />
 		<None Include="client\src\components\Admin\InstituteStructurePage\AddOrUpdateGroupWindow.tsx" />
 		<None Include="client\src\components\Admin\InstituteStructurePage\GroupsPage.tsx" />
