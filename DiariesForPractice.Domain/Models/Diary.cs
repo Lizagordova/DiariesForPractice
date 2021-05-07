@@ -5,7 +5,7 @@ namespace DiariesForPractice.Domain.Models
 	public class Diary
 	{
 		public int Id { get; set; }
-		public Student Student { get; set; }
+		public User Student { get; set; }
 		public string Path { get; set; }
 		public bool Generated { get; set; }
 		public bool Send { get; set; }

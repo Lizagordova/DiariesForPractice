@@ -30,7 +30,7 @@ namespace DiariesForPractice.Persistence.Services.Diaries
 				Path = "",
 				Generated = false,
 				Send = false,
-				StudentId = studentId,
+				Student = new User() { Id = studentId },
 				Comment = ""
 			};
 			var diaryId = _diariesRepository.AddOrUpdateDiary(diary);

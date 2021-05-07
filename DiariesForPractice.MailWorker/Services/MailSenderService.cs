@@ -1,7 +1,6 @@
 ﻿using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Queries;
 using DiariesForPractice.Domain.Services.Diaries;
-using DiariesForPractice.Domain.Services.Students;
 using DiariesForPractice.MailWorker.Helpers;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading;
+using DiariesForPractice.Domain.Services.Users;
 
 namespace DiariesForPractice.MailWorker.Services
 {
@@ -16,16 +16,16 @@ namespace DiariesForPractice.MailWorker.Services
     {
         private readonly IDiariesReaderService _diariesReader;
         private readonly IDiariesEditorService _diariesEditor;
-        private readonly IStudentReaderService _studentReader;
+        private readonly IUserReaderService _userReader;
         
         public MailSenderService(
-            IStudentReaderService studentReader,
+            IUserReaderService userReader,
             IDiariesReaderService diariesReader,
             IDiariesEditorService diariesEditor)
         {
             _diariesReader = diariesReader;
             _diariesEditor = diariesEditor;
-            _studentReader = studentReader;
+            _userReader = userReader;
         }
 
         public void SendDiaries()
@@ -54,15 +54,15 @@ namespace DiariesForPractice.MailWorker.Services
 
             return neccessaryDiaries;
         }
-        private IReadOnlyCollection<Student> GetStudentsForDiaries(IReadOnlyCollection<Diary> diaries)
+        private IReadOnlyCollection<User> GetStudentsForDiaries(IReadOnlyCollection<Diary> diaries)
         {
             var studentsIds = diaries.Select(p => p.Student.Id).ToList();
-            var students = _studentReader.GetStudentsByIds(studentsIds);
+            var students = _userReader.GetUsersByIds(studentsIds);
 
             return students;
         }
 
-        private void AddStudentsForDiaries(IReadOnlyCollection<Diary> diaries, IReadOnlyCollection<Student> students)
+        private void AddStudentsForDiaries(IReadOnlyCollection<Diary> diaries, IReadOnlyCollection<User> students)
         {
             diaries.Join(students,
                 p => p.Student.Id,

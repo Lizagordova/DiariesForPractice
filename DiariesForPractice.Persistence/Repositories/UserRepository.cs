@@ -26,5 +26,15 @@ namespace DiariesForPractice.Persistence.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public int AddOrUpdateUser(User student)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<User> GetUsersByIds(List<int> ids)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

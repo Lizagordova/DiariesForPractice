@@ -1,12 +1,9 @@
-using DiariesForPractice.Domain.Handlers;
 using DiariesForPractice.Domain.Repositories;
 using DiariesForPractice.Domain.Services.Diaries;
 using DiariesForPractice.Domain.Services.GoogleDetail;
 using DiariesForPractice.Domain.Services.InstituteDetails;
 using DiariesForPractice.Domain.Services.Organizations;
 using DiariesForPractice.Domain.Services.PracticeDetail;
-using DiariesForPractice.Domain.Services.Students;
-using DiariesForPractice.Persistence.Handlers;
 using DiariesForPractice.Persistence.Repositories;
 using DiariesForPractice.Persistence.Services.Diaries;
 using DiariesForPractice.Persistence.Services.GoogleDetail;
@@ -14,9 +11,7 @@ using DiariesForPractice.Persistence.Services.InstituteDetail;
 using DiariesForPractice.Persistence.Services.MapperService;
 using DiariesForPractice.Persistence.Services.Organizations;
 using DiariesForPractice.Persistence.Services.PracticeDetail;
-using DiariesForPractice.Persistence.Services.Students;
 using DiariesForPractice.Worker;
-using DiariesForPractice.Worker.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -90,16 +85,12 @@ namespace DiariesForPractice
 			services.AddSingleton<IGoogleDetailsRepository, GoogleDetailsRepository>();
 			services.AddSingleton<IDiariesRepository, DiariesRepository>();
 			services.AddSingleton<IInstituteDetailsRepository, InstituteDetailsRepository>();
-			services.AddSingleton<IStudentRepository, StudentRepository>();
 			services.AddSingleton<IOrganizationRepository, IOrganizationRepository>();
 		}
 
 		private void AddServices(IServiceCollection services)
 		{
-			services.AddSingleton<ILoaderService, GoogleLoaderService>();
 			services.AddHostedService<LoaderWorker>();
-			services.AddSingleton<IStudentEditorService, StudentEditorService>();
-			services.AddSingleton<IStudentReaderService, StudentReaderService>();
 			services.AddSingleton<IInstituteDetailsEditorService, InstituteDetailsEditorService>();
 			services.AddSingleton<IInstituteDetailsReaderService, InstituteDetailsReaderService>();
 			services.AddSingleton<IGoogleDetailsEditorService, GoogleDetailsEditorService>();
@@ -110,7 +101,6 @@ namespace DiariesForPractice
 			services.AddSingleton<IOrganizationReaderService, OrganizationReaderService>();
 			services.AddSingleton<IPracticeEditorService, PracticeEditorService>();
 			services.AddSingleton<IPracticeReaderService, PracticeReaderService>();
-			services.AddSingleton<IGoogleDataHandler, GoogleDataHandler>();
 			services.AddSingleton<MainMapperService>();
 			services.AddSingleton<MapperService>();
 		}

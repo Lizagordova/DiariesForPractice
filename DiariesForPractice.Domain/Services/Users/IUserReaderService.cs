@@ -7,5 +7,6 @@ namespace DiariesForPractice.Domain.Services.Users
     {
         User GetUserById(int userId);
         List<User> GetUsers();
+        List<User> GetUsersByIds(List<int> ids);
     }
 }

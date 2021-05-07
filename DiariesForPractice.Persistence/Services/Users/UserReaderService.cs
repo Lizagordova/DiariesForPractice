@@ -28,5 +28,12 @@ namespace DiariesForPractice.Persistence.Services.Users
 
             return users;
         }
+
+        public List<User> GetUsersByIds(List<int> ids)
+        {
+            var users = _userRepository.GetUsersByIds(ids);
+
+            return users;
+        }
     }
 }
