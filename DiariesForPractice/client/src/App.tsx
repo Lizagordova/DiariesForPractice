@@ -11,6 +11,7 @@ import { UserViewModel } from "./Typings/viewModels/UserViewModel";
 import { UserRole } from "./Typings/enums/UserRole";
 import AdminMain from "./components/Admin/AdminMain";
 import StudentMain from "./components/Student/StudentMain";
+import TeacherMain from "./components/Teacher/TeacherMain";
 
 interface AppProps {
     store: RootStore;
@@ -28,11 +29,11 @@ class App extends Component<AppProps> {
     }
 
     renderMain(currentUser: UserViewModel, store: RootStore) {
-        if(currentUser.role === UserRole.Admin) {
+        if(currentUser.roles.includes(UserRole.Admin)) {
             return (
                 <AdminMain store={store} />
             );
-        } else if(currentUser.role === UserRole.Student) {
+        } else if(currentUser.roles.includes(UserRole.Student)) {
             return (
                 <StudentMain store={store} />
             );

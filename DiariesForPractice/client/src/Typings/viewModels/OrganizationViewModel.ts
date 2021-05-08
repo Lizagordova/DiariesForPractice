@@ -2,9 +2,9 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
-export enum UserRole { 
-	User = 0, 
-	Admin = 1, 
-	Student = 2, 
-	Teacher = 3
+export class OrganizationViewModel
+{
+	public id: number;
+	public name: string;
+	public legalAddress: string;
 }

@@ -2,9 +2,9 @@
 import { RootStore } from "../../../stores/RootStore";
 import { observer } from "mobx-react";
 import { DiaryViewModel } from "../../../Typings/viewModels/DiaryViewModel";
-import { Alert, Button } from "reactstrap";
+import { Alert } from "reactstrap";
 import { makeObservable, observable } from "mobx";
-import PracticeInfo from "./PracticeInfo";
+import PracticeInfo from "./PracticeInfo/PracticeInfo";
 
 class HomePageProps {
     store: RootStore
@@ -52,7 +52,7 @@ class HomePage extends Component<HomePageProps> {
             <>
                 <div className="row justify-content-center">
                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <PracticeInfo />
+                        <PracticeInfo store={this.props.store} />
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         {this.renderDiary(this.studentDiary)}
