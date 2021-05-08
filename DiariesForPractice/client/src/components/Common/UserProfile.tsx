@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { RootStore } from "../../stores/RootStore";
 import { UserViewModel } from "../../Typings/viewModels/UserViewModel";
 import { makeObservable, observable } from "mobx";
-import { Label, Input, Button } from "reactstrap";
+import { Label, Input, Button, Alert } from "reactstrap";
 import { mapUserReadModel } from "../../functions/mapper";
 import AdditionalInformation from "./AdditionalInformation";
 
@@ -29,6 +29,19 @@ class UserProfile extends Component<IUserProfileProps>  {
         this.user = this.props.store.userStore.currentUser;
     }
     
+    renderWarnings() {
+        setTimeout(() => {
+            this.saved = false;
+            this.notSaved = false;
+        });
+        return(
+            <>
+                {this.saved && <Alert color="success">Данные обновились успешно!</Alert>}
+                {this.notSaved && <Alert color="danged">Что-то пошло не так, и данные не сохранились</Alert>}
+            </>
+        );
+    }
+    
     renderPersonalInformationLabel() {
         return(
             <div className="row justify-content-center">
@@ -40,7 +53,7 @@ class UserProfile extends Component<IUserProfileProps>  {
     renderAdditionalInformation() {
         let { store } = this.props;
         return(
-            <AdditionalInformation  store={store} />
+            <AdditionalInformation store={store} />
         );
     }
     
@@ -75,7 +88,7 @@ class UserProfile extends Component<IUserProfileProps>  {
                     {!this.edit && <span>{email}</span>}
                     {this.edit && <Input
                         onChange={(e) => this.editUserData(e, UserDataType.Email)}
-                        value={`${this.user.email}`}
+                        value={`${email}`}
                     />}
                 </div>
             </div>
@@ -91,10 +104,10 @@ class UserProfile extends Component<IUserProfileProps>  {
                     </Label>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    {!this.edit && <span>{this.user.phone}</span>}
+                    {!this.edit && <span>{phone}</span>}
                     {this.edit && <Input
                         onChange={(e) => this.editUserData(e, UserDataType.Phone)}
-                        value={`${this.user.phone}`}
+                        value={phone}
                         />}
                 </div>
             </div>
@@ -139,6 +152,7 @@ class UserProfile extends Component<IUserProfileProps>  {
     render() {
         return(
             <>
+                {this.renderWarnings()}
                 {this.renderPersonalInformationLabel()}
                 {this.renderInformation()}
                 {this.renderButton()}
@@ -154,7 +168,7 @@ class UserProfile extends Component<IUserProfileProps>  {
         } else if(type === UserDataType.Email) {
             this.user.email = value;
         } else if(type === UserDataType.Phone) {
-            this.user.phone === value;
+            this.user.phone = value;
         }
     }
 
@@ -168,6 +182,7 @@ class UserProfile extends Component<IUserProfileProps>  {
             .then((status) => {
                 this.saved = status === 200;
                 this.notSaved = status !== 200;
+                this.edit = status === 200;
             });
     }
 }

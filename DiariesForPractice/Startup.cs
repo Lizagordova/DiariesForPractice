@@ -4,6 +4,7 @@ using DiariesForPractice.Domain.Services.GoogleDetail;
 using DiariesForPractice.Domain.Services.InstituteDetails;
 using DiariesForPractice.Domain.Services.Organizations;
 using DiariesForPractice.Domain.Services.PracticeDetail;
+using DiariesForPractice.Persistence.Generators;
 using DiariesForPractice.Persistence.Repositories;
 using DiariesForPractice.Persistence.Services.Diaries;
 using DiariesForPractice.Persistence.Services.GoogleDetail;
@@ -85,12 +86,14 @@ namespace DiariesForPractice
 			services.AddSingleton<IGoogleDetailsRepository, GoogleDetailsRepository>();
 			services.AddSingleton<IDiariesRepository, DiariesRepository>();
 			services.AddSingleton<IInstituteDetailsRepository, InstituteDetailsRepository>();
-			services.AddSingleton<IOrganizationRepository, IOrganizationRepository>();
+			services.AddSingleton<IOrganizationRepository, OrganizationRepository>();
+			services.AddSingleton<IPracticeRepository, PracticeRepository>();
 		}
 
 		private void AddServices(IServiceCollection services)
 		{
-			services.AddHostedService<LoaderWorker>();
+			//services.AddHostedService<LoaderWorker>();
+			services.AddSingleton<WordGenerator>();
 			services.AddSingleton<IInstituteDetailsEditorService, InstituteDetailsEditorService>();
 			services.AddSingleton<IInstituteDetailsReaderService, InstituteDetailsReaderService>();
 			services.AddSingleton<IGoogleDetailsEditorService, GoogleDetailsEditorService>();

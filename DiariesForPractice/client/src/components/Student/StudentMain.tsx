@@ -24,6 +24,7 @@ class StudentMain extends Component<MainProps> {
                         Главная
                     </NavLink>
                 </NavItem>
+                <i className="fas fa-bell" />
                 <NavItem>
                     <NavLink
                         to="/userprofile"

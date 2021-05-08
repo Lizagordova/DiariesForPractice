@@ -48,6 +48,11 @@
 		<None Include="client\src\components\Common\Main.tsx" />
 		<None Include="client\src\components\Common\UserProfile.tsx" />
 		<None Include="client\src\components\Student\HomePage\HomePage.tsx" />
+		<None Include="client\src\components\Student\HomePage\PersonalData.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\OrganizationInfo.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\PersonalData.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
 		<None Include="client\src\components\Teacher\Groups\GroupsPage.tsx" />
 		<None Include="client\src\components\Teacher\Home\HomePage.tsx" />
 		<None Include="client\src\components\Teacher\TeacherMain.tsx" />
@@ -59,6 +64,7 @@
 		<None Include="client\src\stores\DiariesStore.tsx" />
 		<None Include="client\src\stores\GoogleDetailsStore.tsx" />
 		<None Include="client\src\stores\InstituteDetailsStore.tsx" />
+		<None Include="client\src\stores\OrganizationStore.tsx" />
 		<None Include="client\src\stores\RootStore.tsx" />
 		<None Include="client\src\stores\StudentStore.tsx" />
 		<None Include="client\src\stores\UserStore.tsx" />

@@ -3,7 +3,7 @@
 //     the code is regenerated.
 
 import { IInstituteEntity } from '../interfaces/IInstituteEntity';
-import { StudentViewModel } from './StudentViewModel';
+import { UserViewModel } from './UserViewModel';
 
 export class GroupViewModel implements IInstituteEntity
 {
@@ -11,5 +11,6 @@ export class GroupViewModel implements IInstituteEntity
 	public name: string;
 	public directionId: number;
 	public courseId: number;
-	public students: StudentViewModel[] = [];
+	public responsible: UserViewModel;
+	public students: UserViewModel[] = [];
 }

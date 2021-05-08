@@ -4,7 +4,7 @@
 
 import { UserRole } from '../enums/UserRole';
 
-export class UserViewModel
+export class UserReadModel
 {
 	public id: number;
 	public firstName: string;
@@ -12,5 +12,5 @@ export class UserViewModel
 	public lastName: string;
 	public email: string;
 	public token: string;
-	public roles: UserRole[] = [];
+	public role: UserRole;
 }

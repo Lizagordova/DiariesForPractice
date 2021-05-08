@@ -4,6 +4,7 @@ import GoogleDetailsStore from "./GoogleDetailsStore";
 import InstituteDetailsStore from "./InstituteDetailsStore";
 import DiariesStore from "./DiariesStore";
 import StudentStore from "./StudentStore";
+import OrganizationStore from "./OrganizationStore";
 
 export class RootStore {
     userStore: UserStore;
@@ -11,6 +12,7 @@ export class RootStore {
     instituteDetailsStore: InstituteDetailsStore;
     diariesStore: DiariesStore;
     studentStore: StudentStore;
+    organizationStore: OrganizationStore;
 
     constructor() {
         makeObservable(this, {
@@ -19,6 +21,7 @@ export class RootStore {
             instituteDetailsStore: observable,
             diariesStore: observable,
             studentStore: observable,
+            organizationStore: observable,
         });
         this.setInitialState();
     }
@@ -29,5 +32,6 @@ export class RootStore {
         this.instituteDetailsStore = new InstituteDetailsStore();
         this.diariesStore = new DiariesStore();
         this.studentStore = new StudentStore();
+        this.organizationStore = new OrganizationStore();
     }
 }
