@@ -5,21 +5,18 @@ import { StaffViewModel } from "../../../../Typings/viewModels/StaffViewModel";
 import { RootStore } from "../../../../stores/RootStore";
 import { makeObservable, observable } from "mobx";
 import { PracticeViewModel } from "../../../../Typings/viewModels/PracticeViewModel";
-import { Input, Alert } from "reactstrap";
+import { Input, Alert, Button } from "reactstrap";
 import StaffInfo from "./StaffInfo";
 import { StaffRole } from "../../../../Typings/enums/StaffRole";
-import {mapToPracticeDetailsReadModel} from "../../../../functions/mapper";
+import { mapToPracticeDetailsReadModel } from "../../../../functions/mapper";
+import OrganizationInfo from "./OrganizationInfo";
 
 class PracticeInfoProps {
     store: RootStore;
-    edit: boolean;
 }
 
 @observer
 class PracticeInfo extends Component<PracticeInfoProps> {
-    organization: OrganizationViewModel = new OrganizationViewModel();
-    responsibleForStudent: StaffViewModel = new StaffViewModel();
-    signsTheContract: StaffViewModel = new StaffViewModel();
     practiceDetails: PracticeViewModel = new PracticeViewModel();
     saved: boolean;
     notSaved: boolean;
@@ -27,15 +24,21 @@ class PracticeInfo extends Component<PracticeInfoProps> {
     constructor(props: PracticeInfoProps) {
         super(props);
         makeObservable(this, {
-            organization: observable,
-            responsibleForStudent: observable,
-            signsTheContract: observable,
             practiceDetails: observable,
             saved: observable,
-            notSaved: observable,
+            notSaved: observable
         });
+        this.setPracticeDetails();
     }
 
+    setPracticeDetails() {
+        let currentStudentId = this.props.store.userStore.currentUser.id;
+        this.props.store.practiceStore.getPracticeDetails(currentStudentId)
+            .then((practiceDetails) => {
+                this.practiceDetails = practiceDetails;
+            });
+    }
+    
     renderWarnings() {
         setTimeout(() => {
             this.notSaved = false;
@@ -48,60 +51,31 @@ class PracticeInfo extends Component<PracticeInfoProps> {
             </>
         );
     }
-    
-    renderOrganizationName() {
-        let { edit } = this.props;
-        return (
-            <>
-                {!edit && <span>{this.organization.name}</span>}
-                {edit && <Input
-                    value={this.organization.name}
-                    onChange={(event) => this.inputData(event, OrganizationDataType.OrganizationName)}>
-                    {this.organization.name}
-                </Input>}
-            </>
-        );
-    }
 
-    renderOrganizationLegalAddress() {
-        let { edit } = this.props;
-        return (
-            <>
-                {!edit && <span>{this.organization.legalAddress}</span>}
-                {edit && <Input
-                    value={this.organization.legalAddress}
-                    onChange={(event) => this.inputData(event, OrganizationDataType.OrganizationName)}>
-                    {this.organization.name}
-                </Input>}
-            </>
-        );
-    }
-
-    renderStaff(staff: StaffViewModel, staffRole: StaffRole) {
-        return (
-            <>
-                <StaffInfo staff={staff} role={staffRole} edit={this.props.edit}  updateStaffInfo={this.updateStaffInfo}/>
-            </>
-        );
-    }
-    
     renderOrganizationInfo() {
         return (
-            <>
-                <div className="row justify-content-center">
-                    {this.renderOrganizationName()}
-                </div>
-                <div className="row justify-content-center">
-                    {this.renderOrganizationLegalAddress()}
-                </div>
-                <div className="row justify-content-center">
-                    {this.renderStaff(this.responsibleForStudent, StaffRole.Responsible)}
-                </div>
-                <div className="row justify-content-center">
-                    {this.renderStaff(this.signsTheContract, StaffRole.SignsTheContract)}
-                </div>
-            </>
+            <OrganizationInfo organization={this.practiceDetails.organization} updateStaff={this.updateStaffInfo} updateOrganization={this.updateOrganization}/>
         );
+    }
+    
+    renderButton() {
+        if(this.editInfo) {
+            return (
+                <Button
+                    color="secondary"
+                    onClick={() => this.save()}>
+                    Сохранить
+                </Button>
+            );
+        } else {
+            return (
+                <Button
+                    color="secondary"
+                    onClick={() => this.editInfoToggle()}>
+                    Редактировать
+                </Button>
+            );
+        }
     }
     
     render() {
@@ -110,23 +84,6 @@ class PracticeInfo extends Component<PracticeInfoProps> {
                 {this.renderOrganizationInfo()}  
             </>
         );
-    }
-
-    inputData(event: React.ChangeEvent<HTMLInputElement>,organizationType: OrganizationDataType) {
-        let value = event.currentTarget.value;
-        if(organizationType === OrganizationDataType.OrganizationName) {
-            this.organization.name = value;
-        } else if(organizationType === OrganizationDataType.OrganizationLegalAddress) {
-            this.organization.legalAddress = value;
-        }
-    }
-    
-    updateStaffInfo(staff: StaffViewModel, staffRole: StaffRole) {
-        if(staffRole === StaffRole.Responsible) {
-            this.responsibleForStudent = staff;
-        } else if(staffRole === StaffRole.SignsTheContract) {
-            this.signsTheContract = staff;
-        }
     }
     
     save() {
@@ -138,12 +95,18 @@ class PracticeInfo extends Component<PracticeInfoProps> {
                 this.notSaved = status !== 200;
             });
     }
-        
+
+    updateOrganization(organization: OrganizationViewModel) {
+        this.practiceDetails.organization = organization;
+    }
+
+    updateStaffInfo(staff: StaffViewModel, staffRole: StaffRole) {
+        if(staffRole === StaffRole.Responsible) {
+            this.practiceDetails.responsibleForStudent = staff;
+        } else if(staffRole === StaffRole.SignsTheContract) {
+            this.practiceDetails.signsTheContract = staff;
+        }
+    }
 }
 
 export default PracticeInfo;
-
-enum OrganizationDataType {
-    OrganizationName,
-    OrganizationLegalAddress
-}

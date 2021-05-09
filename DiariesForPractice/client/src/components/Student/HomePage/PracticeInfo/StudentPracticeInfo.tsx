@@ -1,61 +1,24 @@
 ﻿import React, { Component } from "react";
 import { observer } from "mobx-react";
-import { Button } from "reactstrap";
-import { makeObservable, observable } from "mobx";
 import { RootStore } from "../../../../stores/RootStore";
 import PersonalInfo from "./PersonalInfo";
-import OrganizationInfo from "./OrganizationInfo";
+import PracticeInfo from "./PracticeInfo";
 
 class PracticeInfoProps {
     store: RootStore;
 }
 
 @observer
-class StudentPracticeInfo extends Component<PracticeInfoProps> {
-    editInfo: boolean;
-    
-    constructor(props: PracticeInfoProps) {
-        super(props);
-        makeObservable(this, {
-            editInfo: observable
-        });
-    }
-    
-    renderButton() {
-        if(this.editInfo) {
-            return (
-                <Button
-                    color="secondary"
-                    onClick={() => this.save()}>
-                    Сохранить
-                </Button>
-            );
-        } else {
-            return (
-                <Button
-                    color="secondary"
-                    onClick={() => this.editInfoToggle()}>
-                    Редактировать
-                </Button>
-            );
-        }
-        
-    }
-    
-    renderPracticeInfo() {
+class StudentPracticeInfo extends Component<PracticeInfoProps> { 
+    renderInfo() {
         let { store } = this.props;
         return(
             <>
                 <div className="row justify-content-center">
-                    <PersonalInfo store={store} edit={this.editInfo}/>
+                    <PersonalInfo store={store} />
                 </div>
                 <div className="row justify-content-center">
-                    <PracticeInfo  store={store} edit={this.editInfo}/>
-                </div>
-                <div className="row justify-content-center">
-                </div>
-                <div className="row justify-content-center">
-                    {this.renderButton()}
+                    <PracticeInfo store={store} />
                 </div>
             </>
         );
@@ -64,18 +27,9 @@ class StudentPracticeInfo extends Component<PracticeInfoProps> {
     render() {
         return (
             <>
-                {this.renderPracticeInfo()}
+                {this.renderInfo()}
             </>
         );
-    }
-
-    editInfoToggle() {
-        this.editInfo = !this.editInfo;
-    }
-    
-    save() {
-        let { store } = this.props;
-        
     }
 }
 

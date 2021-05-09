@@ -4,6 +4,8 @@ import { UserViewModel } from "../Typings/viewModels/UserViewModel";
 import { UserReadModel } from "../Typings/readModels/UserReadModel";
 import { PracticeReadModel } from "../Typings/readModels/PracticeReadModel";
 import {PracticeViewModel} from "../Typings/viewModels/PracticeViewModel";
+import {StaffViewModel} from "../Typings/viewModels/StaffViewModel";
+import {OrganizationViewModel} from "../Typings/viewModels/OrganizationViewModel";
 
 export function mapToInstituteReadModel(instituteViewModel: InstituteViewModel): InstituteReadModel {
     //todo: реализовать

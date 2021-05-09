@@ -4,7 +4,6 @@ import { RootStore } from "../../../../stores/RootStore";
 
 class PersonalInfoProps {
     store: RootStore;
-    edit: boolean;
 }
 
 @observer
