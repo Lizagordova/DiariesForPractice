@@ -12,6 +12,7 @@ import { UserRole } from "./Typings/enums/UserRole";
 import AdminMain from "./components/Admin/AdminMain";
 import StudentMain from "./components/Student/StudentMain";
 import TeacherMain from "./components/Teacher/TeacherMain";
+import UserMain from "./components/User/UserMain";
 
 interface AppProps {
     store: RootStore;
@@ -37,11 +38,11 @@ class App extends Component<AppProps> {
             return (
                 <StudentMain store={store} />
             );
-        } else if(currentUser.role === UserRole.Teacher) {
+        } else if(currentUser.roles.includes(UserRole.Teacher)) {
             return (
                 <TeacherMain store={store} />
             );
-        } else if(currentUser.role === UserRole.User) {
+        } else if(currentUser.roles.includes(UserRole.User)) {
             return (
                 <UserMain store={store} />
             );

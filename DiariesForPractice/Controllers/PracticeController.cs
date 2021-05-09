@@ -1,4 +1,5 @@
 ﻿using DiariesForPractice.Domain.Services.PracticeDetail;
+using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,13 @@ namespace DiariesForPractice.Controllers
             _practiceEditor = practiceEditor;
             _practiceReader = practiceReader;
             _mapper = mapper;
+        }
+
+        [HttpPost]
+        [Route("/addorupdatepracticedetails")]
+        public ActionResult AddOrUpdatePracticeDetails([FromBody]PracticeReadModel practiceReadModel)
+        {
+            return new OkResult();
         }
     }
 }

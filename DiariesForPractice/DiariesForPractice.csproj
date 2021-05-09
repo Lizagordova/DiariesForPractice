@@ -45,17 +45,15 @@
 		<None Include="client\src\components\Common\Home\HomePage.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Student.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Students.tsx" />
-		<None Include="client\src\components\Common\Main.tsx" />
 		<None Include="client\src\components\Common\UserProfile.tsx" />
 		<None Include="client\src\components\Student\HomePage\HomePage.tsx" />
-		<None Include="client\src\components\Student\HomePage\PersonalData.tsx" />
-		<None Include="client\src\components\Student\HomePage\PracticeInfo.tsx" />
-		<None Include="client\src\components\Student\HomePage\PracticeInfo\OrganizationInfo.tsx" />
-		<None Include="client\src\components\Student\HomePage\PracticeInfo\PersonalData.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\StaffInfo.tsx" />
 		<None Include="client\src\components\Teacher\Groups\GroupsPage.tsx" />
 		<None Include="client\src\components\Teacher\Home\HomePage.tsx" />
 		<None Include="client\src\components\Teacher\TeacherMain.tsx" />
+		<None Include="client\src\components\User\UserMain.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
 		<None Include="client\src\functions\translater.tsx" />
@@ -65,6 +63,7 @@
 		<None Include="client\src\stores\GoogleDetailsStore.tsx" />
 		<None Include="client\src\stores\InstituteDetailsStore.tsx" />
 		<None Include="client\src\stores\OrganizationStore.tsx" />
+		<None Include="client\src\stores\PracticeStore.tsx" />
 		<None Include="client\src\stores\RootStore.tsx" />
 		<None Include="client\src\stores\StudentStore.tsx" />
 		<None Include="client\src\stores\UserStore.tsx" />
@@ -83,7 +82,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="client\src\components\User" />
 	  <Folder Include="Configuration" />
 	</ItemGroup>
 

@@ -2,17 +2,12 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
-import { UserRole } from '../enums/UserRole';
-
-export class UserViewModel
+export class StaffViewModel
 {
 	public id: number;
-	public firstName: string;
-	public secondName: string;
-	public lastName: string;
-	public fio: string;
+	public organizationId: number;
+	public fullName: string;
+	public job: string;
 	public email: string;
 	public phone: string;
-	public token: string;
-	public roles: UserRole[] = [];
 }

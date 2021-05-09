@@ -1,5 +1,6 @@
 ﻿import { makeObservable, observable } from "mobx";
 import { UserViewModel } from "../Typings/viewModels/UserViewModel";
+import { UserReadModel } from "../Typings/readModels/UserReadModel";
 
 class UserStore {
     currentUser: UserViewModel = new UserViewModel();

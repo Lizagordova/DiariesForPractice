@@ -136,7 +136,7 @@ class AddOrUpdateGroupWindow extends Component<InstituteEntityProps> {
                                 <DropdownItem
                                     key={teacher.id}
                                     onClick={() => this.chooseResponsible(teacher)}>
-                                    {teacher.name}
+                                    {teacher.fio}
                                 </DropdownItem>
                             );
                         })}
@@ -183,7 +183,7 @@ class AddOrUpdateGroupWindow extends Component<InstituteEntityProps> {
                 {this.renderInstitute(this.currentInstitute, this.update)}
                 {this.renderDirection(this.currentDirection, this.update)}
                 {this.renderCafedra(this.currentCafedra, this.update)}
-                {this.renderResponsible(this.responsible, this.teachers, this.update)}
+                {this.renderResponsible(new UserViewModel(), this.teachers, this.update)}
                 {this.renderStudents(this.group.students, this.update)}
             </>
         );
@@ -230,6 +230,10 @@ class AddOrUpdateGroupWindow extends Component<InstituteEntityProps> {
     chooseResponsible(teacher: UserViewModel) {
         this.group.responsible = teacher;
         this.updateToggle();
+    }
+
+    addStudentToGroup() {
+        
     }
 }
 

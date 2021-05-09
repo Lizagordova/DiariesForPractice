@@ -10,10 +10,10 @@ import {CafedraViewModel} from "../../../../Typings/viewModels/CafedraViewModel"
 import {DirectionViewModel} from "../../../../Typings/viewModels/DirectionViewModel";
 import {observer} from "mobx-react";
 import {StudentsQueryReadModel} from "../../../../Typings/readModels/StudentsQueryReadModel";
-import {InstituteEntity} from "../../../../consts/InstituteEntity";
 import {UserRole} from "../../../../Typings/enums/UserRole";
 import AddOrUpdateInstituteEntityWindow
     from "../../../Admin/InstituteEntityCreationOrEdition/AddOrUpdateInstituteEntityWindow";
+import {InstituteEntityType} from "../../../../consts/InstituteEntity";
 
 class IFiltersProps {
     store: RootStore;
@@ -91,19 +91,19 @@ class Filters extends Component<IFiltersProps> {
         this.currentInstitute = institutes[0] === undefined ? new InstituteViewModel() : institutes[0];
     }
 
-    renderDropdownToggle(instituteEntity: InstituteEntity) {
+    renderDropdownToggle(instituteEntity: InstituteEntityType) {
         let name = "";
-        if(instituteEntity === InstituteEntity.Degree) {
+        if(instituteEntity === InstituteEntityType.Degree) {
             name = this.currentDegree.name;
-        } else if(instituteEntity === InstituteEntity.Cafedra) {
+        } else if(instituteEntity === InstituteEntityType.Cafedra) {
             name = this.currentCafedra.name;
-        } else if(instituteEntity === InstituteEntity.Course) {
+        } else if(instituteEntity === InstituteEntityType.Course) {
             name = this.currentCourse.name;
-        } else if(instituteEntity === InstituteEntity.Direction) {
+        } else if(instituteEntity === InstituteEntityType.Direction) {
             name = this.currentDirection.name;
-        } else if(instituteEntity === InstituteEntity.Institute) {
+        } else if(instituteEntity === InstituteEntityType.Institute) {
             name = this.currentInstitute.name;
-        } else if(instituteEntity === InstituteEntity.Group) {
+        } else if(instituteEntity === InstituteEntityType.Group) {
             name = this.currentGroup.name;
         }
         name="ты горишь";
@@ -116,14 +116,14 @@ class Filters extends Component<IFiltersProps> {
 
     renderDegreeDropdown(degrees: DegreeViewModel[]) {
         return(
-            <ButtonDropdown isOpen={this.isDegreeOpen} onClick={() => this.dropdownToggle(InstituteEntity.Degree)} style={{width: "90%"}} className="buttonDropdown">
-                {this.renderDropdownToggle(InstituteEntity.Degree)}
+            <ButtonDropdown isOpen={this.isDegreeOpen} onClick={() => this.dropdownToggle(InstituteEntityType.Degree)} style={{width: "90%"}} className="buttonDropdown">
+                {this.renderDropdownToggle(InstituteEntityType.Degree)}
                 <DropdownMenu className="dropdownMenu">
                     {degrees.map(degree => {
                         return (
                             <DropdownItem
                                 key={degree.id.toString()}
-                                onClick={() => this.chooseFilter(InstituteEntity.Degree, degree)}>
+                                onClick={() => this.chooseFilter(InstituteEntityType.Degree, degree)}>
                                 {degree.name}
                             </DropdownItem>
                         );
@@ -134,7 +134,7 @@ class Filters extends Component<IFiltersProps> {
     }
 
     renderAddOrUpdateButton() {
-        if(this.props.store.userStore.currentUser.role === UserRole.Admin) {
+        if(this.props.store.userStore.currentUser.roles.includes(UserRole.Admin)) {
             //todo: потом сюда
         }
         return (
@@ -147,14 +147,14 @@ class Filters extends Component<IFiltersProps> {
 
     renderInstituteDropdown(institutes: InstituteViewModel[]) {
         return(
-            <ButtonDropdown isOpen={this.isInstituteOpen} onClick={() => this.dropdownToggle(InstituteEntity.Institute)} style={{width: "90%"}}>
-                {this.renderDropdownToggle(InstituteEntity.Institute)}
+            <ButtonDropdown isOpen={this.isInstituteOpen} onClick={() => this.dropdownToggle(InstituteEntityType.Institute)} style={{width: "90%"}}>
+                {this.renderDropdownToggle(InstituteEntityType.Institute)}
                 <DropdownMenu>
                     {institutes.map(institute => {
                         return (
                             <DropdownItem
                                 key={institute.id.toString()}
-                                onClick={() => this.chooseFilter(InstituteEntity.Institute, institute)}>
+                                onClick={() => this.chooseFilter(InstituteEntityType.Institute, institute)}>
                                 {institute.name}
                             </DropdownItem>
                         );
@@ -166,14 +166,14 @@ class Filters extends Component<IFiltersProps> {
 
     renderCafedraDropdown(cafedras: CafedraViewModel[]) {
         return(
-            <ButtonDropdown isOpen={this.isCafedraOpen} onClick={() => this.dropdownToggle(InstituteEntity.Cafedra)} style={{width: "90%"}}>
-                {this.renderDropdownToggle(InstituteEntity.Cafedra)}
+            <ButtonDropdown isOpen={this.isCafedraOpen} onClick={() => this.dropdownToggle(InstituteEntityType.Cafedra)} style={{width: "90%"}}>
+                {this.renderDropdownToggle(InstituteEntityType.Cafedra)}
                 <DropdownMenu>
                     {cafedras.map(cafedra => {
                         return (
                             <DropdownItem
                                 key={cafedra.id.toString()}
-                                onClick={() => this.chooseFilter(InstituteEntity.Cafedra, cafedra)}>
+                                onClick={() => this.chooseFilter(InstituteEntityType.Cafedra, cafedra)}>
                                 {cafedra.name}
                             </DropdownItem>
                         )
@@ -185,14 +185,14 @@ class Filters extends Component<IFiltersProps> {
 
     renderDirectionDropdown(directions: DirectionViewModel[]) {
         return(
-            <ButtonDropdown isOpen={this.isDirectionOpen} onClick={() => this.dropdownToggle(InstituteEntity.Direction)} style={{width: "90%"}}>
-                {this.renderDropdownToggle(InstituteEntity.Direction)}
+            <ButtonDropdown isOpen={this.isDirectionOpen} onClick={() => this.dropdownToggle(InstituteEntityType.Direction)} style={{width: "90%"}}>
+                {this.renderDropdownToggle(InstituteEntityType.Direction)}
                 <DropdownMenu>
                     {directions.map(direction => {
                         return (
                             <DropdownItem
                                 key={direction.id.toString()}
-                                onClick={() => this.chooseFilter(InstituteEntity.Direction, direction)}>
+                                onClick={() => this.chooseFilter(InstituteEntityType.Direction, direction)}>
                                 {direction.name}
                             </DropdownItem>
                         );
@@ -204,14 +204,14 @@ class Filters extends Component<IFiltersProps> {
 
     renderGroupsDropdown(groups: GroupViewModel[]) {
         return(
-            <ButtonDropdown isOpen={this.isGroupOpen} onClick={() => this.dropdownToggle(InstituteEntity.Group)} style={{width: "90%"}}>
-                {this.renderDropdownToggle(InstituteEntity.Group)}
+            <ButtonDropdown isOpen={this.isGroupOpen} onClick={() => this.dropdownToggle(InstituteEntityType.Group)} style={{width: "90%"}}>
+                {this.renderDropdownToggle(InstituteEntityType.Group)}
                 <DropdownMenu>
                     {groups.map(group => {
                         return (
                             <DropdownItem
                                 key={group.id.toString()}
-                                onClick={() => this.chooseFilter(InstituteEntity.Group, group)}>
+                                onClick={() => this.chooseFilter(InstituteEntityType.Group, group)}>
                                 {group.name}
                             </DropdownItem>
                         );
@@ -223,14 +223,14 @@ class Filters extends Component<IFiltersProps> {
 
     renderCoursesDropdown(courses: CourseViewModel[]) {
         return(
-            <ButtonDropdown isOpen={this.isCourseOpen} onClick={() => this.dropdownToggle(InstituteEntity.Course)} style={{width: "90%"}}>
-                {this.renderDropdownToggle(InstituteEntity.Course)}
+            <ButtonDropdown isOpen={this.isCourseOpen} onClick={() => this.dropdownToggle(InstituteEntityType.Course)} style={{width: "90%"}}>
+                {this.renderDropdownToggle(InstituteEntityType.Course)}
                 <DropdownMenu>
                     {courses.map(course => {
                         return (
                             <DropdownItem
                                 key={course.id.toString()}
-                                onClick={() => this.chooseFilter(InstituteEntity.Course, course)}>
+                                onClick={() => this.chooseFilter(InstituteEntityType.Course, course)}>
                                 {course.name}
                             </DropdownItem>
                         );
@@ -279,29 +279,29 @@ class Filters extends Component<IFiltersProps> {
         );
     }
 
-    dropdownToggle(instituteEntity: InstituteEntity) {
-        if(instituteEntity === InstituteEntity.Degree) {
+    dropdownToggle(instituteEntity: InstituteEntityType) {
+        if(instituteEntity === InstituteEntityType.Degree) {
             this.isDegreeOpen = !this.isDegreeOpen;
-        } else if(instituteEntity === InstituteEntity.Cafedra) {
+        } else if(instituteEntity === InstituteEntityType.Cafedra) {
             this.isCafedraOpen = !this.isCafedraOpen;
-        } else if(instituteEntity === InstituteEntity.Course) {
+        } else if(instituteEntity === InstituteEntityType.Course) {
             this.isCourseOpen = !this.isCourseOpen;
-        } else if(instituteEntity === InstituteEntity.Direction) {
+        } else if(instituteEntity === InstituteEntityType.Direction) {
             this.isDirectionOpen = !this.isDirectionOpen;
-        } else if(instituteEntity === InstituteEntity.Institute) {
+        } else if(instituteEntity === InstituteEntityType.Institute) {
             this.isInstituteOpen = !this.isInstituteOpen;
-        } else if(instituteEntity === InstituteEntity.Group) {
+        } else if(instituteEntity === InstituteEntityType.Group) {
             this.isGroupOpen = !this.isGroupOpen;
         }
     }
 
-    chooseFilter(instituteEntity: InstituteEntity, filter: any) {
-        if(instituteEntity === InstituteEntity.Degree) {
+    chooseFilter(instituteEntity: InstituteEntityType, filter: any) {
+        if(instituteEntity === InstituteEntityType.Degree) {
             this.currentDegree = filter;
             let courses = this.currentDegree.courses;
             this.currentCourses = courses;
             this.currentCourse = courses[0];
-        } else if(instituteEntity === InstituteEntity.Cafedra) {
+        } else if(instituteEntity === InstituteEntityType.Cafedra) {
             this.currentCafedra = filter;
             this.currentCourse = this.props.store.instituteDetailsStore.courses.filter(c => c.id === filter.instituteId)[0];
             let directions = this.props.store.instituteDetailsStore.directions.filter(d => d.cafedraId === filter.id);
@@ -312,9 +312,9 @@ class Filters extends Component<IFiltersProps> {
                 .filter(g => g.courseId = this.currentCourse.id);
             this.currentGroup = groups[0];
             this.currentGroups = groups;
-        } else if(instituteEntity === InstituteEntity.Course) {
+        } else if(instituteEntity === InstituteEntityType.Course) {
             this.currentCourse = filter;
-        } else if(instituteEntity === InstituteEntity.Direction) {
+        } else if(instituteEntity === InstituteEntityType.Direction) {
             this.currentDirection = filter;
             let cafedra = this.props.store.instituteDetailsStore.cafedras.filter(c => c.id === filter.cafedraId)[0];
             let institute = this.props.store.instituteDetailsStore.institutes.filter(c => c.id === cafedra.instituteId)[0];
@@ -325,7 +325,7 @@ class Filters extends Component<IFiltersProps> {
                 .filter(g => g.courseId === this.currentCourse.id);
             this.currentGroup = groups[0];
             this.currentGroups = groups;
-        } else if(instituteEntity === InstituteEntity.Institute) {
+        } else if(instituteEntity === InstituteEntityType.Institute) {
             this.currentInstitute = filter;
             let cafedras = this.props.store.instituteDetailsStore.cafedras.filter(t => t.instituteId === filter.id);
             this.currentCafedras = cafedras;
@@ -338,7 +338,7 @@ class Filters extends Component<IFiltersProps> {
                 .filter(g => g.courseId = this.currentCourse.id);
             this.currentGroup = groups[0];
             this.currentGroups = groups;
-        } else if(instituteEntity === InstituteEntity.Group) {
+        } else if(instituteEntity === InstituteEntityType.Group) {
             let direction = this.props.store.instituteDetailsStore.directions.filter(c => c.id === filter.directionId)[0];
             let cafedra = this.props.store.instituteDetailsStore.cafedras.filter(c => c.id === direction.cafedraId)[0];
             let institute = this.props.store.instituteDetailsStore.institutes.filter(c => c.id === cafedra.instituteId)[0];

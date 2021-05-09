@@ -3,6 +3,7 @@ import { RootStore } from "../../stores/RootStore";
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
 import { Input, Button, Alert } from "reactstrap";
+import { UserReadModel } from "../../Typings/readModels/UserReadModel";
 
 class AuthorizationWindowProps {
     store: RootStore;

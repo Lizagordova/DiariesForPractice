@@ -12,5 +12,7 @@ export class UserReadModel
 	public lastName: string;
 	public email: string;
 	public token: string;
-	public role: UserRole;
+	public login: string;
+	public password: string;
+	public roles: UserRole[];
 }

@@ -117,7 +117,7 @@ class UserProfile extends Component<IUserProfileProps>  {
     renderInformation() {
         return(
             <>
-                {this.renderFIO(`${this.user.firstName} ${this.user.secondName} ${this.user.lastName}`)}
+                {this.renderFIO(`${this.user.fio}`)}
                 {this.renderEmail(this.user.email)}
                 {this.renderPhone(this.user.phone)}
             </>

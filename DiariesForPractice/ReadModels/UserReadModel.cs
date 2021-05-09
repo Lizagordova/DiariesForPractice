@@ -1,4 +1,5 @@
-﻿using DiariesForPractice.Configuration.Typings.Attributes;
+﻿using System.Collections.Generic;
+using DiariesForPractice.Configuration.Typings.Attributes;
 using DiariesForPractice.Domain.enums;
 
 namespace DiariesForPractice.ReadModels
@@ -12,6 +13,8 @@ namespace DiariesForPractice.ReadModels
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
-        public UserRole Role { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public List<UserRole> Roles { get; set; }
     }
 }

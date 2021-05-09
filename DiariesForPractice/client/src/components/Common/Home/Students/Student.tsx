@@ -27,7 +27,7 @@ class Student extends Component<IStudentProps> {
 
     setInitialState() {
         this.student = this.props.store.studentStore.students.filter(s => s.id === this.props.studentId)[0];
-        this.diary = this.props.store.diariesStore.diaries.filter(s => s.userId === this.props.studentId)[0];
+        this.diary = this.props.store.diariesStore.diaries.filter(s => s.studentId === this.props.studentId)[0];
     }
 
     renderGeneratedOption() {

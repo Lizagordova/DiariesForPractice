@@ -67,12 +67,12 @@ class AddOrUpdateUserWindow extends Component<AddOrUpdateUserWindowProps> {
     }
 
     determineCheckOrNot(userRole: UserRole): boolean {
-        return this.user.roles.contains(userRole);
+        return this.user.roles.includes(userRole);
     }
     
     chooseRole(event: React.ChangeEvent<HTMLInputElement>, userRole: UserRole) {
         let userRoles = this.user.roles;
-        if(userRoles.roles.contains(userRole)) {
+        if(userRoles.includes(userRole)) {
             userRoles = userRoles.filter(ur => ur != userRole);
         } else {
             userRoles.push(userRole);
