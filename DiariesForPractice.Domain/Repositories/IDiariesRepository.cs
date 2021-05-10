@@ -7,5 +7,6 @@ namespace DiariesForPractice.Domain.Repositories
 	{
 		int AddOrUpdateDiary(Diary diary);
 		IReadOnlyCollection<Diary> GetDiaries();
+		Diary GetDiary(int studentId);
 	}
 }

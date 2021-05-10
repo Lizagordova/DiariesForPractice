@@ -22,5 +22,12 @@ namespace DiariesForPractice.Persistence.Services.Diaries
 
 			return diaries;
 		}
+
+		public Diary GetDiary(int studentId)
+		{
+			var diary = _diariesRepository.GetDiary(studentId);
+
+			return diary;
+		}
 	}
 }

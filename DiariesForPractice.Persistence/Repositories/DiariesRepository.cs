@@ -13,9 +13,11 @@ namespace DiariesForPractice.Persistence.Repositories
 {
 	public class DiariesRepository : IDiariesRepository
 	{
-		private readonly MapperService _mapper;
 		private const string AddOrUpdateDiarySp = "DiariesRepository_AddOrUpdateDiary";
 		private const string GetDiariesSp = "DiariesRepository_GetDiaries";
+		private const string GetDiarySp = "DiariesRepository_GetDiary";
+		private readonly MapperService _mapper;
+
 		public DiariesRepository(
 			MapperService mapper)
 		{
@@ -42,6 +44,19 @@ namespace DiariesForPractice.Persistence.Repositories
 			return diaries;
 		}
 
+		public Diary GetDiary(int studentId)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetDiaryParam(studentId);
+			var diaryUdt = conn
+				.Query<DiaryUdt>(GetDiarySp, param, commandType: CommandType.StoredProcedure)
+				.FirstOrDefault();
+			var diary = _mapper.Map<DiaryUdt, Diary>(diaryUdt);
+			DatabaseHelper.CloseConnection(conn);
+
+			return diary;
+		}
+
 		private DynamicTvpParameters GetAddOrUpdateDiaryParam(Diary diary)
 		{
 			var param = new DynamicTvpParameters();
@@ -50,6 +65,14 @@ namespace DiariesForPractice.Persistence.Repositories
 			tvp.AddObjectAsRow(udt);
 			param.Add(tvp);
 
+			return param;
+		}
+
+		private DynamicTvpParameters GetDiaryParam(int studentId)
+		{
+			var param = new DynamicTvpParameters();
+			param.Add("studentId", studentId);
+			
 			return param;
 		}
 	}
