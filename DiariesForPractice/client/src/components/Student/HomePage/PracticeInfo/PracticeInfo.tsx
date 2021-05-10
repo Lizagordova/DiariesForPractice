@@ -6,7 +6,6 @@ import { RootStore } from "../../../../stores/RootStore";
 import { makeObservable, observable } from "mobx";
 import { PracticeViewModel } from "../../../../Typings/viewModels/PracticeViewModel";
 import { Input, Alert, Button } from "reactstrap";
-import StaffInfo from "./StaffInfo";
 import { StaffRole } from "../../../../Typings/enums/StaffRole";
 import { mapToPracticeDetailsReadModel } from "../../../../functions/mapper";
 import OrganizationInfo from "./OrganizationInfo";
@@ -18,15 +17,21 @@ class PracticeInfoProps {
 @observer
 class PracticeInfo extends Component<PracticeInfoProps> {
     practiceDetails: PracticeViewModel = new PracticeViewModel();
+    responsibleForStudent: StaffViewModel = new StaffViewModel();
+    signsTheContract: StaffViewModel = new StaffViewModel();
     saved: boolean;
     notSaved: boolean;
+    editInfo: boolean;
     
     constructor(props: PracticeInfoProps) {
         super(props);
         makeObservable(this, {
             practiceDetails: observable,
             saved: observable,
-            notSaved: observable
+            notSaved: observable,
+            editInfo: observable,
+            responsibleForStudent: observable,
+            signsTheContract: observable,
         });
         this.setPracticeDetails();
     }
@@ -54,7 +59,13 @@ class PracticeInfo extends Component<PracticeInfoProps> {
 
     renderOrganizationInfo() {
         return (
-            <OrganizationInfo organization={this.practiceDetails.organization} updateStaff={this.updateStaffInfo} updateOrganization={this.updateOrganization}/>
+            <OrganizationInfo
+                organization={this.practiceDetails.organization} 
+                updateStaff={this.updateStaffInfo} 
+                updateOrganization={this.updateOrganization}
+                edit={this.editInfo} 
+                responsibleForStudent={this.responsibleForStudent}
+                signsTheContract={this.signsTheContract} />
         );
     }
     
@@ -81,7 +92,10 @@ class PracticeInfo extends Component<PracticeInfoProps> {
     render() {
         return(
             <>
-                {this.renderOrganizationInfo()}  
+                {this.renderOrganizationInfo()}
+                <div className="row justify-content-center">
+                    {this.renderButton()}
+                </div>
             </>
         );
     }
@@ -106,6 +120,10 @@ class PracticeInfo extends Component<PracticeInfoProps> {
         } else if(staffRole === StaffRole.SignsTheContract) {
             this.practiceDetails.signsTheContract = staff;
         }
+    }
+
+    editInfoToggle() {
+        this.editInfo = !this.editInfo;
     }
 }
 

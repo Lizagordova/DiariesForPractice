@@ -23,6 +23,9 @@ namespace DiariesForPractice.Configuration
 			builder
 				.ExportAsEnum<StaffRole>()
 				.OverrideNamespace("enums");
+			builder
+				.ExportAsEnum<ReportingForm>()
+				.OverrideNamespace("enums");
 
 			builder
 				.ExportAsInterface<IInstituteEntity>()

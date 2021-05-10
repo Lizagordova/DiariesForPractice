@@ -47,6 +47,7 @@
 		<None Include="client\src\components\Common\Home\Students\Students.tsx" />
 		<None Include="client\src\components\Common\UserProfile.tsx" />
 		<None Include="client\src\components\Student\HomePage\HomePage.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeDetailsInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\StaffInfo.tsx" />

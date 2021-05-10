@@ -4,6 +4,7 @@
 
 import { UserViewModel } from './UserViewModel';
 import { OrganizationViewModel } from './OrganizationViewModel';
+import { ReportingForm } from '../enums/ReportingForm';
 import { StaffViewModel } from './StaffViewModel';
 
 export class PracticeViewModel
@@ -11,7 +12,7 @@ export class PracticeViewModel
 	public id: number;
 	public student: UserViewModel;
 	public organization: OrganizationViewModel;
-	public reportingForm: string;
+	public reportingForm: ReportingForm;
 	public contractNumber: string;
 	public responsibleForStudent: StaffViewModel;
 	public signsTheContract: StaffViewModel;

@@ -12,21 +12,19 @@ class OrganizationProps {
     updateStaff: any;
     updateOrganization: any;
     edit: boolean;
+    responsibleForStudent: StaffViewModel;
+    signsTheContract: StaffViewModel;
 }
 
 @observer
 class OrganizationInfo extends Component<OrganizationProps> {
     organization: OrganizationViewModel = new OrganizationViewModel();
-    responsibleForStudent: StaffViewModel = new StaffViewModel();
-    signsTheContract: StaffViewModel = new StaffViewModel();
     editInfo: boolean;
     
     constructor(props: OrganizationProps) {
         super(props);
         makeObservable(this, {
             organization: observable,
-            responsibleForStudent: observable,
-            signsTheContract: observable,
             editInfo: observable,
         });
         this.organization = this.props.organization;
@@ -61,13 +59,11 @@ class OrganizationInfo extends Component<OrganizationProps> {
     renderStaff(staff: StaffViewModel, staffRole: StaffRole) {
         return (
             <>
-                <StaffInfo staff={staff} role={staffRole} edit={this.editInfo}  updateStaffInfo={this.updateStaffInfo}/>
+                <StaffInfo staff={staff} role={staffRole} edit={this.editInfo} updateStaffInfo={this.updateStaffInfo}/>
             </>
         );
     }
-
     
-
     renderOrganizationInfo() {
         return (
             <>
@@ -78,13 +74,10 @@ class OrganizationInfo extends Component<OrganizationProps> {
                     {this.renderOrganizationLegalAddress()}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderStaff(this.responsibleForStudent, StaffRole.Responsible)}
+                    {this.renderStaff(this.props.responsibleForStudent, StaffRole.Responsible)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderStaff(this.signsTheContract, StaffRole.SignsTheContract)}
-                </div>
-                <div className="row justify-content-center">
-                    {this.renderButton()}
+                    {this.renderStaff(this.props.signsTheContract, StaffRole.SignsTheContract)}
                 </div>
             </>
         );
@@ -106,11 +99,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
     }
 
     updateStaffInfo(staff: StaffViewModel, staffRole: StaffRole) {
-        if(staffRole === StaffRole.Responsible) {
-            this.responsibleForStudent = staff;
-        } else if(staffRole === StaffRole.SignsTheContract) {
-            this.signsTheContract = staff;
-        }
+        this.props.updateStaff(staff, staffRole);
     }
 }
 
