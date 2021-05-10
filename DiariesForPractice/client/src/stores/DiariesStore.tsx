@@ -42,6 +42,16 @@ class DiariesStore {
             this.diaries = await response.json();
         }
     }
+    
+    async getDiary(studentId: number): Promise<DiaryViewModel> {
+        const response = await fetch(`getdiary?studentId=${studentId}`);
+        let diary = new DiaryViewModel();
+        if(response.status === 200) {
+            diary = await response.json();
+        }
+        
+        return diary;
+    }
 }
 
 export default DiariesStore;

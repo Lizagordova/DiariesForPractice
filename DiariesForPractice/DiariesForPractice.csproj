@@ -46,6 +46,7 @@
 		<None Include="client\src\components\Common\Home\Students\Student.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Students.tsx" />
 		<None Include="client\src\components\Common\UserProfile.tsx" />
+		<None Include="client\src\components\Student\HomePage\Diary\DiaryPreview.tsx" />
 		<None Include="client\src\components\Student\HomePage\Diary\DiaryCompletion.tsx" />
 		<None Include="client\src\components\Student\HomePage\Diary\DiaryWIndow.tsx" />
 		<None Include="client\src\components\Student\HomePage\HomePage.tsx" />
@@ -63,7 +64,6 @@
 		<None Include="client\src\models\InstituteEnitityProps.tsx" />
 		<None Include="client\src\models\MainProps.tsx" />
 		<None Include="client\src\stores\DiariesStore.tsx" />
-		<None Include="client\src\stores\GoogleDetailsStore.tsx" />
 		<None Include="client\src\stores\InstituteDetailsStore.tsx" />
 		<None Include="client\src\stores\OrganizationStore.tsx" />
 		<None Include="client\src\stores\PracticeStore.tsx" />

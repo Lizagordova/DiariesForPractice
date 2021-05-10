@@ -6,8 +6,10 @@ namespace DiariesForPractice.Services.Mapper
 	{
 		protected override void CreateMappings()
 		{
-			CreateGoogleDetailsMappings();
 			CreateDiaryMappings();
+			CreateInstituteDetailsMappings();
+			CreateOrganizationMappings();
+			CreateUserMappings();
 		}
 	}
 }
