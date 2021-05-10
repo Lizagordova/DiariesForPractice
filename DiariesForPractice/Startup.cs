@@ -4,15 +4,15 @@ using DiariesForPractice.Domain.Services.GoogleDetail;
 using DiariesForPractice.Domain.Services.InstituteDetails;
 using DiariesForPractice.Domain.Services.Organizations;
 using DiariesForPractice.Domain.Services.PracticeDetail;
+using DiariesForPractice.Domain.StudentCharacteristics;
 using DiariesForPractice.Persistence.Generators;
 using DiariesForPractice.Persistence.Repositories;
 using DiariesForPractice.Persistence.Services.Diaries;
-using DiariesForPractice.Persistence.Services.GoogleDetail;
 using DiariesForPractice.Persistence.Services.InstituteDetail;
 using DiariesForPractice.Persistence.Services.MapperService;
 using DiariesForPractice.Persistence.Services.Organizations;
 using DiariesForPractice.Persistence.Services.PracticeDetail;
-using DiariesForPractice.Worker;
+using DiariesForPractice.Persistence.Services.StudentCharacteristics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -83,11 +83,11 @@ namespace DiariesForPractice
 
 		private void AddRepositories(IServiceCollection services)
 		{
-			services.AddSingleton<IGoogleDetailsRepository, GoogleDetailsRepository>();
 			services.AddSingleton<IDiariesRepository, DiariesRepository>();
 			services.AddSingleton<IInstituteDetailsRepository, InstituteDetailsRepository>();
 			services.AddSingleton<IOrganizationRepository, OrganizationRepository>();
 			services.AddSingleton<IPracticeRepository, PracticeRepository>();
+			services.AddSingleton<IStudentCharacteristicRepository, StudentCharacteristicRepository>();
 		}
 
 		private void AddServices(IServiceCollection services)
@@ -96,8 +96,8 @@ namespace DiariesForPractice
 			services.AddSingleton<WordGenerator>();
 			services.AddSingleton<IInstituteDetailsEditorService, InstituteDetailsEditorService>();
 			services.AddSingleton<IInstituteDetailsReaderService, InstituteDetailsReaderService>();
-			services.AddSingleton<IGoogleDetailsEditorService, GoogleDetailsEditorService>();
-			services.AddSingleton<IGoogleDetailsReaderService, GoogleDetailsReaderService>();
+			services.AddSingleton<IStudentCharacteristicsEditor, StudentCharacteristicsEditor>();
+			services.AddSingleton<IStudentCharacteristicsReader, StudentCharacteristicsReader>();
 			services.AddSingleton<IDiariesEditorService, DiariesEditorService>();
 			services.AddSingleton<IDiariesReaderService, DiariesReaderService>();
 			services.AddSingleton<IOrganizationEditorService, OrganizationEditorService>();

@@ -2,10 +2,12 @@
 using System.Linq;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Services.InstituteDetails;
+using DiariesForPractice.Services;
 using DiariesForPractice.Services.Mapper;
 using DiariesForPractice.ViewModels;
 using DiariesForPractice.ViewModels.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace DiariesForPractice.Controllers
 {
@@ -14,15 +16,21 @@ namespace DiariesForPractice.Controllers
 		private readonly IInstituteDetailsEditorService _detailsEditor;
 		private readonly IInstituteDetailsReaderService _detailsReader;
 		private readonly MapperService _mapper;
+		private readonly ILogger<InstituteDetailsController> _logger;
+		private readonly LogService _logService;
 
 		public InstituteDetailsController(
 			IInstituteDetailsEditorService detailsEditor,
 			IInstituteDetailsReaderService detailsReader,
-			MapperService mapper)
+			MapperService mapper,
+			ILogger<InstituteDetailsController> logger,
+			LogService logService)
 		{
 			_detailsEditor = detailsEditor;
 			_detailsReader = detailsReader;
 			_mapper = mapper;
+			_logger = logger;
+			_logService = logService;
 		}
 		
 		[HttpGet]

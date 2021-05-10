@@ -22,6 +22,12 @@ namespace DiariesForPractice.Services
             AddLog(logger, exception, customMessage, logType);
         }
 
+        public void GetDiaryLog(ILogger logger, Exception exception, LogType logType, int studentId)
+        {
+            var customMessage = $"Не удалось получить дневник для студента {studentId}";
+            AddLog(logger, exception, customMessage, logType);
+            
+        }
         public void AddRegistrationLog(ILogger logger, Exception exception, LogType logType)
         {
             var customMessage = $"Не удалось зарегестрироваться";
@@ -43,6 +49,18 @@ namespace DiariesForPractice.Services
         public void AddOrUpdateUserLog(ILogger logger, Exception exception, LogType logType)
         {
             var customMessage = $"Не удалось обновить пользователя";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateStudentCharacteristicsLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = $"Не удалось обновить характеристику пользователя";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void GetStudentCharacteristicsLog(ILogger logger, Exception exception, LogType logType, int studentId)
+        {
+            var customMessage = $"Не удалось получить характеристику для студента {studentId}";
             AddLog(logger, exception, customMessage, logType);
         }
         

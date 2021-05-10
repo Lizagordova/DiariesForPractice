@@ -7,5 +7,6 @@ namespace DiariesForPractice.Domain.Services.Diaries
 	public interface IDiariesReaderService
 	{
 		IReadOnlyCollection<Diary> GetDiaries(DiaryQuery query);
+		Diary GetDiary(int studentId);
 	}
 }
