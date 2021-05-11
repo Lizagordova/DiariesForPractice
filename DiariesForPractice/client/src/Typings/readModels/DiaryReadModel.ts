@@ -5,9 +5,13 @@
 export class DiaryReadModel
 {
 	public id: number;
+	public studentId: number;
 	public path: string;
 	public generated: boolean;
 	public send: boolean;
-	public studentId: number;
+	public sendDate: any;
+	public generatedDate: any;
+	public perceivedDate: any;
+	public completion: number;
 	public comment: string;
 }

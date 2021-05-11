@@ -11,6 +11,7 @@ namespace DiariesForPractice.ReadModels
 		public string Path { get; set; }
 		public bool Generated { get; set; }
 		public bool Send { get; set; }
+		public DateTime SendDate { get; set; }
 		public DateTime GeneratedDate { get; set; }
 		public DateTime PerceivedDate { get; set; }
 		public int Completion { get; set; }

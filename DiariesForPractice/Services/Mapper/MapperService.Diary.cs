@@ -13,10 +13,13 @@ namespace DiariesForPractice.Services.Mapper
 			{
 				cfg.CreateMap<DiaryReadModel, Diary>()
 					.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-					.ForMember(dest => dest.Student, opt => opt.Ignore())
+					.ForMember(dest => dest.Student, opt => opt.MapFrom(src => new User() { Id = src.Id }))
 					.ForMember(dest => dest.Send, opt => opt.MapFrom(src => src.Send))
 					.ForMember(dest => dest.Generated, opt => opt.MapFrom(src => src.Generated))
 					.ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
+					.ForMember(dest => dest.PerceivedDate, opt => opt.MapFrom(src => src.PerceivedDate))
+					.ForMember(dest => dest.SendDate, opt => opt.MapFrom(src => src.SendDate))
+					.ForMember(dest => dest.GeneratedDate, opt => opt.MapFrom(src => src.GeneratedDate))
 					.ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment));
 			});
 
@@ -28,6 +31,9 @@ namespace DiariesForPractice.Services.Mapper
 					.ForMember(dest => dest.Send, opt => opt.MapFrom(src => src.Send))
 					.ForMember(dest => dest.Generated, opt => opt.MapFrom(src => src.Generated))
 					.ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
+					.ForMember(dest => dest.GeneratedDate, opt => opt.MapFrom(src => src.GeneratedDate))
+					.ForMember(dest => dest.SendDate, opt => opt.MapFrom(src => src.SendDate))
+					.ForMember(dest => dest.PerceivedDate, opt => opt.MapFrom(src => src.PerceivedDate))
 					.ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment));
 			});
 		}

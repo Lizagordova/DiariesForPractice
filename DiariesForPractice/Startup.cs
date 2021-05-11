@@ -96,14 +96,14 @@ namespace DiariesForPractice
 			services.AddSingleton<WordGenerator>();
 			services.AddSingleton<IInstituteDetailsEditorService, InstituteDetailsEditorService>();
 			services.AddSingleton<IInstituteDetailsReaderService, InstituteDetailsReaderService>();
-			services.AddSingleton<IStudentCharacteristicsEditor, StudentCharacteristicsEditor>();
-			services.AddSingleton<IStudentCharacteristicsReader, StudentCharacteristicsReader>();
 			services.AddSingleton<IDiariesEditorService, DiariesEditorService>();
 			services.AddSingleton<IDiariesReaderService, DiariesReaderService>();
 			services.AddSingleton<IOrganizationEditorService, OrganizationEditorService>();
 			services.AddSingleton<IOrganizationReaderService, OrganizationReaderService>();
 			services.AddSingleton<IPracticeEditorService, PracticeEditorService>();
 			services.AddSingleton<IPracticeReaderService, PracticeReaderService>();
+			services.AddSingleton<IStudentCharacteristicsEditor, StudentCharacteristicsEditor>();
+			services.AddSingleton<IStudentCharacteristicsReader, StudentCharacteristicsReader>();
 			services.AddSingleton<MainMapperService>();
 			services.AddSingleton<MapperService>();
 		}

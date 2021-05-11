@@ -8,7 +8,7 @@ namespace DiariesForPractice.Persistence.Services.StudentCharacteristics
     {
         private readonly IStudentCharacteristicRepository _studentCharacteristicRepository;
 
-        private StudentCharacteristicsReader(
+        public StudentCharacteristicsReader(
             IStudentCharacteristicRepository studentCharacteristicRepository)
         {
             _studentCharacteristicRepository = studentCharacteristicRepository;

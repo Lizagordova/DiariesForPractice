@@ -50,6 +50,8 @@
 		<None Include="client\src\components\Student\HomePage\Diary\DiaryCompletion.tsx" />
 		<None Include="client\src\components\Student\HomePage\Diary\DiaryWIndow.tsx" />
 		<None Include="client\src\components\Student\HomePage\HomePage.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentCharacteristics.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentTask.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeDetailsInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />

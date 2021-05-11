@@ -5,6 +5,8 @@ import { DiaryViewModel } from "../../../Typings/viewModels/DiaryViewModel";
 import { Alert } from "reactstrap";
 import { makeObservable, observable } from "mobx";
 import StudentPracticeInfo from "./PracticeInfo/StudentPracticeInfo";
+import DiaryCompletion from "./Diary/DiaryCompletion";
+import DiaryPreview from "./Diary/DiaryPreview";
 
 class HomePageProps {
     store: RootStore
@@ -32,19 +34,16 @@ class HomePage extends Component<HomePageProps> {
     }
 
     renderDiary(diary: DiaryViewModel) {
-        if(diary.generated) {
-            return (
-                <embed src={diary.path}>
-                    some name
-                </embed>
-            );
-        } else {
-            return (
-                <Alert color="secondary">
-                    {diary.comment}
-                </Alert>
-            );
-        }
+       return (
+           <>
+               <div className="row justify-content-center">
+                   <DiaryCompletion diary={diary} />
+               </div>
+               <div className="row justify-content-center">
+                    <DiaryPreview diary={diary} />
+               </div>
+           </>
+       );
     }
     
     render() {

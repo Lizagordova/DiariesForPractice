@@ -28,7 +28,9 @@ class DiaryPreview extends Component<DiaryPreviewProps> {
     
     render() {
         return (
-            <></>
+            <div className="row justify-content-center">
+                {this.renderDiaryPreview(this.diary)}
+            </div>
         );
     }
 }
