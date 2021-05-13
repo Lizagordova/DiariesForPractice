@@ -14,5 +14,6 @@ namespace DiariesForPractice.ViewModels
 		public int CourseId { get; set; }
 		public UserViewModel Responsible { get; set; }
 		public IReadOnlyCollection<UserViewModel> Students { get; set; } = Array.Empty<UserViewModel>();
+		public GroupDetailsViewModel GroupDetails { get; set; }
 	}
 }

@@ -56,10 +56,13 @@
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\StaffInfo.tsx" />
+		<None Include="client\src\components\Teacher\Groups\GroupDetails.tsx" />
 		<None Include="client\src\components\Teacher\Groups\GroupsPage.tsx" />
+		<None Include="client\src\components\Teacher\Groups\Student.tsx" />
 		<None Include="client\src\components\Teacher\Home\HomePage.tsx" />
 		<None Include="client\src\components\Teacher\TeacherMain.tsx" />
 		<None Include="client\src\components\User\UserMain.tsx" />
+		<None Include="client\src\consts\ActionType.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
 		<None Include="client\src\functions\translater.tsx" />

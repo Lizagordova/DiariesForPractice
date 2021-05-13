@@ -8,6 +8,8 @@ import {StudentTaskReadModel} from "../Typings/readModels/StudentTaskReadModel";
 import {StudentTaskViewModel} from "../Typings/viewModels/StudentTaskViewModel";
 import {StudentCharacteristicViewModel} from "../Typings/viewModels/StudentCharacteristicViewModel";
 import {StudentCharacteristicReadModel} from "../Typings/readModels/StudentCharacteristicReadModel";
+import {GroupViewModel} from "../Typings/viewModels/GroupViewModel";
+import {GroupReadModel} from "../Typings/readModels/GroupReadModel";
 
 export function mapToInstituteReadModel(instituteViewModel: InstituteViewModel): InstituteReadModel {
     //todo: реализовать
@@ -32,4 +34,9 @@ export function mapToStudentTaskReadModel(studentTask: StudentTaskViewModel): St
 export function mapToStudentCharacteristicReadModel(studentCharacteristic: StudentCharacteristicViewModel): StudentCharacteristicReadModel {
     //todo: реализовать
     return new StudentCharacteristicReadModel();
+}
+
+export function mapToGroupReadModel(group: GroupViewModel): GroupReadModel {
+    //todo: реализовать
+    return new GroupReadModel();
 }

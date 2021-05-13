@@ -1,5 +1,6 @@
-﻿import { UserRole } from "../Typings/enums/UserRole";
-import { ReportingForm } from "../Typings/enums/ReportingForm";
+﻿import {UserRole} from "../Typings/enums/UserRole";
+import {ReportingForm} from "../Typings/enums/ReportingForm";
+import {ActionType} from "../consts/ActionType";
 
 export function translateUserRole(userRole: UserRole): string {
     let role = "";
@@ -25,4 +26,17 @@ export function translateReportingForm(reportingForm: ReportingForm): string {
     }
 
     return form;
+}
+
+export function translateAction(actionType: ActionType): string {
+    let action = "";
+    if(actionType === ActionType.Add) {
+        action = "Добавить";
+    } else if(actionType === ActionType.Edit) {
+        action = "Редактировать";
+    } else if(actionType === ActionType.Remove) {
+        action = "Удалить";
+    }
+    
+    return action;
 }

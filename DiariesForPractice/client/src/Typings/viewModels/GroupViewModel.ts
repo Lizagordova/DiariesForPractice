@@ -4,6 +4,7 @@
 
 import { IInstituteEntity } from '../interfaces/IInstituteEntity';
 import { UserViewModel } from './UserViewModel';
+import { GroupDetailsViewModel } from './GroupDetailsViewModel';
 
 export class GroupViewModel implements IInstituteEntity
 {
@@ -13,4 +14,5 @@ export class GroupViewModel implements IInstituteEntity
 	public courseId: number;
 	public responsible: UserViewModel;
 	public students: UserViewModel[] = [];
+	public groupDetails: GroupDetailsViewModel;
 }

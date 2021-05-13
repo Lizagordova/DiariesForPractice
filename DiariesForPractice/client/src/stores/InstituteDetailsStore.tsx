@@ -7,6 +7,7 @@ import { CafedraViewModel } from "../Typings/viewModels/CafedraViewModel";
 import { DirectionViewModel } from "../Typings/viewModels/DirectionViewModel";
 import {InstituteReadModel} from "../Typings/readModels/InstituteReadModel";
 import {UserViewModel} from "../Typings/viewModels/UserViewModel";
+import {GroupReadModel} from "../Typings/readModels/GroupReadModel";
 
 class InstituteDetailsStore {
     degrees: DegreeViewModel[] = new Array<DegreeViewModel>();
@@ -54,8 +55,10 @@ class InstituteDetailsStore {
     async addOrUpdateInstitute(institute: InstituteReadModel): Promise<number> {
         return 200;
     }
-    
-    
+
+    async addOrUpdateGroup(group: GroupReadModel): Promise<number> {
+        return 200;
+    }
 }
 
 export default InstituteDetailsStore;
