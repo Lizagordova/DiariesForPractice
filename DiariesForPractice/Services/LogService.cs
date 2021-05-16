@@ -64,6 +64,12 @@ namespace DiariesForPractice.Services
             AddLog(logger, exception, customMessage, logType);
         }
         
+        public void AddGetUserNotificationsLog(ILogger logger, Exception exception, LogType logType, int userId)
+        {
+            var customMessage = $"Не удалось получить уведомления для пользователя userId={userId}";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
         private void AddLog(ILogger logger, Exception e, string customMessage, LogType logType)
         {
             logger.Log(LogLevel.Error, $"{customMessage}. Error: {e.Message}");

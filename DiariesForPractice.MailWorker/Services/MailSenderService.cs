@@ -46,7 +46,7 @@ namespace DiariesForPractice.MailWorker.Services
             var diaries = _diariesReader.GetDiaries(query);
             foreach(var diary in diaries)//todo: говно какое, мне не нравится
             {
-                if(diary.Send && !diary.Perceived && diary.SendTime.AddDays(ConfigurationHelper.AllowedTimeInterval) > new DateTime())
+                if(diary.Send && !diary.Perceived && diary.SendDate.AddDays(ConfigurationHelper.AllowedTimeInterval) > new DateTime())
                 {
                     neccessaryDiaries.Add(diary);
                 }
