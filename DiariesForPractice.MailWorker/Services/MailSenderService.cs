@@ -114,7 +114,7 @@ namespace DiariesForPractice.MailWorker.Services
         private void UpdateDiaryAfterSendingAMessage(Diary diary)
         {
             diary.Send = true;
-            diary.SendTime = new DateTime();
+            diary.SendDate = new DateTime();
             _diariesEditor.AddOrUpdateDiary(diary);
         }
     }

@@ -137,6 +137,37 @@ namespace DiariesForPractice.Persistence.Repositories
 			return groups;
 		}
 
+		private GroupData GetGroupData(SqlMapper.GridReader reader)
+		{
+			var groupData = new GroupData()
+			{
+				Groups = reader.Read<GroupUdt>().ToList(),
+				GroupsDetails = reader.Read<GroupDetailsUdt>().ToList()
+			};
+
+			return groupData;
+		}
+
+		private IReadOnlyCollection<Group> MapGroups(GroupData groupData)
+		{
+			var groups = groupData.Groups
+				.Join(groupData.GroupsDetails,
+					g => g.Id,
+					gd => gd.GroupId,
+					MapGroup)
+				.ToList();
+
+			return groups;
+		}
+
+		private Group MapGroup(GroupUdt groupUdt, GroupDetailsUdt groupDetailsUdt)
+		{
+			var group = _mapper.Map<GroupUdt, Group>(groupUdt);
+			group.GroupDetails = _mapper.Map<GroupDetailsUdt, GroupDetails>(groupDetailsUdt);
+
+			return group;
+		}
+		
 		public IReadOnlyCollection<Degree> GetDegrees()
 		{
 			var conn = DatabaseHelper.OpenConnection();
