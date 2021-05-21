@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "MailServer";
+
+package receiver;
+
+service Receiver {
+  rpc SendMessage (MailMessage) returns (Confirmation);
+}
+
+message MailMessage {
+  string firstName = 1;
+  string email = 2;
+  string message = 3;
+}
+
+message Confirmation {
+  bool send = 1;
+  string date = 2;
+}

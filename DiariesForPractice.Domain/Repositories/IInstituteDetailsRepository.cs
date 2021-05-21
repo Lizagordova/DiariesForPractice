@@ -17,5 +17,11 @@ namespace DiariesForPractice.Domain.Repositories
 		IReadOnlyCollection<Group> GetGroups(int? directionId = null);
 		IReadOnlyCollection<Degree> GetDegrees();
 		IReadOnlyCollection<Course> GetCourses(int? degreeId = null);
+		Institute GetInstitute(int instituteId);
+		Cafedra GetCafedra(int cafedraId);
+		Direction GetDirection(int directionId);
+		Group GetGroup(int groupId);
+		Course GetCourse(int courseId);
+		Degree GetDegree(int degreeId);
 	}
 }

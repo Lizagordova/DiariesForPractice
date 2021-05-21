@@ -71,5 +71,35 @@ namespace DiariesForPractice.Persistence.Services.InstituteDetail
 
 			return courses;
 		}
+
+		public Institute GetInstitute(int instituteId)
+		{
+			return _instituteDetailsRepository.GetInstitute(instituteId);
+		}
+
+		public Cafedra GetCafedra(int cafedraId)
+		{
+			return _instituteDetailsRepository.GetCafedra(cafedraId);
+		}
+
+		public Direction GetDirection(int directionId)
+		{
+			return _instituteDetailsRepository.GetDirection(directionId);
+		}
+
+		public Group GetGroup(int groupId)
+		{
+			return _instituteDetailsRepository.GetGroup(groupId);
+		}
+
+		public Course GetCourse(int courseId)
+		{
+			return _instituteDetailsRepository.GetCourse(courseId);
+		}
+
+		public Degree GetDegree(int degreeId)
+		{
+			return _instituteDetailsRepository.GetDegree(degreeId);
+		}
 	}
 }

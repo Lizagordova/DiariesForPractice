@@ -10,6 +10,7 @@ namespace DiariesForPractice.Domain.Models
 		public bool Generated { get; set; }
 		public bool Send { get; set; }
 		public bool Perceived { get; set; }
+		public bool Approved { get; set; }
 		public DateTime SendDate { get; set; }
 		public DateTime GeneratedDate { get; set; }
 		public DateTime PerceivedDate { get; set; }

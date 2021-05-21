@@ -28,6 +28,12 @@ namespace DiariesForPractice.Persistence.Repositories
 		private const string GetGroupsSp = "InstituteDetailsRepository_GetGroups";
 		private const string GetDegreesSp = "InstituteDetailsRepository_GetDegrees";
 		private const string GetCoursesSp = "InstituteDetailsRepository_GetCourses";
+		private const string GetInstituteSp = "InstituteDetailsRepository_GetInstitute";
+		private const string GetCafedraSp = "InstituteDetailsRepository_GetCafedra";
+		private const string GetDirectionSp = "InstituteDetailsRepository_GetDirection";
+		private const string GetGroupSp = "InstituteDetailsRepository_GetGroup";
+		private const string GetDegreeSp = "InstituteDetailsRepository_GetDegree";
+		private const string GetCourseSp = "InstituteDetailsRepository_GetCourse";
 		public InstituteDetailsRepository(
 			MapperService mapper)
 		{
@@ -190,6 +196,84 @@ namespace DiariesForPractice.Persistence.Repositories
 			return courses;
 		}
 
+		public Institute GetInstitute(int instituteId)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetInstituteEntityParam(InstituteEntity.Institute, instituteId);
+			var instituteUdt = conn
+				.Query<InstituteUdt>(GetInstituteSp, param, commandType: CommandType.StoredProcedure)
+				.FirstOrDefault();
+			var institute = _mapper.Map<InstituteUdt, Institute>(instituteUdt);
+			DatabaseHelper.CloseConnection(conn);
+
+			return institute;
+		}
+
+		public Cafedra GetCafedra(int cafedraId)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetInstituteEntityParam(InstituteEntity.Cafedra, cafedraId);
+			var cafedraUdt = conn
+				.Query<CafedraUdt>(GetCafedraSp, param, commandType: CommandType.StoredProcedure)
+				.FirstOrDefault();
+			var cafedra = _mapper.Map<CafedraUdt, Cafedra>(cafedraUdt);
+			DatabaseHelper.CloseConnection(conn);
+
+			return cafedra;
+		}
+
+		public Direction GetDirection(int directionId)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetInstituteEntityParam(InstituteEntity.Direction, directionId);
+			var directionUdt = conn
+				.Query<DirectionUdt>(GetDirectionSp, param, commandType: CommandType.StoredProcedure)
+				.FirstOrDefault();
+			var direction = _mapper.Map<DirectionUdt, Direction>(directionUdt);
+			DatabaseHelper.CloseConnection(conn);
+
+			return direction;
+		}
+
+		public Group GetGroup(int groupId)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetInstituteEntityParam(InstituteEntity.Group, groupId);
+			var groupUdt = conn
+				.Query<GroupUdt>(GetGroupSp, param, commandType: CommandType.StoredProcedure)
+				.FirstOrDefault();
+			var group = _mapper.Map<GroupUdt, Group>(groupUdt);
+			DatabaseHelper.CloseConnection(conn);
+
+			return group;
+		}
+
+		public Course GetCourse(int courseId)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetInstituteEntityParam(InstituteEntity.Course, courseId);
+			var courseUdt = conn
+				.Query<CourseUdt>(GetCourseSp, param, commandType: CommandType.StoredProcedure)
+				.FirstOrDefault();
+			var course = _mapper.Map<CourseUdt, Course>(courseUdt);
+			DatabaseHelper.CloseConnection(conn);
+
+			return course;
+		}
+
+		public Degree GetDegree(int degreeId)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetInstituteEntityParam(InstituteEntity.Institute, degreeId);
+			var degreeUdt = conn
+				.Query<DegreeUdt>(GetDegreeSp, param, commandType: CommandType.StoredProcedure)
+				.FirstOrDefault();
+			var degree = _mapper.Map<DegreeUdt, Degree>(degreeUdt);
+			DatabaseHelper.CloseConnection(conn);
+
+			return degree;
+		}
+
 		private DegreeData GetDegreesData(SqlMapper.GridReader reader)
 		{
 			var degreesData = new DegreeData()
@@ -291,10 +375,6 @@ namespace DiariesForPractice.Persistence.Repositories
 		private DynamicTvpParameters GetInstituteEntityParam(InstituteEntity entity, int? entityId = null)
 		{
 			var param = new DynamicTvpParameters();
-			switch (entity)
-			{
-				
-			}
 			if (entityId != null)
 			{
 				switch (entity)
