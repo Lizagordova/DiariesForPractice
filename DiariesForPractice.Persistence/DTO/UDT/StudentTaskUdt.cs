@@ -1,9 +1,9 @@
-﻿namespace DiariesForPractice.Persistence.DTO
+﻿namespace DiariesForPractice.Persistence.DTO.UDT
 {
     public class StudentTaskUdt
     {
         public int Id { get; set; }
         public int StudentId { get; set; }
-        public string IndividualTask { get; set; }
+        public string Task { get; set; }
     }
 }

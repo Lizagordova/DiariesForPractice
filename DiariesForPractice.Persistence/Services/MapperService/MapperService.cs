@@ -6,7 +6,15 @@ namespace DiariesForPractice.Persistence.Services.MapperService
 	{
 		protected override void CreateMappings()
 		{
+			CreateDiariesMappings();
+			CreateInstituteDetailsMappings();
+			CreateLogMappings();
+			CreateNotificationMappings();
 			CreateOrganizationMappings();
+			CreatePracticeDetailsMappings();
+			CreateStudentCharacteristicsMappings();
+			CreateStudentTasksMappings();
+			CreateUsersMappings();
 		}
 	}
 }

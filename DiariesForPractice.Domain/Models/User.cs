@@ -14,6 +14,7 @@ namespace DiariesForPractice.Domain.Models
 		public string Token { get; set; }
 		public string Login { get; set; }
 		public string Password { get; set; }
+		public string EmailConfirmed { get; set; }
 		public List<UserRole> Roles { get; set; }
 	}
 }

@@ -36,9 +36,16 @@ namespace DiariesForPractice.Persistence.Repositories
         public StudentCharacteristic GetStudentCharacteristic(int studentId)
         {
             var conn = DatabaseHelper.OpenConnection();
+            var param = GetStudentParam(studentId);
+            var studentCharacteristicUdt = conn
+                .Query<StudentCharacteristicUdt>(GetStudentCharacteristicSp, param,
+                    commandType: CommandType.StoredProcedure)
+                .FirstOrDefault();
+            var studentCharacteristic =
+                _mapper.Map<StudentCharacteristicUdt, StudentCharacteristic>(studentCharacteristicUdt);
             DatabaseHelper.CloseConnection(conn);
 
-            return new StudentCharacteristic();
+            return studentCharacteristic;
         }
 
         private DynamicTvpParameters GetStudentCharacteristicParam(StudentCharacteristic studentCharacteristic)
@@ -48,6 +55,14 @@ namespace DiariesForPractice.Persistence.Repositories
             var udt = _mapper.Map<StudentCharacteristic, StudentCharacteristicUdt>(studentCharacteristic);
             tvp.AddObjectAsRow(udt);
             param.Add(tvp);
+            
+            return param;
+        }
+
+        private DynamicTvpParameters GetStudentParam(int studentId)
+        {
+            var param = new DynamicTvpParameters();
+            param.Add("studentId", studentId);
             
             return param;
         }

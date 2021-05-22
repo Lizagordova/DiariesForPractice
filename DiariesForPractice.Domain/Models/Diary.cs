@@ -14,6 +14,7 @@ namespace DiariesForPractice.Domain.Models
 		public DateTime SendDate { get; set; }
 		public DateTime GeneratedDate { get; set; }
 		public DateTime PerceivedDate { get; set; }
+		public string Completion { get; set; }
 		public string Comment { get; set; }
 	}
 }

@@ -10,5 +10,6 @@ namespace DiariesForPractice.Persistence.DTO.UDT
         public string CustomMessage { get; set; }
         public DateTime Date { get; set; }
         public LogType LogType { get; set; }
+        public LogType LogLevel { get; set; }
     }
 }

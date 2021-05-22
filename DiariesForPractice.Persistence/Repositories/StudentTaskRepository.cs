@@ -5,6 +5,7 @@ using Dapper;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Repositories;
 using DiariesForPractice.Persistence.DTO;
+using DiariesForPractice.Persistence.DTO.UDT;
 using DiariesForPractice.Persistence.Extensions;
 using DiariesForPractice.Persistence.Helpers;
 using DiariesForPractice.Persistence.Services.MapperService;
