@@ -16,7 +16,7 @@ namespace DiariesForPractice.Persistence.Services.Notifications
         
         public int AddOrUpdateNotification(Notification notification)
         {
-            var notificationId = _notificationRepository.AddOrUpdateNotification(notification);
+            var notificationId = _notificationRepository.AddOrUpdateNotification(notification);//todo: мне кажется, апденйт юзер нотификейшн должен быть здесь
 
             return notificationId;
         }

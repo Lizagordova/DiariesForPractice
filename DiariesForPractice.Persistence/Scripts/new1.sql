@@ -1,4 +1,4 @@
-CREATE TABLE [User]
+﻿CREATE TABLE [User]
 (
 	[Id] INT PRIMARY KEY IDENTITY,
 	[FirstName] NVARCHAR(100),
@@ -109,7 +109,7 @@ CREATE TABLE [PracticeDetails]
 	[StartDate] DATETIME2,
 	[EndDate] DATETIME2,
 	[StructuralDivision] NVARCHAR(MAX),
-	[OrderOfPassingPractice] NVARCHAR(MAX)/*?? ????? INT*/
+	[OrderOfPassingPractice] NVARCHAR(MAX)/*МБ ЗДЕСЬ INT*/
 );
 
 
@@ -1389,6 +1389,97 @@ BEGIN
 	DECLARE @staffId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
 	SELECT @staffId;
+END
+
+CREATE PROCEDURE [NotificationRepository_GetUserNotifications]
+	@userForId INT,
+	@watched BIT = NULL
+AS
+BEGIN
+	DECLARE @userNotifications [UDT_User_Notification];
+
+	INSERT
+	INTO @userNotifications (
+		[Id],
+		[NotificationId],
+		[UserFor],
+		[Watched]
+	)
+	SELECT
+		[Id],
+		[NotificationId],
+		[UserFor],
+		[Watched]
+	FROM [User_Notification]
+	WHERE [UserFor] = @userForId
+		AND (@watched IS NULL OR [Watched] = @watched);
+
+
+	SELECT * FROM @userNotifications;
+END
+
+CREATE PROCEDURE [NotificationRepository_AddOrUpdateNotification]
+	@notification [UDT_Notification] READONLY
+AS
+BEGIN
+	DECLARE @mergedIds TABLE([Id] INT);
+
+	MERGE
+	INTO [Notification] AS [dest]
+	USING @notification AS [src]
+	ON [dest].[Id] = [src].[Id]
+	WHEN NOT MATCHED THEN
+		INSERT (
+			[Message],
+			[Date]
+		) VALUES (
+			[src].[Message],
+			[src].[Date]
+		)
+	WHEN MATCHED THEN 
+		UPDATE
+		SET
+			[dest].[Message] = [src].[Message],
+			[dest].[Date] = [src].[Date]
+	OUTPUT INSERTED.ID INTO @mergedIds;
+
+	DECLARE @notificationId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+
+	SELECT @notificationId;
+END
+
+
+CREATE PROCEDURE [NotificationRepository_AddOrUpdateUserNotification]
+	@userNotification [UDT_User_Notification] READONLY
+AS
+BEGIN
+	DECLARE @mergedIds TABLE([Id] INT);
+
+	MERGE
+	INTO [User_Notification] AS [dest]
+	USING @userNotification AS [src]
+	ON [dest].[Id] = [src].[Id]
+	WHEN NOT MATCHED THEN
+		INSERT (
+			[NotificationId],
+			[UserFor],
+			[Watched]
+		) VALUES (
+			[src].[NotificationId],
+			[src].[UserFor],
+			[src].[Watched]
+		)
+	WHEN MATCHED THEN
+		UPDATE
+		SET
+			[dest].[NotificationId] = [src].[NotificationId],
+			[dest].[UserFor] = [src].[UserFor],
+			[dest].[Watched] = [src].[Watched]
+	OUTPUT INSERTED.ID INTO @mergedIds;
+
+	DECLARE @userNotificationId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+
+	SELECT @userNotificationId;
 END
 
 CREATE PROCEDURE [OrganizationRepository_GetOrganizations]

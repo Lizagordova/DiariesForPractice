@@ -7,5 +7,7 @@ namespace DiariesForPractice.Persistence.DTO.Data
     {
         public IReadOnlyCollection<GroupUdt> Groups { get; set; }
         public IReadOnlyCollection<GroupDetailsUdt> GroupsDetails { get; set; }
+        public IReadOnlyCollection<StudentGroupUdt> StudentGroups { get; set; }
+        public IReadOnlyCollection<UserUdt> Students { get; set; }
     }
 }

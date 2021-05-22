@@ -54,5 +54,10 @@ namespace DiariesForPractice.Persistence.Services.InstituteDetail
 
 			return degreeId;
 		}
+
+		public void AttachStudentToGroup(int studentId, int groupId)
+		{
+			_instituteDetailsRepository.AttachStudentToGroup(studentId, groupId);
+		}
 	}
 }

@@ -11,6 +11,6 @@ namespace DiariesForPractice.Domain.Models
 		public int CourseId { get; set; }
 		public string Name { get; set; }
 		public GroupDetails GroupDetails { get; set; }
-		public IReadOnlyCollection<User> Students { get; set; }
+		public List<User> Students { get; set; } = new List<User>();
 	}
 }

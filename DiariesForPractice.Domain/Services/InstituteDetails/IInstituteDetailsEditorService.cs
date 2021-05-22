@@ -10,5 +10,6 @@ namespace DiariesForPractice.Domain.Services.InstituteDetails
 		int AddOrUpdateGroup(Group @group);
 		int AddOrUpdateCourse(Course course, int degreeId);
 		int AddOrUpdateDegree(Degree degree);
+		void AttachStudentToGroup(int studentId, int groupId);
 	}
 }

@@ -34,6 +34,7 @@ namespace DiariesForPractice.Persistence.Repositories
 		private const string GetGroupSp = "InstituteDetailsRepository_GetGroup";
 		private const string GetDegreeSp = "InstituteDetailsRepository_GetDegree";
 		private const string GetCourseSp = "InstituteDetailsRepository_GetCourse";
+		private const string AttachStudentToGroupSp = "InstituteDetailsRepository_AttachStudentToGroup";
 		public InstituteDetailsRepository(
 			MapperService mapper)
 		{
@@ -136,8 +137,9 @@ namespace DiariesForPractice.Persistence.Repositories
 		{
 			var conn = DatabaseHelper.OpenConnection();
 			var param = GetInstituteEntityParam(InstituteEntity.Direction, directionId);
-			var groupUdts = conn.Query<GroupUdt>(GetGroupsSp, param, commandType: CommandType.StoredProcedure);
-			var groups = groupUdts.Select(_mapper.Map<GroupUdt, Group>).ToList();
+			var response = conn.QueryMultiple(GetGroupsSp, param, commandType: CommandType.StoredProcedure);
+			var groupData = GetGroupData(response);
+			var groups = MapGroups(groupData);
 			DatabaseHelper.CloseConnection(conn);
 
 			return groups;
@@ -148,7 +150,9 @@ namespace DiariesForPractice.Persistence.Repositories
 			var groupData = new GroupData()
 			{
 				Groups = reader.Read<GroupUdt>().ToList(),
-				GroupsDetails = reader.Read<GroupDetailsUdt>().ToList()
+				GroupsDetails = reader.Read<GroupDetailsUdt>().ToList(),
+				Students = reader.Read<UserUdt>().ToList(),
+				StudentGroups = reader.Read<StudentGroupUdt>().ToList(),
 			};
 
 			return groupData;
@@ -161,6 +165,22 @@ namespace DiariesForPractice.Persistence.Repositories
 					g => g.Id,
 					gd => gd.GroupId,
 					MapGroup)
+				.Join(groupData.StudentGroups,
+					g => g.Id,
+					sg => sg.GroupId,
+					MapGroup
+					)
+				// todo: дописать
+				// .Join(groupData.Students,
+				// 	g => g.Students,
+				// 	s => s.Id,
+				// 	(g, s) =>
+				// 	{
+				// 		if(g.Students.Select(u => u.Id).Contains(s.Id))
+				// 		{
+				// 			MapGroup(g, s);
+				// 		}
+				// 	})
 				.ToList();
 
 			return groups;
@@ -173,7 +193,31 @@ namespace DiariesForPractice.Persistence.Repositories
 
 			return group;
 		}
+
+		private Group MapGroup(Group group, StudentGroupUdt studentGroupUdt)
+		{
+			group.Students.Add(new User()
+			{
+				Id = studentGroupUdt.StudentId
+			});
+
+			return group;
+		}
 		
+		private Group MapGroup(Group group, UserUdt studentUdt)
+		{
+			group.Students = @group.Students.Select(u =>
+			{
+				if (u.Id == studentUdt.Id)
+				{
+					u = _mapper.Map<UserUdt, User>(studentUdt);
+				}
+
+				return u;
+			}).ToList();
+
+			return group;
+		}
 		public IReadOnlyCollection<Degree> GetDegrees()
 		{
 			var conn = DatabaseHelper.OpenConnection();
@@ -272,6 +316,14 @@ namespace DiariesForPractice.Persistence.Repositories
 			DatabaseHelper.CloseConnection(conn);
 
 			return degree;
+		}
+
+		public void AttachStudentToGroup(int studentId, int groupId)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetStudentGroupParam(studentId, groupId);
+			conn.Query(AttachStudentToGroupSp, param, commandType: CommandType.StoredProcedure);
+			DatabaseHelper.CloseConnection(conn);
 		}
 
 		private DegreeData GetDegreesData(SqlMapper.GridReader reader)
@@ -393,6 +445,21 @@ namespace DiariesForPractice.Persistence.Repositories
 						return param;
 				}
 			}
+
+			return param;
+		}
+
+		private DynamicTvpParameters GetStudentGroupParam(int studentId, int groupId)
+		{
+			var param = new DynamicTvpParameters();
+			var tvp = new TableValuedParameter("studentGroup", "UDT_Student_Group");
+			var udt = new StudentGroupUdt()
+			{
+				StudentId = studentId,
+				GroupId = groupId
+			};
+			tvp.AddObjectAsRow(udt);
+			param.Add(tvp);
 
 			return param;
 		}

@@ -23,5 +23,6 @@ namespace DiariesForPractice.Domain.Repositories
 		Group GetGroup(int groupId);
 		Course GetCourse(int courseId);
 		Degree GetDegree(int degreeId);
+		void AttachStudentToGroup(int studentId, int groupId);
 	}
 }

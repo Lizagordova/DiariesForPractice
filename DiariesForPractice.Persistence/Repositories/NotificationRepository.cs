@@ -91,7 +91,7 @@ namespace DiariesForPractice.Persistence.Repositories
         {
             var param = new DynamicTvpParameters();
             param.Add("userForId", query.UserForId);
-            param.Add("watched", query.UserForId);
+            param.Add("watched", query.Watched);
             
             return param;
         }
