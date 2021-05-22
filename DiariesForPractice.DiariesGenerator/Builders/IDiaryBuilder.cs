@@ -1,10 +1,10 @@
 ﻿using DiariesForPractice.Domain.Models.Data;
-using Microsoft.Office.Interop.Word;
+using Syncfusion.DocIO.DLS;
 
 namespace DiariesForPractice.DiariesGenerator.Builders
 {
     public interface IDiaryBuilder
     {
-        Document BuildDiary(PracticeData practiceData);
+        WordDocument BuildDiary(PracticeData practiceData);
     }
 }

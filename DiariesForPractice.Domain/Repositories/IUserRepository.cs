@@ -7,7 +7,7 @@ namespace DiariesForPractice.Domain.Repositories
     {
         User GetUserById(int userId);
         List<User> GetUsers();
-        int AddOrUpdateUser(User student);
+        int AddOrUpdateUser(User user);
         List<User> GetUsersByIds(List<int> ids);
     }
 }

@@ -2,17 +2,23 @@ using DiariesForPractice.Domain.Repositories;
 using DiariesForPractice.Domain.Services.Diaries;
 using DiariesForPractice.Domain.Services.GoogleDetail;
 using DiariesForPractice.Domain.Services.InstituteDetails;
+using DiariesForPractice.Domain.Services.Notifications;
 using DiariesForPractice.Domain.Services.Organizations;
 using DiariesForPractice.Domain.Services.PracticeDetail;
+using DiariesForPractice.Domain.Services.StudentTasks;
+using DiariesForPractice.Domain.Services.Users;
 using DiariesForPractice.Domain.StudentCharacteristics;
 using DiariesForPractice.Persistence.Generators;
 using DiariesForPractice.Persistence.Repositories;
 using DiariesForPractice.Persistence.Services.Diaries;
 using DiariesForPractice.Persistence.Services.InstituteDetail;
 using DiariesForPractice.Persistence.Services.MapperService;
+using DiariesForPractice.Persistence.Services.Notifications;
 using DiariesForPractice.Persistence.Services.Organizations;
 using DiariesForPractice.Persistence.Services.PracticeDetail;
 using DiariesForPractice.Persistence.Services.StudentCharacteristics;
+using DiariesForPractice.Persistence.Services.StudentTasks;
+using DiariesForPractice.Persistence.Services.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -85,9 +91,12 @@ namespace DiariesForPractice
 		{
 			services.AddSingleton<IDiariesRepository, DiariesRepository>();
 			services.AddSingleton<IInstituteDetailsRepository, InstituteDetailsRepository>();
-			services.AddSingleton<IOrganizationRepository, OrganizationRepository>();
+			services.AddSingleton<IInstituteDetailsRepository, InstituteDetailsRepository>();
+			services.AddSingleton<INotificationRepository, NotificationRepository>();
 			services.AddSingleton<IPracticeRepository, PracticeRepository>();
 			services.AddSingleton<IStudentCharacteristicRepository, StudentCharacteristicRepository>();
+			services.AddSingleton<IStudentTaskRepository, StudentTaskRepository>();
+			services.AddSingleton<IUserRepository, UserRepository>();
 		}
 
 		private void AddServices(IServiceCollection services)
@@ -96,6 +105,8 @@ namespace DiariesForPractice
 			services.AddSingleton<WordGenerator>();
 			services.AddSingleton<IInstituteDetailsEditorService, InstituteDetailsEditorService>();
 			services.AddSingleton<IInstituteDetailsReaderService, InstituteDetailsReaderService>();
+			services.AddSingleton<INotificationEditorService, NotificationEditorService>();
+			services.AddSingleton<INotificationReaderService, NotificationReaderService>();
 			services.AddSingleton<IDiariesEditorService, DiariesEditorService>();
 			services.AddSingleton<IDiariesReaderService, DiariesReaderService>();
 			services.AddSingleton<IOrganizationEditorService, OrganizationEditorService>();
@@ -104,6 +115,10 @@ namespace DiariesForPractice
 			services.AddSingleton<IPracticeReaderService, PracticeReaderService>();
 			services.AddSingleton<IStudentCharacteristicsEditor, StudentCharacteristicsEditor>();
 			services.AddSingleton<IStudentCharacteristicsReader, StudentCharacteristicsReader>();
+			services.AddSingleton<IStudentTaskEditorService, StudentTaskEditorService>();
+			services.AddSingleton<IStudentTaskReaderService, StudentTaskReaderService>();
+			services.AddSingleton<IUserEditorService, UserEditorService>();
+			services.AddSingleton<IUserReaderService, UserReaderService>();
 			services.AddSingleton<MainMapperService>();
 			services.AddSingleton<MapperService>();
 		}

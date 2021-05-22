@@ -1,296 +1,360 @@
-﻿CREATE TABLE [Student]
+﻿CREATE TABLE [User]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[FirstName] NVARCHAR(100),
-	[SecondName] NVARCHAR(100),
-	[LastName] NVARCHAR(100),
-	[Email] NVARCHAR(100),
-	[Phone] NVARCHAR(100)
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [FirstName] NVARCHAR(100),
+    [SecondName] NVARCHAR(100),
+    [LastName] NVARCHAR(100),
+    [Email] NVARCHAR(100),
+    [Phone] NVARCHAR(100),
+    [EmailConfirmed] BIT
+    );
+
+CREATE TABLE [User_Role]
+(
+    [UserId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+    [Role] INTEGER
+    );
 
 CREATE TABLE [Institute]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100)
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100)
+    );
 
 CREATE TABLE [Cafedra]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100),
-	[InstituteId] INT REFERENCES [Institute]([Id]) ON DELETE CASCADE
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100),
+    [InstituteId] INT REFERENCES [Institute]([Id]) ON DELETE CASCADE
+    );
 
 CREATE TABLE [Direction]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100),
-	[CafedraId] INT REFERENCES [Cafedra]([Id]) ON DELETE CASCADE
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100),
+    [CafedraId] INT REFERENCES [Cafedra]([Id]) ON DELETE CASCADE
+    );
 
 CREATE TABLE [Course]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100)
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100)
+    );
 
 CREATE TABLE [Degree]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100)
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100)
+    );
 
 CREATE TABLE [Course_Degree]
 (
-	[CourseId] INT REFERENCES [Course]([Id]) ON DELETE CASCADE,
-	[DegreeId] INT REFERENCES [Degree]([Id]) ON DELETE CASCADE
-);
+    [CourseId] INT REFERENCES [Course]([Id]) ON DELETE CASCADE,
+    [DegreeId] INT REFERENCES [Degree]([Id]) ON DELETE CASCADE
+    );
 
 CREATE TABLE [Group]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100),
-	[DirectionId] INT REFERENCES [Direction]([Id]) ON DELETE CASCADE,
-	[CourseId] INT REFERENCES [Course]([Id]) ON DELETE CASCADE
-);
-
-CREATE TABLE [Student_Group]
-(
-	[StudentId] INT REFERENCES [Student]([Id]) ON DELETE CASCADE,
-	[GroupId] INT REFERENCES [Group]([Id]) ON DELETE CASCADE
-);
-
-CREATE TABLE [GoogleDetails]
-(
-	[Id] INT PRIMARY KEY IDENTITY,
-	[GroupId] INT REFERENCES [Group]([Id]) ON DELETE CASCADE,
-	[SpreadSheetId] NVARCHAR(100),
-	[SheetName] NVARCHAR(100),
-	[FirstCell] NVARCHAR(100),
-	[LastCell] NVARCHAR(100)
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100),
+    [DirectionId] INT REFERENCES [Direction]([Id]) ON DELETE CASCADE,
+    [CourseId] INT REFERENCES [Course]([Id]) ON DELETE CASCADE
+    );
 
 CREATE TABLE [Diary]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Path] NVARCHAR(MAX),
-	[Generated] BIT,
-	[Send] BIT,
-	[Perceived] BIT,
-	[SendDate] DATETIME2,
-	[PerceivedDate] DATETIME2,
-	[StudentId] INT REFERENCES [Student]([Id]) ON DELETE CASCADE,
-	[Comment] NVARCHAR(MAX)
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+    [Path] NVARCHAR(MAX),
+    [Generated] BIT,
+    [Send] BIT,
+    [Approved] BIT,
+    [Perceived] BIT,
+    [GeneratedDate] DATETIME2,
+    [SendDate] DATETIME2,
+    [PerceivedDate] DATETIME2,
+    [Completion] INT,
+    [Comment] NVARCHAR(MAX)
+    );
 
 CREATE TABLE [Organization]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(MAX),
-	[LegalAddress] NVARCHAR(MAX)
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(MAX),
+    [LegalAddress] NVARCHAR(MAX)
+    );
 
 CREATE TABLE [Staff]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[OrganizationId] INT REFERENCES [Organization]([Id]) ON DELETE CASCADE,
-	[FullName] NVARCHAR(MAX),
-	[Job] NVARCHAR(100),
-	[Email] NVARCHAR(MAX),
-	[Phone] NVARCHAR(100)
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [OrganizationId] INT REFERENCES [Organization]([Id]) ON DELETE CASCADE,
+    [FullName] NVARCHAR(MAX),
+    [Job] NVARCHAR(100),
+    [Email] NVARCHAR(MAX),
+    [Phone] NVARCHAR(100)
+    );
 
 CREATE TABLE [PracticeDetails]
 (
-	[Id] INT PRIMARY KEY IDENTITY,
-	[StudentId] INT REFERENCES [Student]([Id]) ON DELETE CASCADE,
-	[OrganizationId] INT REFERENCES [Organization]([Id]) ON DELETE CASCADE,
-	[ReportingForm] INT,
-	[ContractNumber] NVARCHAR(100),
-	[ResponsibleForStudent] INT REFERENCES [Staff]([Id]) ON DELETE CASCADE,
-	[SignsTheContract] INT REFERENCES [Staff]([Id]) ON DELETE CASCADE
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+    [OrganizationId] INT REFERENCES [Organization]([Id]) ON DELETE CASCADE,
+    [ReportingForm] INT,
+    [ContractNumber] NVARCHAR(100),
+    [ResponsibleForStudent] INT REFERENCES [Staff]([Id]) ON DELETE CASCADE,
+    [SignsTheContract] INT REFERENCES [Staff]([Id]) ON DELETE CASCADE,
+    [PracticeType] INT,
+    [StartDate] DATETIME2,
+    [EndDate] DATETIME2,
+    [StructuralDivision] NVARCHAR(MAX),
+    [OrderOfPassingPractice] NVARCHAR(MAX)/*МБ ЗДЕСЬ INT*/
+    );
 
-CREATE TYPE [UDT_Student] AS TABLE
+
+CREATE TABLE [CalendarWeekPlan]
 (
-	[Id] INT,
-	[FirstName] NVARCHAR(100),
-	[SecondName] NVARCHAR(100),
-	[LastName] NVARCHAR(100),
-	[Email] NVARCHAR(100),
-	[Phone] NVARCHAR(100)
-);
+    [Id] INT PRIMARY KEY IDENTITY,
+    [StartDate] DATETIME2,
+    [EndDate] DATETIME2,
+    [NameOfTheWork] NVARCHAR(MAX),
+    [StructuralDivision] NVARCHAR(MAX)
+    );
 
+CREATE TABLE [CalendarPlan]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [CalendarWeekPlanId] INT REFERENCES [CalendarWeekPlan]([Id]) ON DELETE CASCADE,
+    [Order] INT
+    );
+
+CREATE TABLE [CalendarPlan_PracticeDetails]
+(
+    [CalendarPlanId] INT REFERENCES [CalendarPlan]([Id]) ON DELETE CASCADE,
+    [PracticeDetailsId]INT REFERENCES [PracticeDetails]([Id]) ON DELETE CASCADE
+    );
+
+CREATE TABLE [Student_Group]
+(
+    [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+    [GroupId] INT REFERENCES [Group]([Id]) ON DELETE CASCADE
+    );
+
+CREATE TABLE [StudentCharacteristics]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+    [DescriptionByHead] NVARCHAR(MAX),
+    [MissedDaysWithReason] INT,
+    [MissedDaysWithoutReason] INT,
+    [DescriptionByCafedraHead] NVARCHAR(MAX)
+    );
+
+CREATE TABLE [StudentTask]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+    [Task] NVARCHAR(MAX)
+    );
+
+CREATE TABLE [GroupDetails]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [GroupId] INT REFERENCES [Group]([Id]) ON DELETE CASCADE,
+    [NumberStudentsShouldBe] INT,
+    [NumberRegisteredStudents] INT
+    );
+
+CREATE TABLE [Notification]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Message] NVARCHAR(MAX),
+    [Date] DATETIME2
+    );
+
+CREATE TABLE [User_Notification]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [NotificationId] INT REFERENCES [Notification]([Id]) ON DELETE CASCADE,
+    [UserFor] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+    [Watched] BIT
+    );
+
+CREATE TABLE [Log]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Message] NVARCHAR(MAX),
+    [CustomMessage] NVARCHAR(MAX),
+    [Date] DATETIME2,
+    [LogType] INT
+    );
+
+CREATE TYPE [UDT_User] AS TABLE
+    (
+    [Id] INT,
+    [FirstName] NVARCHAR(100),
+    [SecondName] NVARCHAR(100),
+    [LastName] NVARCHAR(100),
+    [Email] NVARCHAR(100),
+    [Phone] NVARCHAR(100),
+    [EmailConfirmed] BIT
+    );
+
+CREATE TYPE [UDT_User_Role] AS TABLE
+    (
+    [UserId] INT,
+    [Role] INT
+    );
 CREATE TYPE [UDT_Institute] AS TABLE
-(
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100)
-);
+    (
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100)
+    );
 
 CREATE TYPE [UDT_Cafedra] AS TABLE
-(
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100),
-	[InstituteId] INT
-);
+    (
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100),
+    [InstituteId] INT
+    );
 
 CREATE TYPE [UDT_Direction] AS TABLE
-(
-	[Id] INT PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100),
-	[CafedraId] INT
-);
+    (
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100),
+    [CafedraId] INT
+    );
 
 CREATE TYPE [UDT_Course] AS TABLE
-(
-	[Id] INT,
-	[Name] NVARCHAR(100),
-	[DegreeId] INT
-);
+    (
+    [Id] INT,
+    [Name] NVARCHAR(100),
+    [DegreeId] INT
+    );
 
 CREATE TYPE [UDT_Degree] AS TABLE
-(
-	[Id] INT,
-	[Name] NVARCHAR(100)
-);
+    (
+    [Id] INT,
+    [Name] NVARCHAR(100)
+    );
 
 CREATE TYPE [UDT_Group] AS TABLE
-(
-	[Id] INT,
-	[Name] NVARCHAR(100),
-	[DirectionId] INT,
-	[CourseId] INT
-);
+    (
+    [Id] INT,
+    [Name] NVARCHAR(100),
+    [DirectionId] INT,
+    [CourseId] INT
+    );
 
 CREATE TYPE [UDT_Student_Group] AS TABLE
-(
-	[StudentId] INT,
-	[GroupId] INT
-);
-
-CREATE TYPE [UDT_GoogleDetails] AS TABLE
-(
-	[Id] INT,
-	[GroupId] INT,
-	[SpreadSheetId] NVARCHAR(100),
-	[SheetName] NVARCHAR(100),
-	[FirstCell] NVARCHAR(100),
-	[LastCell] NVARCHAR(100)
-);
+    (
+    [StudentId] INT,
+    [GroupId] INT
+    );
 
 CREATE TYPE [UDT_Diary] AS TABLE
-(
-	[Id] INT,
-	[StudentId] INT,
-	[Path] NVARCHAR(MAX),
-	[Generated] BIT,
-	[Send] BIT,
-	[Perceived] BIT,
-	[SendDate] DATETIME2,
-	[PerceivedDate] DATETIME2,
-	[Comment] NVARCHAR(MAX)
-);
+    (
+    [Id] INT,
+    [StudentId] INT,
+    [Path] NVARCHAR(MAX),
+    [Generated] BIT,
+    [Send] BIT,
+    [Approved] BIT,
+    [Perceived] BIT,
+    [GeneratedDate] DATETIME2,
+    [SendDate] DATETIME2,
+    [PerceivedDate] DATETIME2,
+    [Completion] INT,
+    [Comment] NVARCHAR(MAX)
+    );
 
 CREATE TYPE [UDT_Organization] AS TABLE
-(
-	[Id] INT,
-	[Name] NVARCHAR(MAX),
-	[LegalAddress] NVARCHAR(MAX)
-);
+    (
+    [Id] INT,
+    [Name] NVARCHAR(MAX),
+    [LegalAddress] NVARCHAR(MAX)
+    );
 
 CREATE TYPE [UDT_Staff] AS TABLE
-(
-	[Id] INT,
-	[OrganizationId] INT,
-	[FullName] NVARCHAR(MAX),
-	[Job] NVARCHAR(100),
-	[Email] NVARCHAR(MAX),
-	[Phone] NVARCHAR(100)
-);
+    (
+    [Id] INT,
+    [OrganizationId] INT,
+    [FullName] NVARCHAR(MAX),
+    [Job] NVARCHAR(100),
+    [Email] NVARCHAR(MAX),
+    [Phone] NVARCHAR(100)
+    );
 
 CREATE TYPE [UDT_PracticeDetails] AS TABLE
-(
-	[Id] INT,
-	[StudentId] INT,
-	[OrganizationId] INT,
-	[ReportingForm] INT,
-	[ContractNumber] NVARCHAR(100),
-	[ResponsibleForStudent] INT,
-	[SignsTheContract] INT
-);
+    (
+    [Id] INT,
+    [StudentId] INT,
+    [OrganizationId] INT,
+    [ReportingForm] INT,
+    [ContractNumber] NVARCHAR(100),
+    [ResponsibleForStudent] INT,
+    [SignsTheContract] INT,
+    [PracticeType] INT,
+    [StartDate] DATETIME2,
+    [EndDate] DATETIME2,
+    [StructuralDivision] NVARCHAR(MAX),
+    [OrderOfPassingPractice] NVARCHAR(MAX),
+    [CalendarPlanId] INT
+    );
 
 CREATE TYPE [UDT_Integer] AS TABLE
-(
-	[Id] INT
-);
+    (
+    [Id] INT
+    );
 
-CREATE PROCEDURE [GoogleDetailsRepository_AddOrUpdateGoogleDetails]
-	@googleDetails [UDT_GoogleDetails] READONLY
-AS
-BEGIN
-	DECLARE @mergedIds TABLE([Id] INT);
+CREATE TYPE [UDT_CalendarWeekPlan] AS TABLE
+    (
+    [Id] INT PRIMARY KEY IDENTITY,
+    [StartDate] DATETIME2,
+    [EndDate] DATETIME2,
+    [NameOfTheWork] NVARCHAR(MAX),
+    [StructuralDivision] NVARCHAR(MAX)
+    );
 
-	MERGE
-	INTO [GoogleDetails] AS [dest]
-	USING @googleDetails AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR [dest].[GroupId] = [src].[GroupId]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[GroupId],
-			[SpreadSheetId],
-			[SheetName],
-			[FirstCell],
-			[LastCell]
-		) VALUES (
-			[src].[GroupId],
-			[src].[SpreadSheetId],
-			[src].[SheetName],
-			[src].[FirstCell],
-			[src].[LastCell]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[GroupId] = [src].[GroupId],
-			[dest].[SpreadSheetId] = [src].[SpreadSheetId],
-			[dest].[SheetName] = [src].[SheetName],
-			[dest].[FirstCell] = [src].[FirstCell],
-			[dest].[LastCell] = [src].[LastCell]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+CREATE TYPE [UDT_CalendarPlan] AS TABLE
+    (
+    [Id] INT,
+    [CalendarWeekPlanId] INT,
+    [Order] INT
+    );
 
-	DECLARE @googleDetailsId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+CREATE TYPE [UDT_Notification] AS TABLE
+    (
+    [Id] INT,
+    [Message] NVARCHAR(MAX),
+    [Date] DATETIME2
+    );
 
-	SELECT @googleDetailsId;
-END
+CREATE TYPE [UDT_StudentCharacteristic] AS TABLE
+    (
+    [Id] INT,
+    [StudentId] INT,
+    [DescriptionByHead] NVARCHAR(MAX),
+    [MissedDaysWithReason] INT,
+    [MissedDaysWithoutReason] INT,
+    [DescriptionByCafedraHead] NVARCHAR(MAX)
+    );
 
-CREATE PROCEDURE [GoogleDetailsRepository_GetGoogleDetails]
-	@groupId INT = NULL
-AS
-BEGIN
-	DECLARE @googleDetails [UDT_GoogleDetails];
+CREATE TYPE [UDT_Log] AS TABLE
+    (
+    [Id] INT,
+    [Message] NVARCHAR(MAX),
+    [CustomMessage] NVARCHAR(MAX),
+    [Date] DATETIME2,
+    [LogType] INT
+    );
 
-	INSERT
-	INTO @googleDetails (
-		[Id],
-		[GroupId],
-		[SpreadSheetId],
-		[SheetName],
-		[FirstCell],
-		[LastCell]
-	)
-	SELECT
-		[Id],
-		[GroupId],
-		[SpreadSheetId],
-		[SheetName],
-		[FirstCell],
-		[LastCell]
-	FROM [GoogleDetails]
-	WHERE (@groupId IS NULL OR [GroupId] = @groupId);
-
-	SELECT * FROM @googleDetails;
-END
+CREATE TYPE [UDT_User_Notification] AS TABLE
+    (
+    [Id] INT,
+    [NotificationId] INT,
+    [UserFor] INT,
+    [Watched] BIT
+    );
 
 CREATE PROCEDURE [InstituteDetailsRepository_AddOrUpdateInstitute]
 	@institute [UDT_Institute] READONLY
@@ -298,26 +362,26 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Institute] AS [dest]
-	USING @institute AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR [dest].[Name] = [src].[Name]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[Name]
-		) VALUES (
-			[src].[Name]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[Name] = [src].[Name]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [Institute] AS [dest]
+    USING @institute AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR [dest].[Name] = [src].[Name]
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [Name]
+    ) VALUES (
+    [src].[Name]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[Name] = [src].[Name]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @instituteId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @instituteId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	SELECT @instituteId;
+SELECT @instituteId;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_AddOrUpdateCafedra]
@@ -326,30 +390,30 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Cafedra] AS [dest]
-	USING @cafedra AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR [dest].[Name] = [src].[Name]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[Name],
-			[InstituteId]
-		) VALUES (
-			[src].[Name],
-			[src].[InstituteId]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[Name] = [src].[Name],
-			[dest].[InstituteId] = [src].[InstituteId]
+MERGE
+    INTO [Cafedra] AS [dest]
+    USING @cafedra AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR [dest].[Name] = [src].[Name]
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [Name],
+    [InstituteId]
+    ) VALUES (
+    [src].[Name],
+    [src].[InstituteId]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[Name] = [src].[Name],
+    [dest].[InstituteId] = [src].[InstituteId]
 
-	OUTPUT INSERTED.ID INTO @mergedIds;
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @cafedraId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @cafedraId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	SELECT @cafedraId;
+SELECT @cafedraId;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_AddOrUpdateDirection]
@@ -358,29 +422,29 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Direction] AS [dest]
-	USING @direction AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR [dest].[Name] = [src].[Name]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[Name],
-			[CafedraId]
-		) VALUES (
-			[src].[Name],
-			[src].[CafedraId]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[Name] = [src].[Name],
-			[dest].[CafedraId] = [src].[CafedraId]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [Direction] AS [dest]
+    USING @direction AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR [dest].[Name] = [src].[Name]
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [Name],
+    [CafedraId]
+    ) VALUES (
+    [src].[Name],
+    [src].[CafedraId]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[Name] = [src].[Name],
+    [dest].[CafedraId] = [src].[CafedraId]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @directionId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @directionId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	SELECT @directionId;
+SELECT @directionId;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_AddOrUpdateGroup]
@@ -389,32 +453,32 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Group] AS [dest]
-	USING @group AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR [dest].[Name] = [src].[Name]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[Name],
-			[DirectionId],
-			[CourseId]
-		) VALUES (
-			[src].[Name],
-			[src].[DirectionId],
-			[src].[CourseId]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[Name] = [src].[Name],
-			[dest].[DirectionId] = [src].[DirectionId],
-			[dest].[CourseId] = [src].[CourseId]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [Group] AS [dest]
+    USING @group AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR [dest].[Name] = [src].[Name]
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [Name],
+    [DirectionId],
+    [CourseId]
+    ) VALUES (
+    [src].[Name],
+    [src].[DirectionId],
+    [src].[CourseId]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[Name] = [src].[Name],
+    [dest].[DirectionId] = [src].[DirectionId],
+    [dest].[CourseId] = [src].[CourseId]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @groupId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @groupId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	SELECT @groupId;
+SELECT @groupId;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_AddOrUpdateCourse]
@@ -424,40 +488,40 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Course] AS [dest]
-	USING @course AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR [dest].[Name] = [src].[Name]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[Name]
-		) VALUES (
-			[src].[Name]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[Name] = [src].[Name]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [Course] AS [dest]
+    USING @course AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR [dest].[Name] = [src].[Name]
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [Name]
+    ) VALUES (
+    [src].[Name]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[Name] = [src].[Name]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @courseId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @courseId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	MERGE
-	INTO [Course_Degree] AS [dest]
-	USING @course AS [src]
-	ON [dest].[CourseId] = [src].[Id]
-		AND [dest].[DegreeId] = @degreeId
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[CourseId],
-			[DegreeId]
-		) VALUES (
-			[src].[Id],
-			@degreeId
-		);
+MERGE
+    INTO [Course_Degree] AS [dest]
+    USING @course AS [src]
+    ON [dest].[CourseId] = [src].[Id]
+    AND [dest].[DegreeId] = @degreeId
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [CourseId],
+    [DegreeId]
+    ) VALUES (
+    [src].[Id],
+    @degreeId
+    );
 
-	SELECT @courseId;
+SELECT @courseId;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_AddOrUpdateDegree]
@@ -466,44 +530,44 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Degree] AS [dest]
-	USING @degree AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR [dest].[Name] = [src].[Name]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[Name]
-		) VALUES (
-			[src].[Name]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[Name] = [src].[Name]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [Degree] AS [dest]
+    USING @degree AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR [dest].[Name] = [src].[Name]
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [Name]
+    ) VALUES (
+    [src].[Name]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[Name] = [src].[Name]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @degreeId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @degreeId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	SELECT @degreeId;
+SELECT @degreeId;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_GetInstitutes]
 AS
 BEGIN
 	DECLARE @institutes [UDT_Institute];
-	
-	INSERT
-	INTO @institutes (
-		[Id],
-		[Name]
-	)
-	SELECT
-		[Id],
-		[Name]
-	FROM [Institute];
 
-	SELECT * FROM @institutes;
+INSERT
+INTO @institutes (
+[Id],
+    [Name]
+)
+SELECT
+    [Id],
+    [Name]
+FROM [Institute];
+
+SELECT * FROM @institutes;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_GetCafedras]
@@ -511,21 +575,21 @@ CREATE PROCEDURE [InstituteDetailsRepository_GetCafedras]
 AS
 BEGIN
 	DECLARE @cafedras [UDT_Cafedra];
-	
-	INSERT
-	INTO @cafedras (
-		[Id],
-		[Name],
-		[InstituteId]
-	)
-	SELECT
-		[Id],
-		[Name],
-		[InstituteId]
-	FROM [Cafedra]
-	WHERE (@instituteId IS NULL OR [InstituteId] = @instituteId);
 
-	SELECT * FROM @cafedras;
+INSERT
+INTO @cafedras (
+[Id],
+    [Name],
+    [InstituteId]
+)
+SELECT
+    [Id],
+    [Name],
+    [InstituteId]
+FROM [Cafedra]
+WHERE (@instituteId IS NULL OR [InstituteId] = @instituteId);
+
+SELECT * FROM @cafedras;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_GetDirections]
@@ -533,21 +597,21 @@ CREATE PROCEDURE [InstituteDetailsRepository_GetDirections]
 AS
 BEGIN
 	DECLARE @directions [UDT_Direction];
-	
-	INSERT
-	INTO @directions (
-		[Id],
-		[Name],
-		[CafedraId]
-	)
-	SELECT
-		[Id],
-		[Name],
-		[CafedraId]
-	FROM [Direction]
-	WHERE (@cafedraId IS NULL OR [CafedraId] = @cafedraId);
 
-	SELECT * FROM @directions;
+INSERT
+INTO @directions (
+    [Id],
+    [Name],
+    [CafedraId]
+)
+SELECT
+    [Id],
+    [Name],
+    [CafedraId]
+FROM [Direction]
+WHERE (@cafedraId IS NULL OR [CafedraId] = @cafedraId);
+
+SELECT * FROM @directions;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_GetGroups]
@@ -556,24 +620,24 @@ CREATE PROCEDURE [InstituteDetailsRepository_GetGroups]
 AS
 BEGIN
 	DECLARE @groups [UDT_Group];
-	
-	INSERT
-	INTO @groups (
-		[Id],
-		[Name],
-		[DirectionId],
-		[CourseId]
-	)
-	SELECT
-		[Id],
-		[Name],
-		[DirectionId],
-		[CourseId]
-	FROM [Group]
-	WHERE (@directionId IS NULL OR [DirectionId] = @directionId)
-		OR (@courseId IS NULL OR [CourseId] = @courseId);
 
-	SELECT * FROM @groups;
+INSERT
+INTO @groups (
+[Id],
+    [Name],
+    [DirectionId],
+    [CourseId]
+)
+SELECT
+    [Id],
+    [Name],
+    [DirectionId],
+    [CourseId]
+FROM [Group]
+WHERE (@directionId IS NULL OR [DirectionId] = @directionId)
+   OR (@courseId IS NULL OR [CourseId] = @courseId);
+
+SELECT * FROM @groups;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_GetDegrees]
@@ -581,34 +645,34 @@ AS
 BEGIN
 	DECLARE @degrees [UDT_Degree];
 	DECLARE @courses [UDT_Course];
-	
-	INSERT
-	INTO @degrees (
-		[Id],
-		[Name]
-	)
-	SELECT
-		[Id],
-		[Name]
-	FROM [Degree];
 
-	INSERT
-	INTO @courses (
-		[Id],
-		[Name],
-		[DegreeId]
-	)
-	SELECT
-		[c].[Id],
-		[c].[Name],
-		[cd].[DegreeId]
-	FROM [Course] AS [c]
-	JOIN [Course_Degree] AS [cd]
-		ON [cd].[CourseId] = [c].[Id]
-	WHERE [cd].[DegreeId] IN (SELECT [Id] FROM @degrees);
-		
-	SELECT * FROM @degrees;
-	SELECT * FROM @courses;
+INSERT
+INTO @degrees (
+[Id],
+    [Name]
+)
+SELECT
+    [Id],
+    [Name]
+FROM [Degree];
+
+INSERT
+INTO @courses (
+[Id],
+    [Name],
+    [DegreeId]
+)
+SELECT
+    [c].[Id],
+    [c].[Name],
+    [cd].[DegreeId]
+FROM [Course] AS [c]
+    JOIN [Course_Degree] AS [cd]
+ON [cd].[CourseId] = [c].[Id]
+WHERE [cd].[DegreeId] IN (SELECT [Id] FROM @degrees);
+
+SELECT * FROM @degrees;
+SELECT * FROM @courses;
 END
 
 CREATE PROCEDURE [InstituteDetailsRepository_GetCourses]
@@ -616,21 +680,21 @@ CREATE PROCEDURE [InstituteDetailsRepository_GetCourses]
 AS
 BEGIN
 	DECLARE @courses [UDT_Course];
-	
-	INSERT
-	INTO @courses (
-		[Id],
-		[Name]
-	)
-	SELECT
-		[Id],
-		[Name]
-	FROM [Course] AS [c]
-	JOIN [Course_Degree] AS [cd]
-		ON [cd].[CourseId] = [c].[Id]
-	WHERE (@degreeId IS NULL OR [cd].[DegreeId] = @degreeId);
 
-	SELECT * FROM @courses;
+INSERT
+INTO @courses (
+[Id],
+    [Name]
+)
+SELECT
+    [Id],
+    [Name]
+FROM [Course] AS [c]
+    JOIN [Course_Degree] AS [cd]
+ON [cd].[CourseId] = [c].[Id]
+WHERE (@degreeId IS NULL OR [cd].[DegreeId] = @degreeId);
+
+SELECT * FROM @courses;
 END
 
 CREATE PROCEDURE [PracticeRepository_AddOrUpdatePracticeDetails]
@@ -639,41 +703,41 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [PracticeDetails] AS [dest]
-	USING @practiceDetails AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR [dest].[StudentId] = [src].[StudentId]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[OrganizationId],
-			[ReportingForm],
-			[ContractNumber],
-			[ResponsibleForStudent],
-			[SignsTheContract],
-			[StudentId]
-		) VALUES (
-			[src].[OrganizationId],
-			[src].[ReportingForm],
-			[src].[ContractNumber],
-			[src].[ResponsibleForStudent],
-			[src].[SignsTheContract],
-			[src].[StudentId]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[OrganizationId] = [src].[OrganizationId],
-			[dest].[ReportingForm] = [src].[ReportingForm],
-			[dest].[ContractNumber] = [src].[ContractNumber],
-			[dest].[ResponsibleForStudent] = [src].[ResponsibleForStudent],
-			[dest].[SignsTheContract] = [src].[SignsTheContract],
-			[dest].[StudentId] = [src].[StudentId]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [PracticeDetails] AS [dest]
+    USING @practiceDetails AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR [dest].[StudentId] = [src].[StudentId]
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [OrganizationId],
+    [ReportingForm],
+    [ContractNumber],
+    [ResponsibleForStudent],
+    [SignsTheContract],
+    [StudentId]
+    ) VALUES (
+    [src].[OrganizationId],
+    [src].[ReportingForm],
+    [src].[ContractNumber],
+    [src].[ResponsibleForStudent],
+    [src].[SignsTheContract],
+    [src].[StudentId]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[OrganizationId] = [src].[OrganizationId],
+    [dest].[ReportingForm] = [src].[ReportingForm],
+    [dest].[ContractNumber] = [src].[ContractNumber],
+    [dest].[ResponsibleForStudent] = [src].[ResponsibleForStudent],
+    [dest].[SignsTheContract] = [src].[SignsTheContract],
+    [dest].[StudentId] = [src].[StudentId]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @practiceDetailsId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @practiceDetailsId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	SELECT @practiceDetailsId;
+SELECT @practiceDetailsId;
 END
 
 CREATE PROCEDURE [PracticeRepository_GetPracticeDetails]
@@ -684,69 +748,69 @@ BEGIN
 	DECLARE @practiceDetails [UDT_PracticeDetails];
 
 	IF @groupId IS NOT NULL
-		BEGIN
+BEGIN
 
 			DECLARE @studentIds TABLE([Id] INT);
-		
-			INSERT
-			INTO @studentIds (
-				[Id]
-			)
-			SELECT
-				[StudentId]
-			FROM [Student_Group]
-			WHERE [GroupId] = @groupId;
 
-			INSERT
-			INTO @practiceDetails (
-				[Id],
-				[StudentId],
-				[OrganizationId],
-				[ReportingForm],
-				[ContractNumber],
-				[ResponsibleForStudent],
-				[SignsTheContract]
-			)
-			SELECT
-				[Id],
-				[StudentId],
-				[OrganizationId],
-				[ReportingForm],
-				[ContractNumber],
-				[ResponsibleForStudent],
-				[SignsTheContract]
-			FROM [PracticeDetails]
-			WHERE [StudentId] IN (SELECT [Id] FROM @studentIds);
+INSERT
+INTO @studentIds (
+[Id]
+)
+SELECT
+    [StudentId]
+FROM [Student_Group]
+WHERE [GroupId] = @groupId;
 
-		END
+INSERT
+INTO @practiceDetails (
+[Id],
+    [StudentId],
+    [OrganizationId],
+    [ReportingForm],
+    [ContractNumber],
+    [ResponsibleForStudent],
+    [SignsTheContract]
+)
+SELECT
+    [Id],
+    [StudentId],
+    [OrganizationId],
+    [ReportingForm],
+    [ContractNumber],
+    [ResponsibleForStudent],
+    [SignsTheContract]
+FROM [PracticeDetails]
+WHERE [StudentId] IN (SELECT [Id] FROM @studentIds);
 
-	ELSE
-		BEGIN
+END
 
-			INSERT
-			INTO @practiceDetails (
-				[Id],
-				[StudentId],
-				[OrganizationId],
-				[ReportingForm],
-				[ContractNumber],
-				[ResponsibleForStudent],
-				[SignsTheContract]
-			)
-			SELECT
-				[Id],
-				[StudentId],
-				[OrganizationId],
-				[ReportingForm],
-				[ContractNumber],
-				[ResponsibleForStudent],
-				[SignsTheContract]
-			FROM [PracticeDetails]
-			WHERE (@studentId IS NULL OR [StudentId] = @studentId);
-		END
+ELSE
+BEGIN
+
+INSERT
+INTO @practiceDetails (
+[Id],
+    [StudentId],
+    [OrganizationId],
+    [ReportingForm],
+    [ContractNumber],
+    [ResponsibleForStudent],
+    [SignsTheContract]
+)
+SELECT
+    [Id],
+    [StudentId],
+    [OrganizationId],
+    [ReportingForm],
+    [ContractNumber],
+    [ResponsibleForStudent],
+    [SignsTheContract]
+FROM [PracticeDetails]
+WHERE (@studentId IS NULL OR [StudentId] = @studentId);
+END
 
 
-	SELECT * FROM @practiceDetails;
+SELECT * FROM @practiceDetails;
 END
 
 CREATE PROCEDURE [StudentRepository_AddOrUpdateStudent]
@@ -755,40 +819,40 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Student] AS [dest]
-	USING @student AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR ([dest].[FirstName] = [src].[FirstName]
-			AND [dest].[SecondName] = [src].[SecondName]
-			)
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[FirstName],
-			[SecondName],
-			[LastName],
-			[Email],
-			[Phone]		
-		) VALUES (
-			[src].[FirstName],
-			[src].[SecondName],
-			[src].[LastName],
-			[src].[Email],
-			[src].[Phone]	
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[FirstName] = [src].[FirstName],
-			[dest].[SecondName] = [src].[SecondName],
-			[dest].[LastName] = [src].[LastName],
-			[dest].[Email] = [src].[Email],
-			[dest].[Phone] = [src].[Phone]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [Student] AS [dest]
+    USING @student AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR ([dest].[FirstName] = [src].[FirstName]
+    AND [dest].[SecondName] = [src].[SecondName]
+    )
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [FirstName],
+    [SecondName],
+    [LastName],
+    [Email],
+    [Phone]
+    ) VALUES (
+    [src].[FirstName],
+    [src].[SecondName],
+    [src].[LastName],
+    [src].[Email],
+    [src].[Phone]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[FirstName] = [src].[FirstName],
+    [dest].[SecondName] = [src].[SecondName],
+    [dest].[LastName] = [src].[LastName],
+    [dest].[Email] = [src].[Email],
+    [dest].[Phone] = [src].[Phone]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @studentId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @studentId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	SELECT @studentId;
+SELECT @studentId;
 END
 
 CREATE PROCEDURE [StudentRepository_GetStudents]
@@ -796,23 +860,23 @@ AS
 BEGIN
 	DECLARE @students [UDT_Student];
 
-	INSERT
-	INTO @students (
-		[FirstName],
-		[SecondName],
-		[LastName],
-		[Email],
-		[Phone]		
-	) 
-	SELECT
-		[FirstName],
-		[SecondName],
-		[LastName],
-		[Email],
-		[Phone]	
-	FROM [Student];
+INSERT
+INTO @students (
+[FirstName],
+    [SecondName],
+    [LastName],
+    [Email],
+    [Phone]
+)
+SELECT
+    [FirstName],
+    [SecondName],
+    [LastName],
+    [Email],
+    [Phone]
+FROM [Student];
 
-	SELECT * FROM @students;
+SELECT * FROM @students;
 END
 
 CREATE PROCEDURE [DiariesRepository_AddOrUpdateDiary]
@@ -821,38 +885,38 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Diary] AS [dest]
-	USING @diary AS [src]
-	ON [dest].[Id] = [src].[Id] 
-		OR [dest].[StudentId] = [src].[StudentId]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[Path],
-			[Generated],
-			[Send],
-			[StudentId],
-			[Comment]
-		) VALUES (
-			[src].[Path],
-			[src].[Generated],
-			[src].[Send],
-			[src].[StudentId],
-			[src].[Comment]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[Path] = [src].[Path],
-			[dest].[Generated] = [src].[Generated],
-			[dest].[Send] = [src].[Send],
-			[dest].[StudentId] = [src].[StudentId],
-			[dest].[Comment] = [src].[Comment]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [Diary] AS [dest]
+    USING @diary AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR [dest].[StudentId] = [src].[StudentId]
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [Path],
+    [Generated],
+    [Send],
+    [StudentId],
+    [Comment]
+    ) VALUES (
+    [src].[Path],
+    [src].[Generated],
+    [src].[Send],
+    [src].[StudentId],
+    [src].[Comment]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[Path] = [src].[Path],
+    [dest].[Generated] = [src].[Generated],
+    [dest].[Send] = [src].[Send],
+    [dest].[StudentId] = [src].[StudentId],
+    [dest].[Comment] = [src].[Comment]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @diaryId INT = (SELECT TOP 1 [Id] FROM [Diary]);
+DECLARE @diaryId INT = (SELECT TOP 1 [Id] FROM [Diary]);
 
-	SELECT @diaryId;
+SELECT @diaryId;
 END
 
 CREATE PROCEDURE [DiariesRepository_GetDiaries]
@@ -861,32 +925,32 @@ AS
 BEGIN
 	DECLARE @diaries [UDT_Diary];
 
-	INSERT
-	INTO @diaries (
-		[Id],
-		[Path],
-		[Generated],
-		[Send],
-		[Perceived],
-		[SendDate],
-		[PerceivedDate],
-		[StudentId],
-		[Comment]
-	)
-	SELECT
-		[Id],
-		[Path],
-		[Generated],
-		[Send],
-		[Perceived],
-		[SendDate],
-		[PerceivedDate],
-		[StudentId],
-		[Comment]
-	FROM [Diary]
-	WHERE (@generated IS NULL OR [Generated] = @generated);
+INSERT
+INTO @diaries (
+[Id],
+    [Path],
+    [Generated],
+    [Send],
+    [Perceived],
+    [SendDate],
+    [PerceivedDate],
+    [StudentId],
+    [Comment]
+)
+SELECT
+    [Id],
+    [Path],
+    [Generated],
+    [Send],
+    [Perceived],
+    [SendDate],
+    [PerceivedDate],
+    [StudentId],
+    [Comment]
+FROM [Diary]
+WHERE (@generated IS NULL OR [Generated] = @generated);
 
-	SELECT * FROM @diaries;
+SELECT * FROM @diaries;
 END
 
 CREATE PROCEDURE [StudentRepository_AttachStudentToGroup]
@@ -912,29 +976,29 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Organization] AS [dest]
-	USING @organization AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR [dest].[Name] = [src].[Name]
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[Name],
-			[LegalAddress]
-		) VALUES (
-			[src].[Name],
-			[src].[LegalAddress]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[Name] = [src].[Name],
-			[dest].[LegalAddress] = [src].[LegalAddress]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [Organization] AS [dest]
+    USING @organization AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR [dest].[Name] = [src].[Name]
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [Name],
+    [LegalAddress]
+    ) VALUES (
+    [src].[Name],
+    [src].[LegalAddress]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[Name] = [src].[Name],
+    [dest].[LegalAddress] = [src].[LegalAddress]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @organizationId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @organizationId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	SELECT @organizationId;
+SELECT @organizationId;
 END
 
 CREATE PROCEDURE [OrganizationRepository_AddOrUpdateStaff]
@@ -943,41 +1007,41 @@ AS
 BEGIN
 	DECLARE @mergedIds TABLE([Id] INT);
 
-	MERGE
-	INTO [Staff] AS [dest]
-	USING @staff AS [src]
-	ON [dest].[Id] = [src].[Id]
-		OR (
-			[dest].[OrganizationId] = [src].[Name]
-			AND [dest].[FullName] = [src].[FullName]
-		)
-	WHEN NOT MATCHED THEN
-		INSERT (
-			[OrganizationId],
-			[FullName],
-			[Job],
-			[Email],
-			[Phone]
-		) VALUES (
-			[src].[OrganizationId],
-			[src].[FullName],
-			[src].[Job],
-			[src].[Email],
-			[src].[Phone]
-		)
-	WHEN MATCHED THEN
-		UPDATE
-		SET
-			[dest].[OrganizationId] = [src].[OrganizationId],
-			[dest].[FullName] = [src].[FullName],
-			[dest].[Job] = [src].[Job],
-			[dest].[Email] = [src].[Email],
-			[dest].[Phone] = [src].[Phone]
-	OUTPUT INSERTED.ID INTO @mergedIds;
+MERGE
+    INTO [Staff] AS [dest]
+    USING @staff AS [src]
+    ON [dest].[Id] = [src].[Id]
+    OR (
+    [dest].[OrganizationId] = [src].[Name]
+    AND [dest].[FullName] = [src].[FullName]
+    )
+    WHEN NOT MATCHED THEN
+    INSERT (
+    [OrganizationId],
+    [FullName],
+    [Job],
+    [Email],
+    [Phone]
+    ) VALUES (
+    [src].[OrganizationId],
+    [src].[FullName],
+    [src].[Job],
+    [src].[Email],
+    [src].[Phone]
+    )
+    WHEN MATCHED THEN
+UPDATE
+    SET
+    [dest].[OrganizationId] = [src].[OrganizationId],
+    [dest].[FullName] = [src].[FullName],
+    [dest].[Job] = [src].[Job],
+    [dest].[Email] = [src].[Email],
+    [dest].[Phone] = [src].[Phone]
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-	DECLARE @staffId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+DECLARE @staffId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-	SELECT @staffId;
+SELECT @staffId;
 END
 
 CREATE PROCEDURE [OrganizationRepository_GetOrganizations]
@@ -985,19 +1049,19 @@ AS
 BEGIN
 	DECLARE @organizations [UDT_Organization];
 
-	INSERT
-	INTO @organizations (
-		[Id],
-		[Name],
-		[LegalAddress]
-	)
-	SELECT
-		[Id],
-		[Name],
-		[LegalAddress]
-	FROM [Organization];
+INSERT
+INTO @organizations (
+[Id],
+    [Name],
+    [LegalAddress]
+)
+SELECT
+    [Id],
+    [Name],
+    [LegalAddress]
+FROM [Organization];
 
-	SELECT * FROM @organizations;
+SELECT * FROM @organizations;
 END
 
 CREATE PROCEDURE [StudentRepository_GetStudentsByIds]
@@ -1006,26 +1070,26 @@ AS
 BEGIN
 	DECLARE @students [UDT_Student];
 
-	INSERT
-	INTO @students (
-		[Id],
-		[FirstName],
-		[SecondName],
-		[LastName],
-		[Email],
-		[Phone]
-	)
-	SELECT
-		[Id],
-		[FirstName],
-		[SecondName],
-		[LastName],
-		[Email],
-		[Phone]
-	FROM [Student]
-	WHERE [Id] IN (
-		SELECT [Id] FROM @studentIds
-	);
+INSERT
+INTO @students (
+[Id],
+    [FirstName],
+    [SecondName],
+    [LastName],
+    [Email],
+    [Phone]
+)
+SELECT
+    [Id],
+    [FirstName],
+    [SecondName],
+    [LastName],
+    [Email],
+    [Phone]
+FROM [Student]
+WHERE [Id] IN (
+    SELECT [Id] FROM @studentIds
+    );
 
-	SELECT * FROM @students;
+SELECT * FROM @students;
 END

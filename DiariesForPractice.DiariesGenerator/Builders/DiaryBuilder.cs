@@ -1,63 +1,101 @@
 ﻿using System;
-using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Models.Data;
-using Word = Microsoft.Office.Interop.Word;
-using Document =  Microsoft.Office.Interop.Word.Document;
+using Syncfusion.DocIO;
+using Syncfusion.DocIO.DLS;
+using System.IO;
 
 namespace DiariesForPractice.DiariesGenerator.Builders
 {
     public class DiaryBuilder : IDiaryBuilder
     {
-        Word._Application application;
-        Word._Document document;
-        Object missingObj = System.Reflection.Missing.Value;
-        private Object trueObj = true;
-        private Object falseObj = false;
-        Object templatePathObj = @"C:\d";
+        
         public DiaryBuilder()
         {
-            application = new Word.Application();
-            
         }
-        public Document BuildDiary(PracticeData practiceData)
+        
+        public WordDocument BuildDiary(PracticeData practiceData)
         {
-            
-            throw new System.NotImplementedException();
+            var document = new WordDocument();
+            BuildFirstPage(document);
+            BuildSecondPage(document);
+            BuildThirdPage(document);
+            BuildFourthPage(document);
+            BuildFifthPage(document);
+            BuildSixthPage(document);
+            BuildSeventhPage(document);
+            BuildEighthPage(document);
+
+            return document;
         }
 
-        public void BuildFirstPage(Document document)
+        public void BuildFirstPage(WordDocument document)
+        {
+            var section = document.AddSection();
+            section.PageSetup.Margins.All = 72;
+            section.PageSetup.PageSize = new Syncfusion.Drawing.Size(691, 792);
+            var style = document.AddParagraphStyle("normal");
+            style.CharacterFormat.FontSize = 12f;
+            style.CharacterFormat.FontName = "Times New Roman";
+            var paragraph = section.HeadersFooters.Header.AddParagraph();
+            paragraph.AppendText("МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ");
+            var imageStream = new FileStream("images/MISIS_logo.PNG", FileMode.Open, FileAccess.Read);
+            var picture = paragraph.AppendPicture(imageStream);
+            picture.TextWrappingStyle = TextWrappingStyle.InFrontOfText;
+            picture.VerticalOrigin = VerticalOrigin.Margin;
+            picture.VerticalPosition = -45;
+            picture.HorizontalOrigin = HorizontalOrigin.Column;
+            picture.HorizontalPosition = 263.5f;
+            picture.WidthScale = 20;
+            picture.HeightScale = 15;
+            
+        }
+
+        public void BuildSecondPage(WordDocument document)
+        {
+            
+        }
+        
+        public void BuildThirdPage(WordDocument document)
+        {
+            
+        }
+        
+        public void BuildFourthPage(WordDocument document)
+        {
+            
+        }
+        
+        public void BuildFifthPage(WordDocument document)
+        {
+            
+        }
+        
+        public void BuildSixthPage(WordDocument document)
+        {
+            
+        }
+        
+        public void BuildSeventhPage(WordDocument document)
+        {
+            
+        }
+        
+        public void BuildEighthPage(WordDocument document)
         {
             
         }
 
-        public void BuildSecondPage(Document document)
+        private void AddSectionSettings(WordDocument document)
         {
+            
             
         }
-        
-        public void BuildThirdPage(Document document)
+
+        private void AddStyleSettings(WordDocument document)
         {
-            
-        }
-        
-        public void BuildFourthPage(Document document)
-        {
-            
-        }
-        
-        public void BuildFifthPage(Document document)
-        {
-            
-        }
-        
-        public void BuildSixthPage(Document document)
-        {
-            
-        }
-        
-        public void BuildEighthPage(Document document)
-        {
-            
+            var style = document.AddParagraphStyle("normal");
+            style.CharacterFormat.FontSize = 12f;
+            style.CharacterFormat.FontName = "Times New Roman";
         }
     }
 }
