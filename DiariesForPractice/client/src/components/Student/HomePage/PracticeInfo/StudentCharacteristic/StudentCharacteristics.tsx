@@ -1,10 +1,10 @@
 ﻿import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
-import { StudentCharacteristicViewModel } from "../../../../Typings/viewModels/StudentCharacteristicViewModel";
-import PracticeStore from "../../../../stores/PracticeStore";
 import { Label } from "reactstrap";
 import { ProgressBar } from "react-bootstrap";
+import PracticeStore from "../../../../../stores/PracticeStore";
+import { StudentCharacteristicViewModel } from "../../../../../Typings/viewModels/StudentCharacteristicViewModel";
 
 class StudentCharacteristicsProps {
     practiceStore: PracticeStore;
@@ -15,7 +15,7 @@ class StudentCharacteristicsProps {
 class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     studentCharacteristics: StudentCharacteristicViewModel = new StudentCharacteristicViewModel();
     edit: boolean;
-    
+
     constructor(props: StudentCharacteristicsProps) {
         super(props);
         makeObservable(this, {
@@ -41,7 +41,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
             </ProgressBar>
         );
     }
-    
+
     renderDescriptionByHead() {
         return (
             <>
@@ -53,7 +53,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
         return (
             <>
                 <Label>
-                    
+
                 </Label>
             </>
         );
@@ -70,16 +70,16 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
             <></>
         );
     }
-    
+
     renderHeader() {
-        
+
     }
     render() {
         return (
             <></>
         );
     }
-    
+
     inputChange(event: React.ChangeEvent<HTMLInputElement>, type: StudentCharacteristicType) {
         let value = event.currentTarget.value;
         if(type === StudentCharacteristicType.MissedDaysWithoutReason) {

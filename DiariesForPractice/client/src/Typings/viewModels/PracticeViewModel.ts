@@ -6,6 +6,8 @@ import { UserViewModel } from './UserViewModel';
 import { OrganizationViewModel } from './OrganizationViewModel';
 import { ReportingForm } from '../enums/ReportingForm';
 import { StaffViewModel } from './StaffViewModel';
+import { PracticeType } from '../enums/PracticeType';
+import { CalendarPlanViewModel } from './CalendarPlanViewModel';
 
 export class PracticeViewModel
 {
@@ -16,4 +18,10 @@ export class PracticeViewModel
 	public contractNumber: string;
 	public responsibleForStudent: StaffViewModel;
 	public signsTheContract: StaffViewModel;
+	public practiceType: PracticeType;
+	public startDate: any;
+	public endDate: any;
+	public structuralDivision: string;
+	public orderOfPassingPractice: string;
+	public calendarPlan: CalendarPlanViewModel;
 }

@@ -2,9 +2,7 @@
 import { RootStore } from "../../../stores/RootStore";
 import { observer } from "mobx-react";
 import { DiaryViewModel } from "../../../Typings/viewModels/DiaryViewModel";
-import { Alert } from "reactstrap";
 import { makeObservable, observable } from "mobx";
-import StudentPracticeInfo from "./PracticeInfo/StudentPracticeInfo";
 import DiaryCompletion from "./Diary/DiaryCompletion";
 import DiaryPreview from "./Diary/DiaryPreview";
 

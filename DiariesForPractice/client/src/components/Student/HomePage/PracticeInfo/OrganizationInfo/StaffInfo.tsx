@@ -1,9 +1,10 @@
 ﻿import React, { Component } from "react";
-import { StaffViewModel } from "../../../../Typings/viewModels/StaffViewModel";
-import { StaffRole } from "../../../../Typings/enums/StaffRole";
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
-import {Input} from "reactstrap";
+import { Input, Label } from "reactstrap";
+import { StaffViewModel } from "../../../../../Typings/viewModels/StaffViewModel";
+import { StaffRole } from "../../../../../Typings/enums/StaffRole";
+import {translateStaffRole} from "../../../../../functions/translater";
 
 class StaffInfoProps {
     staff: StaffViewModel;
@@ -15,18 +16,19 @@ class StaffInfoProps {
 @observer
 class StaffInfo extends Component<StaffInfoProps> {
     staff: StaffViewModel = new StaffViewModel();
-    
+
     constructor(props: StaffInfoProps) {
         super(props);
         makeObservable(this, {
             staff: observable,
         });
     }
-    
+
     renderFullName(fullName: string) {
         let { edit } = this.props;
         return (
             <>
+                <Label>ФИО: </Label>
                 {edit && <span>{fullName}</span>}
                 {!edit && <Input
                     value={fullName}
@@ -35,11 +37,12 @@ class StaffInfo extends Component<StaffInfoProps> {
             </>
         );
     }
-    
+
     renderJob(job: string) {
         let { edit } = this.props;
         return(
             <>
+                <Label>Должность: </Label>
                 {edit && <span>{job}</span>}
                 {!edit && <Input
                     value={job}
@@ -48,11 +51,12 @@ class StaffInfo extends Component<StaffInfoProps> {
             </>
         );
     }
-    
+
     renderEmail(email: string) {
         let { edit } = this.props;
         return (
             <>
+                <Label>Email</Label>
                 {edit && <span>{email}</span>}
                 {!edit && <Input
                     value={email}
@@ -61,23 +65,35 @@ class StaffInfo extends Component<StaffInfoProps> {
             </>
         );
     }
-    
+
     renderPhone(phone: string) {
         let { edit } = this.props;
         return(
             <>
+                <Label>Телефон: </Label>
                 {edit && <span>{phone}</span>}
                 {!edit && <Input
                     value={phone}
-                    onChange={(event) => this.inputStaffData(event, StaffDataType.Phone)} 
+                    onChange={(event) => this.inputStaffData(event, StaffDataType.Phone)}
                 />}
             </>
+        );
+    }
+
+    renderHeader(staffRole: StaffRole) {
+        return (
+            <Label>
+                {translateStaffRole(staffRole)}
+            </Label>
         );
     }
     
     renderStaffInfo() {
         return (
             <>
+                <div className="row justify-content-center">
+                    {this.renderHeader(this.props.role)}
+                </div>
                 <div className="row justify-content-center">
                     {this.renderFullName(this.staff.fullName)}
                 </div>
@@ -93,7 +109,7 @@ class StaffInfo extends Component<StaffInfoProps> {
             </>
         );
     }
-    
+
     render() {
         return (
             <>
@@ -101,7 +117,7 @@ class StaffInfo extends Component<StaffInfoProps> {
             </>
         );
     }
-    
+
     inputStaffData(event: React.ChangeEvent<HTMLInputElement>, dataType: StaffDataType) {
         let value = event.currentTarget.value;
         if(dataType === StaffDataType.FullName) {

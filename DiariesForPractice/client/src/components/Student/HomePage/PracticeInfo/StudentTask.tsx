@@ -3,8 +3,9 @@ import { observer } from "mobx-react";
 import { StudentTaskViewModel } from "../../../../Typings/viewModels/StudentTaskViewModel";
 import { makeObservable, observable } from "mobx";
 import PracticeStore from "../../../../stores/PracticeStore";
-import { Button, Alert, Input } from "reactstrap";
+import { Button, Alert, Input, Label } from "reactstrap";
 import { mapToStudentTaskReadModel } from "../../../../functions/mapper";
+import {ProgressBar} from "react-bootstrap";
 
 class StudentTaskProps {
     practiceStore: PracticeStore;
@@ -41,10 +42,13 @@ class IndividualTask extends Component<StudentTaskProps> {
         return (
             <>
                 {!this.edit && <span>{task}</span>}
-                {this.edit && <Input//todo: добавить label
+                {this.edit && <>
+                    <Label>Индивидуальное задание</Label>
+                    <Input
                     value={task}
                     placeholder="Индивидуальное задание"
-                    onChange={(event) => this.changeStudentTask(event)} />}
+                    onChange={(event) => this.changeStudentTask(event)} />
+                    </>}
             </>
         )
     }
@@ -61,25 +65,34 @@ class IndividualTask extends Component<StudentTaskProps> {
             </>
         );
     }
+
+    renderSaveButton(edit: boolean) {
+        return (
+            <Button
+                outline color="primary"
+                onClick={() => this.save()}>
+                Сохранить
+            </Button>
+        );
+    }
+
+    renderSectionProgress() {
+        let progress = this.computeProgress();
+        return (
+            <ProgressBar>{progress}</ProgressBar>
+        );
+    }
     
-    renderButton(edit: boolean) {
-        if(edit) {
-            return (
-                <Button
-                    outline color="primary"
-                    onClick={() => this.save()}>
-                    Сохранить
-                </Button>
-            );
-        } else {
-            return (
-                <Button
-                    outline color="primary"
-                    onClick={() => this.editToggle()}>
-                    Редактировать
-                </Button>
-            );
-        }
+    renderHeader() {
+        return (
+            <>
+                <Label>
+                    Индивидуальное задание
+                </Label>
+                {!this.edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
+                {this.renderSectionProgress()}
+            </>
+        );
     }
     
     render() {
@@ -87,11 +100,14 @@ class IndividualTask extends Component<StudentTaskProps> {
             <>
                 {this.renderWarnings()}
                 <div className="row justify-content-center">
-                    {this.renderStudentTask(this.studentTask.task)}
+                    {this.renderHeader()}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderButton(this.edit)}
+                    {this.renderStudentTask(this.studentTask.task)}
                 </div>
+                {this.edit && <div className="row justify-content-center">
+                    {this.renderSaveButton(this.edit)}
+                </div>}
             </>
         );
     }
@@ -112,6 +128,15 @@ class IndividualTask extends Component<StudentTaskProps> {
                 this.notSaved = status !== 200;
                 this.saved = status === 200;
             });     
+    }
+
+    computeProgress(): number {
+        let progress = 0;
+        if(this.studentTask.task !== "") {
+            progress = 100;
+        }
+        
+        return progress;
     }
 }
 

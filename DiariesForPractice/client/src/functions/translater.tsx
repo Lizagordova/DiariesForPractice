@@ -1,6 +1,8 @@
 ﻿import {UserRole} from "../Typings/enums/UserRole";
 import {ReportingForm} from "../Typings/enums/ReportingForm";
 import {ActionType} from "../consts/ActionType";
+import {StaffRole} from "../Typings/enums/StaffRole";
+import {PracticeType} from "../Typings/enums/PracticeType";
 
 export function translateUserRole(userRole: UserRole): string {
     let role = "";
@@ -39,4 +41,23 @@ export function translateAction(actionType: ActionType): string {
     }
     
     return action;
+}
+
+export function translateStaffRole(staffRole: StaffRole): string {
+    let role = "";
+    if(staffRole === StaffRole.Responsible) {
+        role = "Ответственный";
+    } else if(staffRole === StaffRole.SignsTheContract) {
+        role = "Подписывает";
+    }
+    
+    return role;
+}
+
+export function translatePracticeType(practiceType: PracticeType): string {
+    let type = "";
+    if(practiceType === PracticeType.Production) {
+        return "Производственная";
+    }
+    return practiceType;
 }

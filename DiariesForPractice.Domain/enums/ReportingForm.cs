@@ -2,6 +2,7 @@
 {
     public enum ReportingForm
     {
+        None,
         Dogovor,
         Spravka
     }

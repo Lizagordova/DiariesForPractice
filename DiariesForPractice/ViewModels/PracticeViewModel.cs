@@ -1,4 +1,5 @@
-﻿using DiariesForPractice.Configuration.Typings.Attributes;
+﻿using System;
+using DiariesForPractice.Configuration.Typings.Attributes;
 using DiariesForPractice.Domain.enums;
 
 namespace DiariesForPractice.ViewModels
@@ -13,5 +14,11 @@ namespace DiariesForPractice.ViewModels
         public string ContractNumber { get; set; }
         public StaffViewModel ResponsibleForStudent { get; set; }
         public StaffViewModel SignsTheContract { get; set; }
+        public PracticeType PracticeType { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string StructuralDivision { get; set; }
+        public string OrderOfPassingPractice { get; set; }
+        public CalendarPlanViewModel CalendarPlan { get; set; }
     }
 }

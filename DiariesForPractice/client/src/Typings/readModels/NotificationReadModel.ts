@@ -2,8 +2,9 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
-export enum ReportingForm { 
-	None = 0, 
-	Dogovor = 1, 
-	Spravka = 2
+export class NotificationReadModel
+{
+	public id: number;
+	public message: string;
+	public date: any;
 }

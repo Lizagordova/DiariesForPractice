@@ -1,11 +1,11 @@
 ﻿import React, { Component}  from "react";
 import { observer } from "mobx-react";
-import { OrganizationViewModel } from "../../../../Typings/viewModels/OrganizationViewModel";
 import { makeObservable, observable } from "mobx";
-import { Button, Input } from "reactstrap";
-import { StaffViewModel } from "../../../../Typings/viewModels/StaffViewModel";
-import { StaffRole } from "../../../../Typings/enums/StaffRole";
+import { Input } from "reactstrap";
+import { StaffViewModel } from "../../../../../Typings/viewModels/StaffViewModel";
+import { OrganizationViewModel } from "../../../../../Typings/viewModels/OrganizationViewModel";
 import StaffInfo from "./StaffInfo";
+import { StaffRole } from "../../../../../Typings/enums/StaffRole";
 
 class OrganizationProps {
     organization: OrganizationViewModel;
@@ -20,7 +20,7 @@ class OrganizationProps {
 class OrganizationInfo extends Component<OrganizationProps> {
     organization: OrganizationViewModel = new OrganizationViewModel();
     editInfo: boolean;
-    
+
     constructor(props: OrganizationProps) {
         super(props);
         makeObservable(this, {
@@ -63,7 +63,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
             </>
         );
     }
-    
+
     renderOrganizationInfo() {
         return (
             <>
@@ -82,7 +82,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
             </>
         );
     }
-    
+
     render() {
         return(
             <></>

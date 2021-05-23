@@ -1,6 +1,5 @@
 using DiariesForPractice.Domain.Repositories;
 using DiariesForPractice.Domain.Services.Diaries;
-using DiariesForPractice.Domain.Services.GoogleDetail;
 using DiariesForPractice.Domain.Services.InstituteDetails;
 using DiariesForPractice.Domain.Services.Notifications;
 using DiariesForPractice.Domain.Services.Organizations;
@@ -96,6 +95,7 @@ namespace DiariesForPractice
 			services.AddSingleton<IPracticeRepository, PracticeRepository>();
 			services.AddSingleton<IStudentCharacteristicRepository, StudentCharacteristicRepository>();
 			services.AddSingleton<IStudentTaskRepository, StudentTaskRepository>();
+			services.AddSingleton<IOrganizationRepository, OrganizationRepository>();
 			services.AddSingleton<IUserRepository, UserRepository>();
 		}
 
