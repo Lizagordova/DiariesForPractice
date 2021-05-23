@@ -51,6 +51,8 @@
 		<None Include="client\src\components\Student\HomePage\Diary\DiaryWIndow.tsx" />
 		<None Include="client\src\components\Student\HomePage\HomePage.tsx" />
 		<None Include="client\src\components\Student\HomePage\OrganizationInfo\OrganizationInfo.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\CalendarPlan\CalendarPlan.tsx" />
+		<None Include="client\src\components\Student\HomePage\PracticeInfo\CalendarPlan\CalendarWeekPlan.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\OrganizationInfo\OrganizationInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\OrganizationInfo\StaffInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentCharacteristics.tsx" />
@@ -69,6 +71,7 @@
 		<None Include="client\src\components\User\UserMain.tsx" />
 		<None Include="client\src\consts\ActionType.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
+		<None Include="client\src\consts\StudentCharacteristicType.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
 		<None Include="client\src\functions\translater.tsx" />
 		<None Include="client\src\models\InstituteEnitityProps.tsx" />

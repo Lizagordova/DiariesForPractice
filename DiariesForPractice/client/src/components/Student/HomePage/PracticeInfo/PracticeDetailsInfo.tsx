@@ -13,6 +13,8 @@ import {UserReadModel} from "../../../../Typings/readModels/UserReadModel";
 import {OrganizationReadModel} from "../../../../Typings/readModels/OrganizationReadModel";
 import {PracticeReadModel} from "../../../../Typings/readModels/PracticeReadModel";
 import {ProgressBar} from "react-bootstrap";
+import {CalendarPlanViewModel} from "../../../../Typings/viewModels/CalendarPlanViewModel";
+import CalendarPlan from "./CalendarPlan/CalendarPlan";
 
 class PracticeDetailsInfoProps {
     practiceStore: PracticeStore; 
@@ -160,9 +162,8 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                 {edit && <Input
                     placeholder="Структурное подразделение"
                     value={structuralDivision}
-                    onChange={(event) => this.changePracticeDetails(event, PracticeDetailsType.StructuralDivision)}>
-                    
-                </Input>}
+                    onChange={(event) => this.changePracticeDetails(event, PracticeDetailsType.StructuralDivision)}
+                />}
             </>
         );
     }
@@ -172,7 +173,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
             <></>
         );
     }
-
+    
     renderSectionProgress() {
         let progress = this.computeProgress(this.practiceDetails)
         return (
@@ -189,6 +190,12 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                 {!this.edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.toggle(ToggleType.Edit)} />}
                 {this.renderSectionProgress()}
             </>
+        );
+    }
+
+    renderCalendarPlan(calendarPlan: CalendarPlanViewModel) {
+        return (
+            <CalendarPlan calendarPlan={calendarPlan} edit={this.edit} updateCalendarPlan={this.updateCalendarPlan}/>
         );
     }
     
@@ -216,6 +223,9 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                 </div>
                 <div className="row justify-content-center">
                     {this.renderStructuralDivision(this.practiceDetails.structuralDivision, this.edit)}
+                </div>
+                <div className="row justify-content-center">
+                    {this.renderCalendarPlan(this.practiceDetails.calendarPlan)}
                 </div>
                 <div className="row justify-content-center">
                     {this.renderOrderOfPassingPractice()}
@@ -297,6 +307,10 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
             progress += 20;
         }
         return progress;
+    }
+    
+    updateCalendarPlan(calendarPlan: CalendarPlanViewModel) {
+        this.practiceDetails.calendarPlan = calendarPlan;
     }
 }
 

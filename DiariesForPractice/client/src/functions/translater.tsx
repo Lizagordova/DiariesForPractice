@@ -3,6 +3,7 @@ import {ReportingForm} from "../Typings/enums/ReportingForm";
 import {ActionType} from "../consts/ActionType";
 import {StaffRole} from "../Typings/enums/StaffRole";
 import {PracticeType} from "../Typings/enums/PracticeType";
+import {StudentCharacteristicType} from "../consts/StudentCharacteristicType";
 
 export function translateUserRole(userRole: UserRole): string {
     let role = "";
@@ -60,4 +61,19 @@ export function translatePracticeType(practiceType: PracticeType): string {
         return "Производственная";
     }
     return practiceType;
+}
+
+export function translateStudentCharacteristicType(characteristicType: StudentCharacteristicType): string {
+    let type = "";
+    if(characteristicType === StudentCharacteristicType.DescriptionByCafedraHead) {
+        type = "Отзыв от руководителя кафедры";
+    } else if(characteristicType === StudentCharacteristicType.DescriptionByHead) {
+        type = "Отзыв от руководителя практики";
+    } else if(characteristicType === StudentCharacteristicType.MissedDaysWithoutReason) {
+        type = "Количество пропущенных дней без уважительной причины";
+    } else if(characteristicType === StudentCharacteristicType.MissedDaysWithReason) {
+        type = "Количество пропущенных дней по уважительной причине";
+    }
+
+    return type;
 }

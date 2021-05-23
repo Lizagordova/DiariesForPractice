@@ -1,10 +1,15 @@
 ﻿import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
-import { Label } from "reactstrap";
+import { Label, Input, Button } from "reactstrap";
 import { ProgressBar } from "react-bootstrap";
 import PracticeStore from "../../../../../stores/PracticeStore";
 import { StudentCharacteristicViewModel } from "../../../../../Typings/viewModels/StudentCharacteristicViewModel";
+import { StudentCharacteristicType } from "../../../../../consts/StudentCharacteristicType";
+import { translateStudentCharacteristicType } from "../../../../../functions/translater";
+import {mapToStudentCharacteristicReadModel} from "../../../../../functions/mapper";
+import CalendarPlan from "./CalendarPlan";
+import {CalendarPlanViewModel} from "../../../../../Typings/viewModels/CalendarPlanViewModel";
 
 class StudentCharacteristicsProps {
     practiceStore: PracticeStore;
@@ -15,12 +20,16 @@ class StudentCharacteristicsProps {
 class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     studentCharacteristics: StudentCharacteristicViewModel = new StudentCharacteristicViewModel();
     edit: boolean;
+    saved: boolean;
+    notSaved: boolean;
 
     constructor(props: StudentCharacteristicsProps) {
         super(props);
         makeObservable(this, {
             studentCharacteristics: observable,
-            edit: observable
+            edit: observable,
+            saved: observable,
+            notSaved: observable
         });
         this.setStudentCharacteristics();
     }
@@ -42,41 +51,62 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
         );
     }
 
-    renderDescriptionByHead() {
+    renderCharacteristic(edit: boolean, characteristic: string | number, characteristicType: StudentCharacteristicType) {
+        let type = translateStudentCharacteristicType(characteristicType);
         return (
             <>
+                <Label>{type}</Label>
+                {!edit && <span>{characteristic}</span>}
+                {edit && <Input
+                    placeholder={type}
+                    value={characteristic}
+                    onChange={(event) => this.inputChange(event, characteristicType)}
+                />}
             </>
-        );
-    }
-
-    renderMissedDaysWithoutReason() {
-        return (
-            <>
-                <Label>
-
-                </Label>
-            </>
-        );
-    }
-
-    renderMissedDaysWithReason() {
-        return (
-            <></>
-        );
-    }
-
-    renderDescriptionByCafedraHead() {
-        return (
-            <></>
         );
     }
 
     renderHeader() {
-
+        return(
+            <>
+                <Label>Характеристика студента</Label>
+                {!this.edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
+                {this.renderSectionProgress()}
+            </>
+        );
     }
+
+    renderSaveButton() {
+        return (
+            <Button
+                onClick={() => this.save()}>
+                Сохранить
+            </Button>
+        );
+    }
+    
     render() {
         return (
-            <></>
+            <>
+                <div className="row justify-content-center">
+                    {this.renderHeader()}
+                </div>
+                <div className="row justify-content-center">
+                    {this.renderCharacteristic(this.edit, this.studentCharacteristics.descriptionByCafedraHead, StudentCharacteristicType.DescriptionByCafedraHead)}
+                </div>
+                <div className="row justify-content-center">
+                    {this.renderCharacteristic(this.edit, this.studentCharacteristics.descriptionByHead, StudentCharacteristicType.DescriptionByHead)}
+                </div>
+                <div className="row justify-content-center">
+                    {this.renderCharacteristic(this.edit, this.studentCharacteristics.missedDaysWithReason, StudentCharacteristicType.MissedDaysWithReason)}
+                </div>
+                <div className="row justify-content-center">
+                    {this.renderCharacteristic(this.edit, this.studentCharacteristics.missedDaysWithoutReason, StudentCharacteristicType.MissedDaysWithoutReason)}
+                </div>
+                {this.edit && <div className="row justify-content-center">
+                    {this.renderSaveButton()}
+                </div>}
+            </>
         );
     }
 
@@ -104,13 +134,20 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
 
         return progress;
     }
+
+    save() {
+        let studentCharacteristic = mapToStudentCharacteristicReadModel(this.studentCharacteristics);
+        this.props.practiceStore.addOrUpdateStudentCharacteristic(studentCharacteristic)
+            .then((status) => {
+                this.saved = status === 200;
+                this.notSaved = status !== 200;
+                this.edit = status !== 200;
+            })
+    }
+
+    editToggle() {
+        this.edit = !this.edit;
+    }
 }
 
 export default StudentCharacteristics;
-
-enum StudentCharacteristicType {
-    DescriptionByHead,
-    DescriptionByCafedraHead,
-    MissedDaysWithReason,
-    MissedDaysWithoutReason
-}
