@@ -71,6 +71,7 @@
 		<None Include="client\src\components\User\UserMain.tsx" />
 		<None Include="client\src\consts\ActionType.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
+		<None Include="client\src\consts\StaffDataType.tsx" />
 		<None Include="client\src\consts\StudentCharacteristicType.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
 		<None Include="client\src\functions\translater.tsx" />

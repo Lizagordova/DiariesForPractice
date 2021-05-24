@@ -8,18 +8,16 @@ import {translatePracticeType, translateReportingForm} from "../../../../functio
 import {PracticeType} from "../../../../Typings/enums/PracticeType";
 import Calendar from "react-calendar";
 import PracticeStore from "../../../../stores/PracticeStore";
-import {mapToPracticeDetailsReadModel} from "../../../../functions/mapper";
+import { mapToPracticeDetailsReadModel} from "../../../../functions/mapper";
 import {UserReadModel} from "../../../../Typings/readModels/UserReadModel";
-import {OrganizationReadModel} from "../../../../Typings/readModels/OrganizationReadModel";
 import {PracticeReadModel} from "../../../../Typings/readModels/PracticeReadModel";
 import {ProgressBar} from "react-bootstrap";
 import {CalendarPlanViewModel} from "../../../../Typings/viewModels/CalendarPlanViewModel";
 import CalendarPlan from "./CalendarPlan/CalendarPlan";
 
 class PracticeDetailsInfoProps {
-    practiceStore: PracticeStore; 
-    studentId: number;
-    organizationId: number;
+    practiceStore: PracticeStore;
+    practiceDetails: PracticeViewModel;
 }
 
 @observer
@@ -51,11 +49,9 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     }
 
     setPracticeDetails() {
-        this.props.practiceStore.getPracticeDetails(this.props.studentId)
-            .then((practiceDetails) => {
-                this.practiceDetails = practiceDetails;
-            })
+        this.practiceDetails = this.props.practiceDetails;
     }
+    
     renderWarnings() {
         setTimeout(() => {
             this.saved = false;
@@ -271,7 +267,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     }
     
     save() {
-        let practiceDetails = this.getPracticeDetailsReadModel();
+        let practiceDetails = mapToPracticeDetailsReadModel(this.practiceDetails);
         this.props.practiceStore
             .addOrUpdatePracticeDetails(practiceDetails)
             .then((status) => {
@@ -279,19 +275,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                 this.notSaved = status !== 200;
             });
     }
-    
-    getPracticeDetailsReadModel(): PracticeReadModel {
-        let practiceDetails = mapToPracticeDetailsReadModel(this.practiceDetails);
-        let student = new UserReadModel();
-        student.id = this.props.studentId;
-        let organization = new OrganizationReadModel();
-        organization.id = this.props.organizationId;
-        practiceDetails.student = student;
-        practiceDetails.organization = organization;
-        
-        return practiceDetails;
-    }
-    
+
     computeProgress(practiceDetails: PracticeViewModel) {//todo: 
         let progress = 0;
         if(practiceDetails.reportingForm !== ReportingForm.None) {

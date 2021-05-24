@@ -11,5 +11,6 @@ namespace DiariesForPractice.ReadModels
         public string Job { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public int PracticeDetailsId { get; set; }
     }
 }

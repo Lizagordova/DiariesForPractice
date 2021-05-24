@@ -8,8 +8,6 @@ import { StudentCharacteristicViewModel } from "../../../../../Typings/viewModel
 import { StudentCharacteristicType } from "../../../../../consts/StudentCharacteristicType";
 import { translateStudentCharacteristicType } from "../../../../../functions/translater";
 import {mapToStudentCharacteristicReadModel} from "../../../../../functions/mapper";
-import CalendarPlan from "./CalendarPlan";
-import {CalendarPlanViewModel} from "../../../../../Typings/viewModels/CalendarPlanViewModel";
 
 class StudentCharacteristicsProps {
     practiceStore: PracticeStore;

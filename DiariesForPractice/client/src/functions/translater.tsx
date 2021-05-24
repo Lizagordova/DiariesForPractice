@@ -4,6 +4,7 @@ import {ActionType} from "../consts/ActionType";
 import {StaffRole} from "../Typings/enums/StaffRole";
 import {PracticeType} from "../Typings/enums/PracticeType";
 import {StudentCharacteristicType} from "../consts/StudentCharacteristicType";
+import {StaffDataType} from "../consts/StaffDataType";
 
 export function translateUserRole(userRole: UserRole): string {
     let role = "";
@@ -73,6 +74,21 @@ export function translateStudentCharacteristicType(characteristicType: StudentCh
         type = "Количество пропущенных дней без уважительной причины";
     } else if(characteristicType === StudentCharacteristicType.MissedDaysWithReason) {
         type = "Количество пропущенных дней по уважительной причине";
+    }
+
+    return type;
+}
+
+export function translateStaffInfoType(staffInfoType: StaffDataType): string {
+    let type = "";
+    if(staffInfoType === StaffDataType.FullName) {
+        type = "Фио";
+    } else if(staffInfoType === StaffDataType.Email) {
+        type = "Email";
+    } else if(staffInfoType === StaffDataType.Phone) {
+        type = "Телефон";
+    } else if(staffInfoType === StaffDataType.Job) {
+        type = "Должность";
     }
 
     return type;

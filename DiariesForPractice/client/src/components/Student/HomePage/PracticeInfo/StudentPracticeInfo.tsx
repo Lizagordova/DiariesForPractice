@@ -8,6 +8,8 @@ import {PracticeViewModel} from "../../../../Typings/viewModels/PracticeViewMode
 import {makeObservable, observable} from "mobx";
 import {OrganizationViewModel} from "../../../../Typings/viewModels/OrganizationViewModel";
 import {StaffViewModel} from "../../../../Typings/viewModels/StaffViewModel";
+import PracticeDetailsInfo from "./PracticeDetailsInfo";
+import StudentTask from "./StudentTask";
 
 class StudentPracticeInfoProps {
     store: RootStore;
@@ -16,48 +18,82 @@ class StudentPracticeInfoProps {
 @observer
 class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
     practiceDetails: PracticeViewModel = new PracticeViewModel();
+    update: boolean;
     
     constructor(props: StudentPracticeInfoProps) {
         super(props);
         makeObservable(this, {
-           practiceDetails: observable 
+           practiceDetails: observable,
+           update: observable 
         });
+        this.setPracticeDetails();
+    }
+
+    setPracticeDetails() {
+        let studentId = this.props.store.userStore.currentUser.id;
+        this.props.store.practiceStore
+            .getPracticeDetails(studentId)
+            .then((practiceDetails) => {
+                this.practiceDetails = practiceDetails;
+            });
     }
     
-    renderOrganizationInfo() {
+    renderOrganizationInfo(update: boolean) {
         return (
-            <OrganizationInfo organization={this.practiceDetails.organization} store={this.props.store} updateOrganization={this.updateOrganization}/>
+            <OrganizationInfo 
+                organization={this.practiceDetails.organization}
+                store={this.props.store} 
+                practiceDetailsId={this.practiceDetails.id} updateOrganization={this.updateOrganization}/>
         );
     }
-    
+
     renderStaffInfo(staff: StaffViewModel, role: StaffRole) {
         return (
             <>
-                <StaffInfo staff={staff} role={role} updateStaff={this.updateStaff}/>
+                <StaffInfo
+                    staff={staff}
+                    role={role}
+                    organizationId={this.practiceDetails.organization.id}
+                    organizationStore={this.props.store.organizationStore}
+                    practiceDetailsId={this.practiceDetails.id}
+                />
             </>
+        );
+    }
+
+    renderPracticeDetails(update: boolean) {
+        return (
+            <PracticeDetailsInfo
+                practiceStore={this.props.store.practiceStore}
+                practiceDetails={this.practiceDetails}
+            />
+        );
+    }
+
+    renderStudentTask(update: boolean) {
+        return (
+            <StudentTask 
+                studentTask={this.practiceDetails.studentTask}
+                practiceStore={this.props.store.practiceStore}
+                practiceDetailsId={this.practiceDetails.id}
+            />
         );
     }
     
     render() {
         return (
             <>
-                {this.renderOrganizationInfo()}
+                {this.renderOrganizationInfo(this.update)}
                 {this.renderStaffInfo(this.practiceDetails.responsibleForStudent, StaffRole.Responsible)}
                 {this.renderStaffInfo(this.practiceDetails.signsTheContract, StaffRole.SignsTheContract)}
+                {this.renderPracticeDetails(this.update)}
+                {this.renderStudentTask(this.update)}
             </>
         );
     }
 
     updateOrganization(organization: OrganizationViewModel) {
         this.practiceDetails.organization = organization;
-    }
-
-    updateStaff(staff: StaffViewModel, role: StaffRole) {
-        if(role === StaffRole.Responsible) {
-            this.practiceDetails.responsibleForStudent = staff;
-        } else if(role === StaffRole.SignsTheContract) {
-            this.practiceDetails.signsTheContract = staff;
-        }
     }
 }
 

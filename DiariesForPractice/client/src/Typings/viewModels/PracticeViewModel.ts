@@ -8,6 +8,8 @@ import { ReportingForm } from '../enums/ReportingForm';
 import { StaffViewModel } from './StaffViewModel';
 import { PracticeType } from '../enums/PracticeType';
 import { CalendarPlanViewModel } from './CalendarPlanViewModel';
+import { StudentTaskViewModel } from './StudentTaskViewModel';
+import { StudentCharacteristicViewModel } from './StudentCharacteristicViewModel';
 
 export class PracticeViewModel
 {
@@ -24,4 +26,6 @@ export class PracticeViewModel
 	public structuralDivision: string;
 	public orderOfPassingPractice: string;
 	public calendarPlan: CalendarPlanViewModel;
+	public studentTask: StudentTaskViewModel;
+	public studentCharacteristic: StudentCharacteristicViewModel;
 }

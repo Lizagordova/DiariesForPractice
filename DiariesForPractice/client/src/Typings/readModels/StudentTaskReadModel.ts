@@ -7,4 +7,5 @@ export class StudentTaskReadModel
 	public id: number;
 	public studentId: number;
 	public task: string;
+	public practiceDetailsId: number;
 }

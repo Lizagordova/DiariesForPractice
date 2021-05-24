@@ -11,5 +11,6 @@ namespace DiariesForPractice.ReadModels
         public string DescriptionByCafedraHead { get; set; }
         public int MissedDaysWithReason { get; set; }
         public int MissedDaysWithoutReason { get; set; }
+        public int PracticeDetailsId { get; set; }
     }
 }

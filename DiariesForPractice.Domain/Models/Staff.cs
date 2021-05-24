@@ -1,4 +1,6 @@
-﻿namespace DiariesForPractice.Domain.Models
+﻿using DiariesForPractice.Domain.enums;
+
+namespace DiariesForPractice.Domain.Models
 {
 	public class Staff
 	{
@@ -8,5 +10,6 @@
 		public string Job { get; set; }
 		public string Email { get; set; }
 		public string Phone { get; set; }
+		public StaffRole Role { get; set; }
 	}
 }

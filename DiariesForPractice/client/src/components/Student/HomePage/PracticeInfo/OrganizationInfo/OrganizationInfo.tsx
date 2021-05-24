@@ -10,6 +10,7 @@ import {mapToOrganizationReadModel} from "../../../../../functions/mapper";
 class OrganizationProps {
     organization: OrganizationViewModel;
     store: RootStore;
+    practiceDetailsId: number;
     updateOrganization: any;
 }
 
@@ -142,7 +143,8 @@ class OrganizationInfo extends Component<OrganizationProps> {
         let progress = 0;
         if(organization.name !== "") {
             progress += 50;
-        } else if(organization.legalAddress !== "") {
+        }
+        if(organization.legalAddress !== "") {
             progress += 50;
         }
 

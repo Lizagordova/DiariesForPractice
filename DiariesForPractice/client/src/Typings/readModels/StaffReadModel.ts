@@ -10,4 +10,5 @@ export class StaffReadModel
 	public job: string;
 	public email: string;
 	public phone: string;
+	public practiceDetailsId: number;
 }

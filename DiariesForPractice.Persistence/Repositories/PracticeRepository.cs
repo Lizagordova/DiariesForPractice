@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
+using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Queries;
 using DiariesForPractice.Domain.Repositories;
@@ -46,6 +48,11 @@ namespace DiariesForPractice.Persistence.Repositories
 			return practiceDetails;
 		}
 
+		public void AttachDataToPracticeDetails(int dataId, int practiceDetailsId, PracticeDetailsDataType type)
+		{
+			throw new NotImplementedException();
+		}
+		
 		private DynamicTvpParameters GetAddOrUpdatePracticeDetailsParam(PracticeDetails practiceDetails)
 		{
 			var param = new DynamicTvpParameters();

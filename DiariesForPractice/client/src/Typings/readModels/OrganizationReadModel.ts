@@ -7,4 +7,5 @@ export class OrganizationReadModel
 	public id: number;
 	public name: string;
 	public legalAddress: string;
+	public practiceDetailsId: number;
 }

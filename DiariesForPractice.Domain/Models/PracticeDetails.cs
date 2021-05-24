@@ -18,5 +18,6 @@ namespace DiariesForPractice.Domain.Models
 		public string StructuralDivision { get; set; }
 		public string OrderOfPassingPractice { get; set; }
 		public CalendarPlan CalendarPlan { get; set; }
+		public StudentCharacteristic StudentCharacteristic { get; set; }
 	}
 }

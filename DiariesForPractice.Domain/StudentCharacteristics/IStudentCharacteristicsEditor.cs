@@ -4,6 +4,6 @@ namespace DiariesForPractice.Domain.StudentCharacteristics
 {
     public interface IStudentCharacteristicsEditor
     {
-        int AddOrUpdateStudentCharacteristic(StudentCharacteristic studentCharacteristic);
+        int AddOrUpdateStudentCharacteristic(StudentCharacteristic studentCharacteristic, int practiceDetailsId);
     }
 }

@@ -12,6 +12,8 @@ import {GroupViewModel} from "../Typings/viewModels/GroupViewModel";
 import {GroupReadModel} from "../Typings/readModels/GroupReadModel";
 import {OrganizationViewModel} from "../Typings/viewModels/OrganizationViewModel";
 import {OrganizationReadModel} from "../Typings/readModels/OrganizationReadModel";
+import {StaffViewModel} from "../Typings/viewModels/StaffViewModel";
+import {StaffReadModel} from "../Typings/readModels/StaffReadModel";
 
 export function mapToInstituteReadModel(instituteViewModel: InstituteViewModel): InstituteReadModel {
     //todo: реализовать
@@ -46,4 +48,9 @@ export function mapToGroupReadModel(group: GroupViewModel): GroupReadModel {
 export function mapToOrganizationReadModel(organization: OrganizationViewModel): OrganizationReadModel {
     //todo: реализовать
     return new OrganizationReadModel();
+}
+
+export function mapToStaffReadModel(staff: StaffViewModel): StaffReadModel {
+    //todo: реализовать
+    return new StaffReadModel();
 }

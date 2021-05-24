@@ -21,10 +21,10 @@ namespace DiariesForPractice.Persistence.Repositories
             _mapper = mapper;
         }
         
-        public int AddOrUpdateStudentCharacteristic(StudentCharacteristic studentCharacteristic)
+        public int AddOrUpdateStudentCharacteristic(StudentCharacteristic studentCharacteristic, int practiceDetailsId)
         {
             var conn = DatabaseHelper.OpenConnection();
-            var param = GetStudentCharacteristicParam(studentCharacteristic);
+            var param = GetStudentCharacteristicParam(studentCharacteristic, practiceDetailsId);
             var studentId = conn
                 .Query(AddOrUpdateStudentCharacteristicSp, param, commandType: CommandType.StoredProcedure)
                 .FirstOrDefault();
@@ -48,13 +48,14 @@ namespace DiariesForPractice.Persistence.Repositories
             return studentCharacteristic;
         }
 
-        private DynamicTvpParameters GetStudentCharacteristicParam(StudentCharacteristic studentCharacteristic)
+        private DynamicTvpParameters GetStudentCharacteristicParam(StudentCharacteristic studentCharacteristic, int practiceDetailsId)
         {
             var param = new DynamicTvpParameters();
             var tvp = new TableValuedParameter("studentCharacteristic", "UDT_StudentCharacteristic");
             var udt = _mapper.Map<StudentCharacteristic, StudentCharacteristicUdt>(studentCharacteristic);
             tvp.AddObjectAsRow(udt);
             param.Add(tvp);
+            param.Add("practiceDetailsId", practiceDetailsId);
             
             return param;
         }

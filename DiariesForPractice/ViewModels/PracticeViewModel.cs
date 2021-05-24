@@ -20,5 +20,7 @@ namespace DiariesForPractice.ViewModels
         public string StructuralDivision { get; set; }
         public string OrderOfPassingPractice { get; set; }
         public CalendarPlanViewModel CalendarPlan { get; set; }
+        public StudentTaskViewModel StudentTask { get; set; }
+        public StudentCharacteristicViewModel StudentCharacteristic { get; set; }
     }
 }

@@ -135,24 +135,9 @@ class SettingsWindow extends Component<ISettingsWindowProps> {
     }
 
     save() {
-        this.props.store.googleDetailsStore.addOrUpdateGoogleDetails(this.googleDetails)
-            .then((status) => {
-                this.notSaved = status !== 200;
-                this.saved = status === 200;
-            });
+        
     }
 
-    inputSetting(event: React.ChangeEvent<HTMLInputElement>, setting: SettingType) {
-        if(setting === SettingType.SpreadSheetId) {
-            this.googleDetails.spreadSheetId = event.target.value;
-        } else if(setting === SettingType.SheetName) {
-            this.googleDetails.sheetName = event.target.value;
-        } else if(setting === SettingType.FirstCell) {
-            this.googleDetails.firstCell = event.target.value;
-        } else if(setting === SettingType.LastCell) {
-            this.googleDetails.lastCell = event.target.value;
-        }
-    }
 }
 
 export default SettingsWindow;

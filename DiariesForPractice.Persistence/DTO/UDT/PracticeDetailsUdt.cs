@@ -17,5 +17,7 @@ namespace DiariesForPractice.Persistence.DTO.UDT
 		public DateTime EndDate { get; set; }
 		public string StructuralDivision { get; set; }
 		public string OrderOfPassingPractice { get; set; }
+		public int StudentCharacteristicId { get; set; }
+		public int StudentTaskId { get; set; }
 	}
 }

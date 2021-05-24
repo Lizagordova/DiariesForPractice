@@ -41,7 +41,7 @@ namespace DiariesForPractice.Controllers
             {
                 var studentCharacteristic =
                     _mapper.Map<StudentCharacteristicReadModel, StudentCharacteristic>(studentCharacteristicReadModel);
-                var studentCharacteristicId = _studentCharacteristicsEditor.AddOrUpdateStudentCharacteristic(studentCharacteristic);
+                var studentCharacteristicId = _studentCharacteristicsEditor.AddOrUpdateStudentCharacteristic(studentCharacteristic, studentCharacteristicReadModel.PracticeDetailsId);
 
                 return new JsonResult(studentCharacteristicId);
             }

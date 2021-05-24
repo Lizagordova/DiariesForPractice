@@ -9,7 +9,8 @@ import {ProgressBar} from "react-bootstrap";
 
 class StudentTaskProps {
     practiceStore: PracticeStore;
-    studentId: number;
+    studentTask: StudentTaskViewModel;
+    practiceDetailsId: number;
 }
 
 @observer
@@ -31,11 +32,7 @@ class IndividualTask extends Component<StudentTaskProps> {
     }
 
     setStudentTask() {
-        let studentId = this.props.studentId;
-        this.props.practiceStore.getStudentTask(studentId)
-            .then((studentTask) => {
-                this.studentTask = studentTask;
-            });
+        this.studentTask = this.props.studentTask;
     }
     
     renderStudentTask(task: string) {
@@ -43,7 +40,7 @@ class IndividualTask extends Component<StudentTaskProps> {
             <>
                 {!this.edit && <span>{task}</span>}
                 {this.edit && <>
-                    <Label>Индивидуальное задание</Label>
+                    <Label>Задание</Label>
                     <Input
                     value={task}
                     placeholder="Индивидуальное задание"
@@ -86,9 +83,7 @@ class IndividualTask extends Component<StudentTaskProps> {
     renderHeader() {
         return (
             <>
-                <Label>
-                    Индивидуальное задание
-                </Label>
+                <Label>Индивидуальное задание</Label>
                 {!this.edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
                 {this.renderSectionProgress()}
             </>

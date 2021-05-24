@@ -1,5 +1,6 @@
 ﻿import { OrganizationReadModel } from "../Typings/readModels/OrganizationReadModel";
 import {OrganizationViewModel} from "../Typings/viewModels/OrganizationViewModel";
+import {StaffReadModel} from "../Typings/readModels/StaffReadModel";
 
 class OrganizationStore {
     constructor() {
@@ -31,6 +32,24 @@ class OrganizationStore {
         }
         
         return organization;
+    }
+    
+    async addOrUpdateStaff(staff: StaffReadModel): Promise<number> {
+        let staffId = 0;
+        const response = await fetch("/addorupdatestaff", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                staff: staff//todo: всё ещё не знаю, можно ли так
+            })
+        });
+        if(response.status === 200) {
+            staffId = await response.json();
+        }
+
+        return staffId;
     }
 }
 

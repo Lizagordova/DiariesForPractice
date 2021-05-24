@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 
 namespace DiariesForPractice.Domain.Repositories

@@ -14,10 +14,10 @@ namespace DiariesForPractice.Persistence.Services.StudentCharacteristics
             _studentCharacteristicRepository = studentCharacteristicRepository;
         }
         
-        public int AddOrUpdateStudentCharacteristic(StudentCharacteristic studentCharacteristic)
+        public int AddOrUpdateStudentCharacteristic(StudentCharacteristic studentCharacteristic, int practiceDetailsId)
         {
             var studentCharacteristicsId =
-                _studentCharacteristicRepository.AddOrUpdateStudentCharacteristic(studentCharacteristic);
+                _studentCharacteristicRepository.AddOrUpdateStudentCharacteristic(studentCharacteristic, practiceDetailsId);
 
             return studentCharacteristicsId;
         }

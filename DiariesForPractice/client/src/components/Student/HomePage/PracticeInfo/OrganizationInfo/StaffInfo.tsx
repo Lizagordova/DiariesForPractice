@@ -1,116 +1,142 @@
-﻿import React, { Component } from "react";
+﻿import React, {Component} from "react";
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
-import { Input, Label } from "reactstrap";
+import {Input, Label, Button, Alert} from "reactstrap";
 import { StaffViewModel } from "../../../../../Typings/viewModels/StaffViewModel";
 import { StaffRole } from "../../../../../Typings/enums/StaffRole";
-import { translateStaffRole } from "../../../../../functions/translater";
+import { translateStaffInfoType, translateStaffRole } from "../../../../../functions/translater";
+import { StaffDataType } from "../../../../../consts/StaffDataType";
+import { ProgressBar } from "react-bootstrap";
+import OrganizationStore from "../../../../../stores/OrganizationStore";
+import { mapToStaffReadModel } from "../../../../../functions/mapper";
+import {StaffReadModel} from "../../../../../Typings/readModels/StaffReadModel";
 
 class StaffInfoProps {
     staff: StaffViewModel;
     role: StaffRole;
-    updateStaff: any;
     organizationId: number;
+    organizationStore: OrganizationStore;
+    practiceDetailsId: number;
 }
 
 @observer
 class StaffInfo extends Component<StaffInfoProps> {
     staff: StaffViewModel = new StaffViewModel();
     edit: boolean;
+    saved: boolean;
+    notSaved: boolean;
+    notOrganizationInfo: boolean;
 
     constructor(props: StaffInfoProps) {
         super(props);
         makeObservable(this, {
             staff: observable,
+            edit: observable,
+            saved: observable,
+            notSaved: observable,
+            notOrganizationInfo: observable
         });
+        this.setStaff();
     }
 
-    renderFullName(fullName: string, edit: boolean) {
+    componentDidUpdate(prevProps: Readonly<StaffInfoProps>, prevState: Readonly<{}>, snapshot?: any) {
+        if(prevProps.organizationId !== this.props.organizationId) {
+            this.staff.organizationId = this.props.organizationId;
+            this.notOrganizationInfo = false;
+        }
+    }
+
+    setStaff() {
+        let staff = this.props.staff;
+        staff.organizationId = this.props.organizationId;
+        this.staff = staff;
+    }
+
+    renderWarnings() {
+        setTimeout(() => {
+            this.notSaved = false;
+            this.saved = false;
+        }, 6000);
         return (
             <>
-                <Label>ФИО: </Label>
-                {edit && <span>{fullName}</span>}
-                {!edit && <Input
-                    value={fullName}
-                    onChange={(event) => this.inputStaffData(event, StaffDataType.FullName)}
-                />}
+                {this.notSaved && <Alert color="danger">Что-то пошло не так, и данные не сохранились</Alert>}
+                {this.saved && <Alert color="success">Данные успешно сохранились</Alert>}
+                {this.notOrganizationInfo && <Alert color="danger">Добавьте данные об организации сначала.</Alert>}
             </>
-        );
-    }
-
-    renderJob(job: string, edit: boolean) {
-        return(
-            <>
-                <Label>Должность: </Label>
-                {edit && <span>{job}</span>}
-                {!edit && <Input
-                    value={job}
-                    onChange={(event) => this.inputStaffData(event, StaffDataType.Job)}
-                />}
-            </>
-        );
-    }
-
-    renderEmail(email: string, edit: boolean) {
-        return (
-            <>
-                <Label>Email</Label>
-                {edit && <span>{email}</span>}
-                {!edit && <Input
-                    value={email}
-                    onChange={(event) => this.inputStaffData(event, StaffDataType.Email)}
-                />}
-            </>
-        );
-    }
-
-    renderPhone(phone: string, edit: boolean) {
-        return(
-            <>
-                <Label>Телефон: </Label>
-                {edit && <span>{phone}</span>}
-                {!edit && <Input
-                    value={phone}
-                    onChange={(event) => this.inputStaffData(event, StaffDataType.Phone)}
-                />}
-            </>
-        );
-    }
-
-    renderHeader(staffRole: StaffRole) {
-        return (
-            <Label>
-                {translateStaffRole(staffRole)}
-            </Label>
         );
     }
     
-    renderStaffInfo() {
+    renderData(data: string, type: StaffDataType, edit: boolean) {
+        return (
+            <>
+                <Label>{translateStaffInfoType(type)}</Label>
+                {edit && <span>{data}</span>}
+                {!edit && <Input
+                    value={data}
+                    onChange={(event) => this.inputStaffData(event, type)}
+                />}
+            </>
+        );
+    }
+
+    renderSectionProgress() {
+        let progress = this.computeProgress(this.staff);
+        return (
+            <ProgressBar>{progress}</ProgressBar>
+        );
+    }
+    
+    renderHeader(staffRole: StaffRole) {
+        return (
+            <>
+                <Label>{translateStaffRole(staffRole)}</Label>
+                {!this.edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
+                {this.renderSectionProgress()}
+            </>
+        );
+    }
+    
+    renderStaffInfo(edit: boolean) {
         return (
             <>
                 <div className="row justify-content-center">
                     {this.renderHeader(this.props.role)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderFullName(this.staff.fullName, this.edit)}
+                    {this.renderData(this.staff.fullName, StaffDataType.FullName, edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderJob(this.staff.job, this.edit)}
+                    {this.renderData(this.staff.job, StaffDataType.Job, edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderEmail(this.staff.email, this.edit)}
+                    {this.renderData(this.staff.email, StaffDataType.Email, edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderPhone(this.staff.phone, this.edit)}
+                    {this.renderData(this.staff.phone, StaffDataType.Phone, edit)}
                 </div>
             </>
         );
     }
 
+    renderSaveButton() {
+        return (
+            <Button
+                outline color="success"
+                onClick={() => this.save()}
+            >
+                Сохранить
+            </Button>
+        );
+    }
+    
     render() {
         return (
             <>
-                {this.renderStaffInfo()}
+                {this.renderWarnings()}
+                {this.renderStaffInfo(this.edit)}
+                {this.edit && <div className="row justify-content-center">
+                    {this.renderSaveButton()}
+                </div>}
             </>
         );
     }
@@ -126,15 +152,53 @@ class StaffInfo extends Component<StaffInfoProps> {
         } else if(dataType === StaffDataType.Email) {
             this.staff.email = value;
         }
-        this.props.updateStaffInfo(this.staff, this.props.role);
+    }
+
+    editToggle() {
+        this.edit = !this.edit;
+    }
+
+    computeProgress(staff: StaffViewModel) {
+        let progress = "";
+        if(staff.fullName !== "") {
+            progress += 25;
+        }
+        if(staff.job !== "") {
+            progress += 25;
+        }
+        if(staff.email !== "") {
+            progress += 25;
+        }
+        if(staff.phone !== "") {
+            progress += 25;
+        }
+
+        return progress;
+    }
+
+    save() {
+        let staff = this.getStaffReadModel();
+        if(staff.organizationId === 0) {
+            this.notOrganizationInfo = true;
+        } else {
+            this.props.organizationStore.addOrUpdateStaff(staff)
+                .then((staffId) => {
+                    if(staffId !== 0) {
+                        this.staff.id = staffId;
+                        this.saved = true;
+                    } else {
+                        this.notSaved = true;
+                    }
+                });
+        }
+    }
+    
+    getStaffReadModel(): StaffReadModel {
+        let staff = mapToStaffReadModel(this.staff);
+        staff.practiceDetailsId = this.props.practiceDetailsId;
+        
+        return staff;
     }
 }
 
 export default StaffInfo;
-
-enum StaffDataType {
-    FullName,
-    Job,
-    Email,
-    Phone
-}

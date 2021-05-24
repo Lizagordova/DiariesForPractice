@@ -45,7 +45,26 @@ namespace DiariesForPractice.Controllers
             }
             catch (Exception e)
             {
-                _logService.AddAuthorizationLog(_logger, e, LogType.Base);
+                _logService.AddOrUpdateOrganizationLog(_logger, e, LogType.Base);
+                
+                return new StatusCodeResult(500);
+            }
+        }
+        
+        [HttpPost]
+        [Route("/addorupdatestaff")]
+        public ActionResult AddOrUpdateStaff([FromBody]StaffReadModel staffReadModel)
+        {
+            try
+            {
+                var staff = _mapper.Map<StaffReadModel, Staff>(staffReadModel);
+                var staffId = _organizationEditor.AddOrUpdateStaff(staff, staffReadModel.PracticeDetailsId);
+
+                return new JsonResult(staffId);
+            }
+            catch (Exception e)
+            {
+                _logService.AddOrUpdateStaffLog(_logger, e, LogType.Base);
                 
                 return new StatusCodeResult(500);
             }

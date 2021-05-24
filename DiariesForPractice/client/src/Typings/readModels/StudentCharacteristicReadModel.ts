@@ -10,4 +10,5 @@ export class StudentCharacteristicReadModel
 	public descriptionByCafedraHead: string;
 	public missedDaysWithReason: number;
 	public missedDaysWithoutReason: number;
+	public practiceDetailsId: number;
 }

@@ -109,8 +109,10 @@ CREATE TABLE [PracticeDetails]
     [StartDate] DATETIME2,
     [EndDate] DATETIME2,
     [StructuralDivision] NVARCHAR(MAX),
-    [OrderOfPassingPractice] NVARCHAR(MAX)/*МБ ЗДЕСЬ INT*/
-    );
+    [OrderOfPassingPractice] NVARCHAR(MAX)/*МБ ЗДЕСЬ INT*/,
+    [StudentCharacteristicId] INT REFERENCES [StudentCharacteristics]([Id]) ON DELETE CASCADE,
+    [StudentTaskId] INT REFERENCES [StudentTask]([Id]) ON DELETE CASCADE
+);
 
 
 CREATE TABLE [CalendarWeekPlan]
@@ -302,7 +304,9 @@ CREATE TYPE [UDT_PracticeDetails] AS TABLE
     [EndDate] DATETIME2,
     [StructuralDivision] NVARCHAR(MAX),
     [OrderOfPassingPractice] NVARCHAR(MAX),
-    [CalendarPlanId] INT
+    [CalendarPlanId] INT,
+    [StudentCharacteristicId] INT,
+    [StudentTaskId] INT
     );
 
 CREATE TYPE [UDT_Integer] AS TABLE
@@ -946,7 +950,9 @@ MERGE
     [StartDate],
     [EndDate],
     [StructuralDivision],
-    [OrderOfPassingPractice]
+    [OrderOfPassingPractice],
+    [StudentCharacteristicId],
+    [StudentTaskId]
     ) VALUES (
     [src].[StudentId],
     [src].[OrganizationId],
@@ -958,7 +964,9 @@ MERGE
     [src].[StartDate],
     [src].[EndDate],
     [src].[StructuralDivision],
-    [src].[OrderOfPassingPractice]
+    [src].[OrderOfPassingPractice],
+    [src].[StudentCharacteristicId],
+    [src].[StudentTaskId]
     )
     WHEN MATCHED THEN
 UPDATE
@@ -1015,7 +1023,9 @@ INTO @practiceDetails (
     [StartDate],
     [EndDate],
     [StructuralDivision],
-    [OrderOfPassingPractice]
+    [OrderOfPassingPractice],
+    [StudentCharacteristicId],
+    [StudentTaskId]
 )
 SELECT
     [Id],
@@ -1029,7 +1039,9 @@ SELECT
     [StartDate],
     [EndDate],
     [StructuralDivision],
-    [OrderOfPassingPractice]
+    [OrderOfPassingPractice],
+    [StudentCharacteristicId],
+    [StudentTaskId]
 FROM [PracticeDetails]
 WHERE [StudentId] IN (SELECT [Id] FROM @studentIds);
 
@@ -1049,7 +1061,9 @@ INTO @practiceDetails (
     [StartDate],
     [EndDate],
     [StructuralDivision],
-    [OrderOfPassingPractice]
+    [OrderOfPassingPractice],
+    [StudentCharacteristicId],
+    [StudentTaskId]
 )
 SELECT
     [Id],
@@ -1063,7 +1077,9 @@ SELECT
     [StartDate],
     [EndDate],
     [StructuralDivision],
-    [OrderOfPassingPractice]
+    [OrderOfPassingPractice],
+    [StudentCharacteristicId],
+    [StudentTaskId]
 FROM [PracticeDetails]
 WHERE (@studentId IS NULL OR [StudentId] = @studentId);
 END

@@ -72,7 +72,13 @@ namespace DiariesForPractice.Services
         
         public void AddOrUpdateOrganizationLog(ILogger logger, Exception exception, LogType logType)
         {
-            var customMessage = $"Не удалось добавить организацию";
+            var customMessage = $"Не удалось добавить или обновить организацию ";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateStaffLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = $"Не удалось добавить или обновить сотрудника";
             AddLog(logger, exception, customMessage, logType);
         }
         
