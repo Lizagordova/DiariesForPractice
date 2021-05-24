@@ -4,17 +4,19 @@ import { makeObservable, observable } from "mobx";
 import { Input, Label } from "reactstrap";
 import { StaffViewModel } from "../../../../../Typings/viewModels/StaffViewModel";
 import { StaffRole } from "../../../../../Typings/enums/StaffRole";
-import {translateStaffRole} from "../../../../../functions/translater";
+import { translateStaffRole } from "../../../../../functions/translater";
 
 class StaffInfoProps {
     staff: StaffViewModel;
     role: StaffRole;
     updateStaff: any;
+    organizationId: number;
 }
 
 @observer
 class StaffInfo extends Component<StaffInfoProps> {
     staff: StaffViewModel = new StaffViewModel();
+    edit: boolean;
 
     constructor(props: StaffInfoProps) {
         super(props);
@@ -23,8 +25,7 @@ class StaffInfo extends Component<StaffInfoProps> {
         });
     }
 
-    renderFullName(fullName: string) {
-        let { edit } = this.props;
+    renderFullName(fullName: string, edit: boolean) {
         return (
             <>
                 <Label>ФИО: </Label>
@@ -37,8 +38,7 @@ class StaffInfo extends Component<StaffInfoProps> {
         );
     }
 
-    renderJob(job: string) {
-        let { edit } = this.props;
+    renderJob(job: string, edit: boolean) {
         return(
             <>
                 <Label>Должность: </Label>
@@ -51,8 +51,7 @@ class StaffInfo extends Component<StaffInfoProps> {
         );
     }
 
-    renderEmail(email: string) {
-        let { edit } = this.props;
+    renderEmail(email: string, edit: boolean) {
         return (
             <>
                 <Label>Email</Label>
@@ -65,8 +64,7 @@ class StaffInfo extends Component<StaffInfoProps> {
         );
     }
 
-    renderPhone(phone: string) {
-        let { edit } = this.props;
+    renderPhone(phone: string, edit: boolean) {
         return(
             <>
                 <Label>Телефон: </Label>
@@ -94,16 +92,16 @@ class StaffInfo extends Component<StaffInfoProps> {
                     {this.renderHeader(this.props.role)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderFullName(this.staff.fullName)}
+                    {this.renderFullName(this.staff.fullName, this.edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderJob(this.staff.job)}
+                    {this.renderJob(this.staff.job, this.edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderEmail(this.staff.email)}
+                    {this.renderEmail(this.staff.email, this.edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderPhone(this.staff.phone)}
+                    {this.renderPhone(this.staff.phone, this.edit)}
                 </div>
             </>
         );
