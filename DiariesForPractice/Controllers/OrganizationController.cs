@@ -1,4 +1,8 @@
-﻿using DiariesForPractice.Domain.Services.Organizations;
+﻿using System;
+using DiariesForPractice.Domain.enums;
+using DiariesForPractice.Domain.Models;
+using DiariesForPractice.Domain.Services.Organizations;
+using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services;
 using DiariesForPractice.Services.Mapper;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +30,25 @@ namespace DiariesForPractice.Controllers
             _mapper = mapper;
             _logger = logger;
             _logService = logService;
+        }
+
+        [HttpPost]
+        [Route("/addorupdateorganization")]
+        public ActionResult AddOrUpdateOrganization([FromBody]OrganizationReadModel organizationReadModel)
+        {
+            try
+            {
+                var organization = _mapper.Map<OrganizationReadModel, Organization>(organizationReadModel);
+                var organizationId = _organizationEditor.AddOrUpdateOrganization(organization);
+
+                return new JsonResult(organizationId);
+            }
+            catch (Exception e)
+            {
+                _logService.AddAuthorizationLog(_logger, e, LogType.Base);
+                
+                return new StatusCodeResult(500);
+            }
         }
     }
 }

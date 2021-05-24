@@ -5,6 +5,7 @@ import { DiaryViewModel } from "../../../Typings/viewModels/DiaryViewModel";
 import { makeObservable, observable } from "mobx";
 import DiaryCompletion from "./Diary/DiaryCompletion";
 import DiaryPreview from "./Diary/DiaryPreview";
+import StudentPracticeInfo from "./PracticeInfo/StudentPracticeInfo";
 
 class HomePageProps {
     store: RootStore

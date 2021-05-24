@@ -1,84 +1,124 @@
 ﻿import React, { Component}  from "react";
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
-import { Input } from "reactstrap";
-import { StaffViewModel } from "../../../../../Typings/viewModels/StaffViewModel";
+import { Input, Label, Button, Alert } from "reactstrap";
 import { OrganizationViewModel } from "../../../../../Typings/viewModels/OrganizationViewModel";
-import StaffInfo from "./StaffInfo";
-import { StaffRole } from "../../../../../Typings/enums/StaffRole";
+import { ProgressBar } from "react-bootstrap";
+import { RootStore } from "../../../../../stores/RootStore";
+import {mapToOrganizationReadModel} from "../../../../../functions/mapper";
 
 class OrganizationProps {
     organization: OrganizationViewModel;
-    updateStaff: any;
+    store: RootStore;
     updateOrganization: any;
-    edit: boolean;
-    responsibleForStudent: StaffViewModel;
-    signsTheContract: StaffViewModel;
 }
 
 @observer
 class OrganizationInfo extends Component<OrganizationProps> {
     organization: OrganizationViewModel = new OrganizationViewModel();
-    editInfo: boolean;
+    edit: boolean;
+    notSaved: boolean;
+    saved: boolean;
 
     constructor(props: OrganizationProps) {
         super(props);
         makeObservable(this, {
             organization: observable,
-            editInfo: observable,
+            edit: observable,
+            notSaved: observable,
+            saved: observable,
         });
+        this.setOrganization();
+    }
+
+    setOrganization() {
         this.organization = this.props.organization;
     }
-
-    renderOrganizationName() {
+    
+    renderWarnings() {
+        setTimeout(() => {
+            this.saved = false;
+            this.notSaved = false;
+        });
         return (
             <>
-                {!this.editInfo && <span>{this.organization.name}</span>}
-                {this.editInfo && <Input
-                    value={this.organization.name}
+                {this.saved && <Alert>Данные успешно сохранены!</Alert>}
+                {this.notSaved && <Alert>Что-то пошло не так и данные не сохранились.</Alert>}
+            </>
+        );
+    }
+    
+    renderOrganizationName(organizationName: string, edit: boolean) {
+        return (
+            <>
+                <Label>Название организации</Label>
+                {!edit && <span>{organizationName}</span>}
+                {edit && <Input
+                    value={organizationName}
                     onChange={(event) => this.inputData(event, OrganizationDataType.OrganizationName)}>
-                    {this.organization.name}
+                    {organizationName}
                 </Input>}
             </>
         );
     }
 
-    renderOrganizationLegalAddress() {
+    renderOrganizationLegalAddress(legalAddress: string, edit: boolean) {
         return (
             <>
-                {!this.editInfo && <span>{this.organization.legalAddress}</span>}
-                {this.editInfo && <Input
-                    value={this.organization.legalAddress}
+                <Label>Юридический адрес</Label>
+                {!edit && <span>{legalAddress}</span>}
+                {edit && <Input
+                    value={legalAddress}
                     onChange={(event) => this.inputData(event, OrganizationDataType.OrganizationName)}>
-                    {this.organization.name}
+                    {legalAddress}
                 </Input>}
             </>
         );
     }
 
-    renderStaff(staff: StaffViewModel, staffRole: StaffRole) {
+    renderSectionProgress() {
+        let progress = this.computeProgress(this.organization);
+        return (
+            <ProgressBar>{progress}</ProgressBar>
+        );
+    }
+
+    renderHeader(edit: boolean) {
         return (
             <>
-                <StaffInfo staff={staff} role={staffRole} edit={this.editInfo} updateStaffInfo={this.updateStaffInfo}/>
+                <Label>Организация</Label>
+                {!edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
+                {this.renderSectionProgress()}
             </>
         );
     }
 
-    renderOrganizationInfo() {
+    renderSaveButton() {
+        return (
+            <Button
+                outline color="success"
+                onClick={() => this.save()}>
+                Сохранить
+            </Button>
+        );
+    }
+    
+    renderOrganizationInfo(organization: OrganizationViewModel, edit: boolean) {
         return (
             <>
+                {this.renderWarnings()}
                 <div className="row justify-content-center">
-                    {this.renderOrganizationName()}
+                    {this.renderHeader(edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderOrganizationLegalAddress()}
+                    {this.renderOrganizationName(organization.name, this.edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderStaff(this.props.responsibleForStudent, StaffRole.Responsible)}
+                    {this.renderOrganizationLegalAddress(organization.legalAddress, edit)}
                 </div>
-                <div className="row justify-content-center">
-                    {this.renderStaff(this.props.signsTheContract, StaffRole.SignsTheContract)}
-                </div>
+                {this.edit && <div className="row justify-content-center">
+                    {this.renderSaveButton()}
+                </div>}
             </>
         );
     }
@@ -98,8 +138,35 @@ class OrganizationInfo extends Component<OrganizationProps> {
         }
     }
 
-    updateStaffInfo(staff: StaffViewModel, staffRole: StaffRole) {
-        this.props.updateStaff(staff, staffRole);
+    computeProgress(organization: OrganizationViewModel): number {
+        let progress = 0;
+        if(organization.name !== "") {
+            progress += 50;
+        } else if(organization.legalAddress !== "") {
+            progress += 50;
+        }
+
+        return progress;
+    }
+
+    editToggle() {
+        this.edit = !this.edit;
+    }
+
+    save() {
+        let organization = mapToOrganizationReadModel(this.organization);
+        this.props.store.organizationStore.addOrUpdateOrganization(organization)
+            .then((organizationId) => {
+                if(organizationId === 0) {
+                    this.notSaved = true;
+                } else {
+                    this.saved = true;
+                    let organization = new OrganizationViewModel();
+                    organization.id = organizationId;
+                    this.organization = organization;
+                    this.props.updateOrganization(organization);
+                }
+            });
     }
 }
 

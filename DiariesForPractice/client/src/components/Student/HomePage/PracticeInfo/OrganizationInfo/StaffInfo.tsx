@@ -9,8 +9,7 @@ import {translateStaffRole} from "../../../../../functions/translater";
 class StaffInfoProps {
     staff: StaffViewModel;
     role: StaffRole;
-    edit: boolean;
-    updateStaffInfo: any;
+    updateStaff: any;
 }
 
 @observer
