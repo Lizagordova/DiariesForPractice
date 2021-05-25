@@ -1,8 +1,10 @@
 ﻿using System;
+using DiariesForPractice.Configuration.Typings.Attributes;
 
-namespace DiariesForPractice.Domain.Models
+namespace DiariesForPractice.ReadModels
 {
-    public class CalendarPlanWeek
+    [ApiReadModel]
+    public class CalendarWeekPlanReadModel
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }

@@ -60,7 +60,6 @@ namespace DiariesForPractice.Persistence.Services.MapperService
             {
                 cfg.CreateMap<CalendarPlanWeek, CalendarWeekPlanUdt>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.CalendarPlanId, opt => opt.MapFrom(src => src.CalendarPlanId))
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.NameOfTheWork, opt => opt.MapFrom(src => src.NameOfTheWork))
@@ -72,7 +71,6 @@ namespace DiariesForPractice.Persistence.Services.MapperService
             {
                 cfg.CreateMap<CalendarWeekPlanUdt, CalendarPlanWeek>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.CalendarPlanId, opt => opt.MapFrom(src => src.CalendarPlanId))
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.NameOfTheWork, opt => opt.MapFrom(src => src.NameOfTheWork))

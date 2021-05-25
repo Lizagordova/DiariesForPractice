@@ -21,5 +21,20 @@ namespace DiariesForPractice.Persistence.Services.PracticeDetail
 
 			return practiceDetails;
 		}
+
+		public PracticeDetails GetPracticeDetails(int studentId)
+		{
+			var practiceDetails = _practiceRepository.GetPracticeDetails(studentId);
+			if (practiceDetails.Id == 0)
+			{
+				practiceDetails = new PracticeDetails()
+				{
+					Student = new User() { Id = studentId }
+				};
+				practiceDetails.Id = _practiceRepository.AddOrUpdatePracticeDetails(practiceDetails);
+			}
+
+			return practiceDetails;
+		}
 	}
 }

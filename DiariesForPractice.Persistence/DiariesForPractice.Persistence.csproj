@@ -19,6 +19,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Scripts\Procedures" />
+	  <Folder Include="Services\CalendarPlans" />
 	</ItemGroup>
 
 </Project>

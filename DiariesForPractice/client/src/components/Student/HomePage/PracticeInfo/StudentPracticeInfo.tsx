@@ -10,6 +10,8 @@ import {OrganizationViewModel} from "../../../../Typings/viewModels/Organization
 import {StaffViewModel} from "../../../../Typings/viewModels/StaffViewModel";
 import PracticeDetailsInfo from "./PracticeDetailsInfo";
 import StudentTask from "./StudentTask";
+import StudentCharacteristics from "./StudentCharacteristic/StudentCharacteristics";
+import CalendarPlan from "./CalendarPlan/CalendarPlan";
 
 class StudentPracticeInfoProps {
     store: RootStore;
@@ -43,7 +45,9 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
             <OrganizationInfo 
                 organization={this.practiceDetails.organization}
                 store={this.props.store} 
-                practiceDetailsId={this.practiceDetails.id} updateOrganization={this.updateOrganization}/>
+                practiceDetailsId={this.practiceDetails.id} 
+                updateOrganization={this.updateOrganization}
+            />
         );
     }
 
@@ -79,6 +83,26 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
             />
         );
     }
+
+    renderStudentCharacteristic(update: boolean) {
+        return (
+            <StudentCharacteristics
+                practiceStore={this.props.store.practiceStore}
+                practiceDetailsId={this.practiceDetails.id}
+                studentCharacteristic={this.practiceDetails.studentCharacteristic}
+            />
+        );
+    }
+
+    renderCalendarPlan(update: boolean) {
+        return (
+            <CalendarPlan
+                practiceStore={this.props.store.practiceStore}
+                practiceDetailsId={this.practiceDetails.id}
+                calendarPlan={this.practiceDetails.calendarPlan}
+            />
+        );
+    }
     
     render() {
         return (
@@ -88,6 +112,8 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
                 {this.renderStaffInfo(this.practiceDetails.signsTheContract, StaffRole.SignsTheContract)}
                 {this.renderPracticeDetails(this.update)}
                 {this.renderStudentTask(this.update)}
+                {this.renderStudentCharacteristic(this.update)}
+                {this.renderCalendarPlan(this.update)}
             </>
         );
     }

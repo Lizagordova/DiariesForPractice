@@ -2,14 +2,13 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
-import { UserReadModel } from './UserReadModel';
 import { OrganizationReadModel } from './OrganizationReadModel';
 import { StaffReadModel } from './StaffReadModel';
 
 export class PracticeReadModel
 {
 	public id: number;
-	public student: UserReadModel;
+	public studentId: number;
 	public organization: OrganizationReadModel;
 	public reportingForm: string;
 	public contractNumber: string;

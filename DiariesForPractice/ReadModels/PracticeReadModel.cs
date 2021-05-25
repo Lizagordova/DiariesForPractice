@@ -6,7 +6,7 @@ namespace DiariesForPractice.ReadModels
     public class PracticeReadModel
     {
         public int Id { get; set; }
-        public UserReadModel Student { get; set; }
+        public int StudentId { get; set; }
         public OrganizationReadModel Organization { get; set; }
         public string ReportingForm { get; set; }
         public string ContractNumber { get; set; }

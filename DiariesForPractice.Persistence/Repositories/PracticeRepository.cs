@@ -52,7 +52,12 @@ namespace DiariesForPractice.Persistence.Repositories
 		{
 			throw new NotImplementedException();
 		}
-		
+
+		public PracticeDetails GetPracticeDetails(int studentId)
+		{
+			throw new NotImplementedException();
+		}
+
 		private DynamicTvpParameters GetAddOrUpdatePracticeDetailsParam(PracticeDetails practiceDetails)
 		{
 			var param = new DynamicTvpParameters();

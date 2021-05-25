@@ -10,5 +10,6 @@ namespace DiariesForPractice.Domain.Repositories
 		int AddOrUpdatePracticeDetails(PracticeDetails practiceDetails);
 		IReadOnlyCollection<PracticeDetails> GetPracticeDetails(PracticeDetailsQuery query);
 		void AttachDataToPracticeDetails(int dataId, int practiceDetailsId, PracticeDetailsDataType type);
+		PracticeDetails GetPracticeDetails(int studentId);
 	}
 }

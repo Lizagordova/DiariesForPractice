@@ -54,15 +54,11 @@
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\CalendarPlan\CalendarWeekPlan.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\OrganizationInfo\OrganizationInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\OrganizationInfo\StaffInfo.tsx" />
-		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentCharacteristics.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentCharacteristic\CalendarPlan.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentCharacteristic\StudentCharacteristics.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentPracticeInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentTask.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeDetailsInfo.tsx" />
-		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
-		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeInfo.tsx" />
-		<None Include="client\src\components\Student\HomePage\PracticeInfo\StaffInfo.tsx" />
 		<None Include="client\src\components\Teacher\Groups\GroupDetails.tsx" />
 		<None Include="client\src\components\Teacher\Groups\GroupsPage.tsx" />
 		<None Include="client\src\components\Teacher\Groups\Student.tsx" />

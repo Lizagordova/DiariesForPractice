@@ -1,6 +1,7 @@
 ﻿using System;
 using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
+using DiariesForPractice.Domain.Queries;
 using DiariesForPractice.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -79,6 +80,24 @@ namespace DiariesForPractice.Services
         public void AddOrUpdateStaffLog(ILogger logger, Exception exception, LogType logType)
         {
             var customMessage = $"Не удалось добавить или обновить сотрудника";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void GetPracticeDetailsLog(ILogger logger, Exception exception, LogType logType, PracticeDetailsQuery query)
+        {
+            var customMessage = $"Не удалось получить данные о практике для studentId={query.StudentId} или groupId={query.GroupId}";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdatePracticeDetailsLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = $"Не удалось добавить или обновить данные по практике";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateCalendarPlanLog(ILogger logger, Exception exception, LogType logType, int practiceDetailsId)
+        {
+            var customMessage = $"Не удалось добавить или обновить календарный план для practiceDetailsId={practiceDetailsId}";
             AddLog(logger, exception, customMessage, logType);
         }
         

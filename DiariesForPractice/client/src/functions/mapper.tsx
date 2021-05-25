@@ -14,6 +14,10 @@ import {OrganizationViewModel} from "../Typings/viewModels/OrganizationViewModel
 import {OrganizationReadModel} from "../Typings/readModels/OrganizationReadModel";
 import {StaffViewModel} from "../Typings/viewModels/StaffViewModel";
 import {StaffReadModel} from "../Typings/readModels/StaffReadModel";
+import {CalendarPlanViewModel} from "../Typings/viewModels/CalendarPlanViewModel";
+import {CalendarPlanReadModel} from "../Typings/readModels/CalendarPlanReadModel";
+import {CalendarWeekPlanViewModel} from "../Typings/viewModels/CalendarWeekPlanViewModel";
+import {CalendarWeekPlanReadModel} from "../Typings/readModels/CalendarWeekPlanReadModel";
 
 export function mapToInstituteReadModel(instituteViewModel: InstituteViewModel): InstituteReadModel {
     //todo: реализовать
@@ -53,4 +57,14 @@ export function mapToOrganizationReadModel(organization: OrganizationViewModel):
 export function mapToStaffReadModel(staff: StaffViewModel): StaffReadModel {
     //todo: реализовать
     return new StaffReadModel();
+}
+
+export function mapToCalendarPlanReadModel(calendarPlan: CalendarPlanViewModel): CalendarPlanReadModel {
+    //todo: реализовать
+    return new CalendarPlanReadModel;
+}
+
+export function mapToCalendarWeekPlanReadModel(calendarWeekPlan: CalendarWeekPlanViewModel): CalendarWeekPlanReadModel {
+    //todo: реализовать
+    return new CalendarWeekPlanViewModel();
 }

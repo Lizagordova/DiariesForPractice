@@ -11,7 +11,8 @@ import {mapToStudentCharacteristicReadModel} from "../../../../../functions/mapp
 
 class StudentCharacteristicsProps {
     practiceStore: PracticeStore;
-    studentId: number;
+    studentCharacteristic: StudentCharacteristicViewModel;
+    practiceDetailsId: number;
 }
 
 @observer
@@ -33,11 +34,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     }
 
     setStudentCharacteristics() {
-        this.props.practiceStore
-            .getStudentCharacteristic(this.props.studentId)
-            .then((studentCharacteristic) => {
-                this.studentCharacteristics = studentCharacteristic;
-            });
+        this.studentCharacteristics = this.props.studentCharacteristic;
     }
 
     renderSectionProgress() {

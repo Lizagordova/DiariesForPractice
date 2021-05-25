@@ -6,11 +6,13 @@ import { Label, Button } from "reactstrap";
 import { ProgressBar } from "react-bootstrap";
 import { CalendarWeekPlanViewModel } from "../../../../../Typings/viewModels/CalendarWeekPlanViewModel";
 import CalendarWeekPlan from "./CalendarWeekPlan";
+import PracticeStore from "../../../../../stores/PracticeStore";
+import {mapToCalendarPlanReadModel} from "../../../../../functions/mapper";
 
 class CalendarPlanProps {
+    practiceStore: PracticeStore;
     calendarPlan: CalendarPlanViewModel;
-    edit: boolean;
-    updateCalendarPlan: any;
+    practiceDetailsId: number;
 }
 
 @observer
@@ -24,8 +26,13 @@ class CalendarPlan extends Component<CalendarPlanProps> {
             calendarPlan: observable,
             edit: observable
         });
+        this.setCalendarPlan();
     }
     
+    setCalendarPlan() {
+        this.calendarPlan = this.props.calendarPlan;
+    }
+
     renderSectionProgress() {
         let progress = this.computeProgress(this.calendarPlan);
         return (
@@ -37,7 +44,10 @@ class CalendarPlan extends Component<CalendarPlanProps> {
 
     renderAddButton() {
         return (
-            <i className="fa fa-plus fa-3x" onClick={() => this.addCalendarWeekPlan()}/>
+            <i 
+                className="fa fa-plus fa-3x"
+               onClick={() => this.addCalendarWeekPlan()}
+            />
         );
     }
     
@@ -46,7 +56,8 @@ class CalendarPlan extends Component<CalendarPlanProps> {
             <>
                 {calendarWeekPlans.map((plan) => {
                     return (
-                        <CalendarWeekPlan calendarWeekPlan={plan} updateCalendarPlanWeek={this.updateCalendarPlanWeek} />
+                        <CalendarWeekPlan
+                            calendarWeekPlan={plan} updateCalendarPlanWeek={this.updateCalendarPlanWeek} />
                     );
                 })}
                 {this.renderAddButton()}
@@ -102,8 +113,10 @@ class CalendarPlan extends Component<CalendarPlanProps> {
     }
 
     save() {
-        this.props.updateCalendarPlan(this.calendarPlan);
-        this.edit = false;
+        //this.edit = false;
+        let calendarPlan = mapToCalendarPlanReadModel(this.calendarPlan);
+        this.props.practiceStore
+            .addOrUpdateCalendarPlan()
     }
 
     addCalendarWeekPlan() {
