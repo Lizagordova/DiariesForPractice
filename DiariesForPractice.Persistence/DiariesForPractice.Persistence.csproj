@@ -20,6 +20,7 @@
 	<ItemGroup>
 	  <Folder Include="Scripts\Procedures" />
 	  <Folder Include="Services\CalendarPlans" />
+	  <Folder Include="Services\Comments" />
 	</ItemGroup>
 
 </Project>

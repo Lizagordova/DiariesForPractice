@@ -45,7 +45,9 @@
 		<None Include="client\src\components\Common\Home\HomePage.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Student.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Students.tsx" />
+		<None Include="client\src\components\Common\Notifications\NotificationWindow.tsx" />
 		<None Include="client\src\components\Common\UserProfile.tsx" />
+		<None Include="client\src\components\Student\HomePage\Diary\Diary.tsx" />
 		<None Include="client\src\components\Student\HomePage\Diary\DiaryPreview.tsx" />
 		<None Include="client\src\components\Student\HomePage\Diary\DiaryCompletion.tsx" />
 		<None Include="client\src\components\Student\HomePage\Diary\DiaryWIndow.tsx" />

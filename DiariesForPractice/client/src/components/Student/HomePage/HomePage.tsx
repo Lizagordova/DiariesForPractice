@@ -3,9 +3,8 @@ import { RootStore } from "../../../stores/RootStore";
 import { observer } from "mobx-react";
 import { DiaryViewModel } from "../../../Typings/viewModels/DiaryViewModel";
 import { makeObservable, observable } from "mobx";
-import DiaryCompletion from "./Diary/DiaryCompletion";
-import DiaryPreview from "./Diary/DiaryPreview";
 import StudentPracticeInfo from "./PracticeInfo/StudentPracticeInfo";
+import Diary from "./Diary/Diary";
 
 class HomePageProps {
     store: RootStore
@@ -20,31 +19,8 @@ class HomePage extends Component<HomePageProps> {
         makeObservable(this, {
             studentDiary: observable
         });
-        this.setStudentDiary();
     }
 
-    setStudentDiary() {
-        let { store } = this.props;
-        let currentUser = store.userStore.currentUser;
-        let diary = store.diariesStore.diaries.find(d => d.studentId = currentUser.id);
-        if(diary !== undefined) {
-            this.studentDiary = diary;
-        }
-    }
-
-    renderDiary(diary: DiaryViewModel) {
-       return (
-           <>
-               <div className="row justify-content-center">
-                   <DiaryCompletion diary={diary} />
-               </div>
-               <div className="row justify-content-center">
-                    <DiaryPreview diary={diary} />
-               </div>
-           </>
-       );
-    }
-    
     render() {
         return (
             <>
@@ -53,7 +29,7 @@ class HomePage extends Component<HomePageProps> {
                         <StudentPracticeInfo store={this.props.store} />
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        {this.renderDiary(this.studentDiary)}
+                        <Diary store={this.props.store} />
                     </div>
                 </div>
             </>

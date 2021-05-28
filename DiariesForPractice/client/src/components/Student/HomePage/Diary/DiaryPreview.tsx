@@ -2,8 +2,11 @@
 import { observer } from "mobx-react";
 import { DiaryViewModel } from "../../../../Typings/viewModels/DiaryViewModel";
 import { makeObservable, observable } from "mobx";
+import { Button } from "reactstrap";
+import { RootStore } from "../../../../stores/RootStore";
 
 class DiaryPreviewProps {
+    store: RootStore;
     diary: DiaryViewModel;
 }
 
@@ -16,7 +19,10 @@ class DiaryPreview extends Component<DiaryPreviewProps> {
         makeObservable(this, {
             diary: observable
         });
+        this.diary = this.props.diary;
     }
+
+   
     
     renderDiaryPreview(diary: DiaryViewModel) {
         return (
@@ -28,11 +34,24 @@ class DiaryPreview extends Component<DiaryPreviewProps> {
     
     render() {
         return (
-            <div className="row justify-content-center">
-                {this.renderDiaryPreview(this.diary)}
-            </div>
+            <>
+                <div className="row justify-content-center">
+                    {this.renderDiaryPreview(this.diary)}
+                </div>
+            </>
+        );
+    }
+
+    regenerate() {
+        return (
+            <></>
         );
     }
 }
 
 export default DiaryPreview;
+
+enum ControlType {
+    Regenerate,
+    Download
+}
