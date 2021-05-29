@@ -18,6 +18,8 @@ import {CalendarPlanViewModel} from "../Typings/viewModels/CalendarPlanViewModel
 import {CalendarPlanReadModel} from "../Typings/readModels/CalendarPlanReadModel";
 import {CalendarWeekPlanViewModel} from "../Typings/viewModels/CalendarWeekPlanViewModel";
 import {CalendarWeekPlanReadModel} from "../Typings/readModels/CalendarWeekPlanReadModel";
+import {DiaryViewModel} from "../Typings/viewModels/DiaryViewModel";
+import {DiaryReadModel} from "../Typings/readModels/DiaryReadModel";
 
 export function mapToInstituteReadModel(instituteViewModel: InstituteViewModel): InstituteReadModel {
     //todo: реализовать
@@ -67,4 +69,9 @@ export function mapToCalendarPlanReadModel(calendarPlan: CalendarPlanViewModel):
 export function mapToCalendarWeekPlanReadModel(calendarWeekPlan: CalendarWeekPlanViewModel): CalendarWeekPlanReadModel {
     //todo: реализовать
     return new CalendarWeekPlanViewModel();
+}
+
+export function mapToDiaryReadModel(diary: DiaryViewModel): DiaryReadModel {
+    //todo: реализовать
+    return new DiaryReadModel();
 }

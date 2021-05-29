@@ -1,5 +1,6 @@
 ﻿import { makeObservable, observable } from "mobx";
 import { DiaryViewModel } from "../Typings/viewModels/DiaryViewModel";
+import {DiaryReadModel} from "../Typings/readModels/DiaryReadModel";
 
 class DiariesStore {
     diaries: DiaryViewModel[] = new Array<DiaryViewModel>();
@@ -32,12 +33,7 @@ class DiariesStore {
     }
 
     async getDiaries() {
-        const response = await fetch("/getdiaries", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            }
-        });
+        const response = await fetch("/getdiaries");
         if(response.status === 200) {
             this.diaries = await response.json();
         }
@@ -51,6 +47,18 @@ class DiariesStore {
         }
         
         return diary;
+    }
+
+    async addOrUpdateDiary(diary: DiaryReadModel): Promise<number> {
+        const response = await fetch("/addorupdatediary", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(diary)
+        });
+        
+        return response.status;
     }
 }
 

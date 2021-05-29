@@ -52,7 +52,7 @@ namespace DiariesForPractice.Controllers
 			}
 		}
 
-		[HttpPost]
+		[HttpGet]
 		[Route("/getdiaries")]
 		public ActionResult GetDiaries()
 		{
@@ -71,20 +71,20 @@ namespace DiariesForPractice.Controllers
 			}
 		}
 		
-		[HttpGet]
-		[Route("/getdiary")]//todo: мб и не так это делается для get
-		public ActionResult GetDiaries([FromQuery]int studentId)
+		[HttpPost]
+		[Route("/addorupdatediary")]
+		public ActionResult AddOrUpdateDiary([FromBody]DiaryReadModel diaryReadModel)
 		{
 			try
 			{
-				var diary = _diariesReader.GetDiary(studentId);
-				var diaryViewModel = _mapper.Map<Diary, DiaryViewModel>(diary);
+				var diary = _mapper.Map<DiaryReadModel, Diary>(diaryReadModel);
+				var diaryId = _diariesEditor.AddOrUpdateDiary(diary);
 				
-				return new JsonResult(diaryViewModel);
+				return new JsonResult(diaryId);
 			}
 			catch (Exception e)
 			{
-				_logService.GetDiaryLog(_logger, e, LogType.Base, studentId);
+				_logService.AddOrUpdateDiaryLog(_logger, e, LogType.Base, diaryReadModel.Id);
 
 				return new StatusCodeResult(500);
 			}

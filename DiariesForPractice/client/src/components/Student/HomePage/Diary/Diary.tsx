@@ -6,7 +6,7 @@ import DiaryCompletion from "./DiaryCompletion";
 import DiaryPreview from "./DiaryPreview";
 import { makeObservable, observable } from "mobx";
 import { Button, Alert } from "reactstrap";
-import {PracticeReadModel} from "../../../../Typings/readModels/PracticeReadModel";
+import { mapToDiaryReadModel } from "../../../../functions/mapper";
 
 class DiaryProps {
     store: RootStore;
@@ -118,8 +118,10 @@ class Diary extends Component<DiaryProps> {
     }
 
     download() {
+        let diary = mapToDiaryReadModel(this.diary);
+        diary.perceivedDate = Date.now();//todo: может, по-другому
         this.props.store.diariesStore
-            .addOrUpdateDiary();
+            .addOrUpdateDiary(diary);
     }
 }
 

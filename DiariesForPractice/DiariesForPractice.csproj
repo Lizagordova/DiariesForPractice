@@ -75,8 +75,10 @@
 		<None Include="client\src\functions\translater.tsx" />
 		<None Include="client\src\models\InstituteEnitityProps.tsx" />
 		<None Include="client\src\models\MainProps.tsx" />
+		<None Include="client\src\stores\CommentStore.tsx" />
 		<None Include="client\src\stores\DiariesStore.tsx" />
 		<None Include="client\src\stores\InstituteDetailsStore.tsx" />
+		<None Include="client\src\stores\NotificationStore.tsx" />
 		<None Include="client\src\stores\OrganizationStore.tsx" />
 		<None Include="client\src\stores\PracticeStore.tsx" />
 		<None Include="client\src\stores\RootStore.tsx" />
@@ -97,6 +99,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="client\src\components\Common\Comments" />
 	  <Folder Include="Configuration" />
 	</ItemGroup>
 

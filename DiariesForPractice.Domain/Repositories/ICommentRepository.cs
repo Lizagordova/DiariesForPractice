@@ -4,8 +4,9 @@ namespace DiariesForPractice.Domain.Repositories
 {
     public interface ICommentRepository
     {
-        int AddOrUpdateComment(Comment comment);
+        int AddOrUpdateComment(Comment comment, int groupId);
         int AddOrUpdateCommentGroup(CommentGroup commentGroup);
-        CommentGroup GetCommentGroup();
+        void RemoveComment(int commentId);
+        CommentGroup GetCommentGroup(CommentGroup commentGroup);
     }
 }

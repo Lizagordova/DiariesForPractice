@@ -27,8 +27,14 @@ namespace DiariesForPractice.Services
         {
             var customMessage = $"Не удалось получить дневник для студента {studentId}";
             AddLog(logger, exception, customMessage, logType);
-            
         }
+        
+        public void AddOrUpdateDiaryLog(ILogger logger, Exception exception, LogType logType, int diaryId)
+        {
+            var customMessage = $"Не удалось обновить дневник с diaryId={diaryId}";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
         public void AddRegistrationLog(ILogger logger, Exception exception, LogType logType)
         {
             var customMessage = $"Не удалось зарегестрироваться";
@@ -98,6 +104,34 @@ namespace DiariesForPractice.Services
         public void AddOrUpdateCalendarPlanLog(ILogger logger, Exception exception, LogType logType, int practiceDetailsId)
         {
             var customMessage = $"Не удалось добавить или обновить календарный план для practiceDetailsId={practiceDetailsId}";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateCommentLog(ILogger logger, Exception exception, LogType logType, int userId, int commmentId, int groupId)
+        {
+            var customMessage = $"Пользователь с id={userId} не смог добавить комментарий с id={commmentId} в группе с id={groupId}";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateCommentGroup(ILogger logger, Exception exception, LogType logType, CommentGroup commentGroup)
+        {
+            var customMessage = $"Не удалось добавить или обновить группу комментариев id={commentGroup.Id}, userId={commentGroup.UserId}," +
+                                $" commentedEntityId={commentGroup.CommentedEntityId}, " +
+                                $"commentedEntityType={commentGroup.CommentedEntityType}";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void RemoveCommentLog(ILogger logger, Exception exception, LogType logType, int commentId)
+        {
+            var customMessage = $"Не удалось удалить комментарий id={commentId}";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void GetCommentGroupLog(ILogger logger, Exception exception, LogType logType, CommentGroup commentGroup)
+        {
+            var customMessage = $"Не удалось получить группу комментариев id={commentGroup.Id}, userId={commentGroup.UserId}," +
+                                $" commentedEntityId={commentGroup.CommentedEntityId}, " +
+                                $"commentedEntityType={commentGroup.CommentedEntityType}";
             AddLog(logger, exception, customMessage, logType);
         }
         
