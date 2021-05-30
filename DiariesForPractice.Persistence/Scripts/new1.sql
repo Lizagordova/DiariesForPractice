@@ -94,7 +94,25 @@ CREATE TABLE [Staff]
     [Job] NVARCHAR(100),
     [Email] NVARCHAR(MAX),
     [Phone] NVARCHAR(100)
-    );
+);
+
+
+CREATE TABLE [StudentCharacteristics]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+    [DescriptionByHead] NVARCHAR(MAX),
+    [MissedDaysWithReason] INT,
+    [MissedDaysWithoutReason] INT,
+    [DescriptionByCafedraHead] NVARCHAR(MAX)
+);
+
+CREATE TABLE [StudentTask]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+    [Task] NVARCHAR(MAX)
+);
 
 CREATE TABLE [PracticeDetails]
 (
@@ -114,7 +132,6 @@ CREATE TABLE [PracticeDetails]
     [StudentTaskId] INT REFERENCES [StudentTask]([Id]) ON DELETE CASCADE
 );
 
-
 CREATE TABLE [CalendarWeekPlan]
 (
     [Id] INT PRIMARY KEY IDENTITY,
@@ -129,7 +146,7 @@ CREATE TABLE [CalendarPlan]
     [Id] INT PRIMARY KEY IDENTITY,
     [CalendarWeekPlanId] INT REFERENCES [CalendarWeekPlan]([Id]) ON DELETE CASCADE,
     [Order] INT
-    );
+);
 
 CREATE TABLE [CalendarPlan_PracticeDetails]
 (
@@ -141,24 +158,7 @@ CREATE TABLE [Student_Group]
 (
     [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
     [GroupId] INT REFERENCES [Group]([Id]) ON DELETE CASCADE
-    );
-
-CREATE TABLE [StudentCharacteristics]
-(
-    [Id] INT PRIMARY KEY IDENTITY,
-    [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
-    [DescriptionByHead] NVARCHAR(MAX),
-    [MissedDaysWithReason] INT,
-    [MissedDaysWithoutReason] INT,
-    [DescriptionByCafedraHead] NVARCHAR(MAX)
-    );
-
-CREATE TABLE [StudentTask]
-(
-    [Id] INT PRIMARY KEY IDENTITY,
-    [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
-    [Task] NVARCHAR(MAX)
-    );
+);
 
 CREATE TABLE [GroupDetails]
 (
@@ -190,7 +190,24 @@ CREATE TABLE [Log]
     [CustomMessage] NVARCHAR(MAX),
     [Date] DATETIME2,
     [LogType] INT
-    );
+);
+
+CREATE TABLE [Comment]
+(
+	[Id] INT PRIMARY KEY IDENTITY,
+	[UserId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
+	[Text] NVARCHAR(MAX),
+	[PublishDate] DATETIME2,
+	[GroupId] INT REFERENCES [Group]([Id]) ON DELETE CASCADE
+);
+
+CREATE TABLE [CommentGroup]
+(
+	[Id] INT PRIMARY KEY IDENTITY,
+	[CommentedEntityType] INT,
+	[CommentedEntityId] INT,
+	[UserId] INT REFERENCES [User]([Id]) ON DELETE CASCADE
+);
 
 CREATE TYPE [UDT_User] AS TABLE
     (
@@ -204,10 +221,11 @@ CREATE TYPE [UDT_User] AS TABLE
     );
 
 CREATE TYPE [UDT_User_Role] AS TABLE
-    (
+(
     [UserId] INT,
     [Role] INT
-    );
+);
+
 CREATE TYPE [UDT_Institute] AS TABLE
     (
     [Id] INT PRIMARY KEY IDENTITY,
@@ -281,14 +299,14 @@ CREATE TYPE [UDT_Organization] AS TABLE
     );
 
 CREATE TYPE [UDT_Staff] AS TABLE
-    (
+(
     [Id] INT,
     [OrganizationId] INT,
     [FullName] NVARCHAR(MAX),
     [Job] NVARCHAR(100),
     [Email] NVARCHAR(MAX),
     [Phone] NVARCHAR(100)
-    );
+);
 
 CREATE TYPE [UDT_PracticeDetails] AS TABLE
     (
@@ -310,9 +328,9 @@ CREATE TYPE [UDT_PracticeDetails] AS TABLE
     );
 
 CREATE TYPE [UDT_Integer] AS TABLE
-    (
+(
     [Id] INT
-    );
+);
 
 CREATE TYPE [UDT_CalendarWeekPlan] AS TABLE
     (
@@ -331,11 +349,11 @@ CREATE TYPE [UDT_CalendarPlan] AS TABLE
     );
 
 CREATE TYPE [UDT_Notification] AS TABLE
-    (
+(
     [Id] INT,
     [Message] NVARCHAR(MAX),
     [Date] DATETIME2
-    );
+);
 
 CREATE TYPE [UDT_StudentCharacteristic] AS TABLE
     (
@@ -378,6 +396,23 @@ CREATE TYPE [UDT_StudentTask] AS TABLE
     [StudentId] INT,
     [Task] NVARCHAR(MAX)
     );
+
+CREATE TYPE [UDT_Comment] AS TABLE
+(
+	[Id] INT,
+	[UserId] INT,
+	[Text] NVARCHAR(MAX),
+	[PublishDate] DATETIME2,
+	[GroupId] INT
+);
+
+CREATE TYPE [UDT_CommentGroup] AS TABLE
+(
+	[Id] INT,
+	[CommentedEntityType] INT,
+	[CommentedEntityId] INT,
+	[UserId] INT
+);
 
 CREATE PROCEDURE [InstituteDetailsRepository_AddOrUpdateInstitute]
 	@institute [UDT_Institute] READONLY
@@ -1696,4 +1731,108 @@ SELECT
 FROM [StudentTask];
 
 SELECT * FROM @studentTasks;
+END
+
+CREATE PROCEDURE [CommentRepository_AddOrUpdateComment]
+	@comment [UDT_Comment] READONLY
+AS
+BEGIN
+	DECLARE @mergedIds TABLE([Id] INT);
+
+	MERGE
+	INTO [Comment] AS [dest]
+	USING @comment AS [src]
+	ON [dest].[Id] = [src].[Id]
+	WHEN NOT MATCHED THEN
+		INSERT (
+			[UserId],
+			[Text],
+			[PublishDate],
+			[GroupId] 
+		) VALUES (
+			[src].[UserId],
+			[src].[Text],
+			[src].[PublishDate],
+			[src].[GroupId] 
+		)
+	WHEN MATCHED THEN
+		UPDATE
+		SET
+			[dest].[UserId] = [src].[UserId],
+			[dest].[Text] = [src].[Text],
+			[dest].[PublishDate] = [src].[PublishDate],
+			[dest].[GroupId] = [src].[GroupId]
+	DECLARE @commentId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+
+	SELECT @commentId;
+END
+
+CREATE PROCEDURE [CommentRepository_AddOrUpdateCommentGroup]
+	@commentGroup [UDT_CommentGroup] READONLY
+AS
+BEGIN
+	DECLARE @mergedIds TABLE([Id] INT);
+
+	MERGE
+	INTO [CommentGroup] AS [dest]
+	USING @commentGroup AS [src]
+	ON [dest].[Id] = [src].[Id]
+	WHEN NOT MATCHED THEN
+		INSERT (
+			[CommentedEntityType],
+			[CommentedEntityId],
+			[UserId]
+		) VALUES (
+			[src].[CommentedEntityType],
+			[src].[CommentedEntityId],
+			[src].[UserId]
+		)
+	WHEN MATCHED THEN
+		UPDATE
+		SET
+			[dest].[CommentedEntityType] = [src].[CommentedEntityType],
+			[dest].[CommentedEntityId] = [src].[CommentedEntityId],
+			[dest].[UserId] = [src].[UserId]
+	OUTPUT INSERTED.ID INTO @mergedIds;
+
+	DECLARE @commentId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+
+	SELECT @commentId;
+END
+
+CREATE PROCEDURE [CommentRepository_RemoveComment]
+	@commentId INT
+AS
+BEGIN
+	DELETE
+	FROM [Comment]
+	WHERE [Id] = @commentId;
+END
+
+CREATE PROCEDURE [CommentRepository_GetCommentGroup]
+	@commentGroup [UDT_CommentGroup] READONLY
+AS
+BEGIN
+	DECLARE @perceivedCommentGroup [UDT_CommentGroup];
+
+	INSERT
+	INTO @perceivedCommentGroup (
+		[Id],
+		[CommentedEntityType],
+		[CommentedEntityId],
+		[UserId]
+	)
+	SELECT
+		[Id],
+		[CommentedEntityType],
+		[CommentedEntityId],
+		[UserId]
+	FROM [CommentGroup]
+	WHERE ([Id] = (SELECT TOP 1[Id] FROM @commentGroup))
+		OR ([CommentedEntityType] = (SELECT TOP 1 [CommentedEntityType] FROM @commentGroup)
+		AND [CommentedEntityId] = (SELECT TOP 1 [CommentedEntityId] FROM @commentGroup)
+		AND [UserId] = (SELECT TOP 1 [UserId] FROM @commentGroup)
+	);
+
+	SELECT * FROM @perceivedCommentGroup;
 END

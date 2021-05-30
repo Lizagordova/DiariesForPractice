@@ -7,7 +7,6 @@ using DiariesForPractice.Domain.Services.PracticeDetail;
 using DiariesForPractice.Domain.Services.StudentTasks;
 using DiariesForPractice.Domain.Services.Users;
 using DiariesForPractice.Domain.StudentCharacteristics;
-using DiariesForPractice.Persistence.Generators;
 using DiariesForPractice.Persistence.Repositories;
 using DiariesForPractice.Persistence.Services.Diaries;
 using DiariesForPractice.Persistence.Services.InstituteDetail;
@@ -102,7 +101,6 @@ namespace DiariesForPractice
 		private void AddServices(IServiceCollection services)
 		{
 			//services.AddHostedService<LoaderWorker>();
-			services.AddSingleton<WordGenerator>();
 			services.AddSingleton<IInstituteDetailsEditorService, InstituteDetailsEditorService>();
 			services.AddSingleton<IInstituteDetailsReaderService, InstituteDetailsReaderService>();
 			services.AddSingleton<INotificationEditorService, NotificationEditorService>();

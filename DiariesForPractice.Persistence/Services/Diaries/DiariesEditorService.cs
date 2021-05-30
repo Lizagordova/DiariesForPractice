@@ -2,20 +2,16 @@
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Repositories;
 using DiariesForPractice.Domain.Services.Diaries;
-using DiariesForPractice.Persistence.Generators;
 
 namespace DiariesForPractice.Persistence.Services.Diaries
 {
 	public class DiariesEditorService : IDiariesEditorService
 	{
 		private readonly IDiariesRepository _diariesRepository;
-		private readonly WordGenerator _wordGenerator;
 		public DiariesEditorService(
-			IDiariesRepository diariesRepository,
-			WordGenerator wordGenerator)
+			IDiariesRepository diariesRepository)
 		{
 			_diariesRepository = diariesRepository;
-			_wordGenerator = wordGenerator;
 		}
 
 		public void GenerateDiaries(List<int> studentIds)

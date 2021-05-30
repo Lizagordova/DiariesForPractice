@@ -40,29 +40,6 @@ namespace DiariesForPractice.Persistence.Repositories
             return userNotifications;
         }
 
-        private UserNotificationData GetUserNotificationData(SqlMapper.GridReader reader)
-        {
-            var userNotificationData = new UserNotificationData()
-            {
-                UserNotifications = reader.Read<UserNotificationUdt>().ToList(),
-                Notifications = reader.Read<NotificationUdt>().ToList()
-            };
-
-            return userNotificationData;
-        }
-
-        private IReadOnlyCollection<UserNotification> MapUserNotifications(UserNotificationData data)
-        {
-            var userNotifications = data.UserNotifications
-                .Join(data.Notifications,
-                    un => un.NotificationId,
-                    n => n.Id,
-                    MapUserNotification)
-                .ToList();
-
-            return userNotifications;
-        }
-        
         public int AddOrUpdateNotification(Notification notification)
         {
             var conn = DatabaseHelper.OpenConnection();
@@ -85,6 +62,29 @@ namespace DiariesForPractice.Persistence.Repositories
             DatabaseHelper.CloseConnection(conn);
 
             return userNotificationId;
+        }
+        
+        private UserNotificationData GetUserNotificationData(SqlMapper.GridReader reader)
+        {
+            var userNotificationData = new UserNotificationData()
+            {
+                UserNotifications = reader.Read<UserNotificationUdt>().ToList(),
+                Notifications = reader.Read<NotificationUdt>().ToList()
+            };
+
+            return userNotificationData;
+        }
+
+        private IReadOnlyCollection<UserNotification> MapUserNotifications(UserNotificationData data)
+        {
+            var userNotifications = data.UserNotifications
+                .Join(data.Notifications,
+                    un => un.NotificationId,
+                    n => n.Id,
+                    MapUserNotification)
+                .ToList();
+
+            return userNotifications;
         }
 
         private DynamicTvpParameters GetUserNotificationsParam(NotificationQuery query)
