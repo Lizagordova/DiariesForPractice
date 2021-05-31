@@ -7,7 +7,7 @@ namespace DiariesForPractice.Services.Mapper
 {
     public partial class MapperService : MapperServiceBase
     {
-        private void CreateStudentPracticeMappings()
+        private void CreatePracticeMappings()
         {
             AddMapping<StudentCharacteristicReadModel, StudentCharacteristic>(cfg =>
             {

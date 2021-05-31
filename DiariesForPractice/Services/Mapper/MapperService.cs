@@ -10,6 +10,10 @@ namespace DiariesForPractice.Services.Mapper
 			CreateInstituteDetailsMappings();
 			CreateOrganizationMappings();
 			CreateUserMappings();
+			CreateCommentMappings();
+			CreateNotificationMappings();
+			CreatePracticeMappings();
+			CreateCalendarPlanMappings();
 		}
 	}
 }

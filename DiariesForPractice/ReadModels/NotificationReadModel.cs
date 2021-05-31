@@ -1,5 +1,6 @@
 ﻿using System;
 using DiariesForPractice.Configuration.Typings.Attributes;
+using DiariesForPractice.Domain.enums;
 
 namespace DiariesForPractice.ReadModels
 {

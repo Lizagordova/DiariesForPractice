@@ -1,4 +1,5 @@
 ﻿using DiariesForPractice.Configuration.Typings.Attributes;
+using DiariesForPractice.Domain.enums;
 
 namespace DiariesForPractice.ReadModels
 {
@@ -9,5 +10,6 @@ namespace DiariesForPractice.ReadModels
         public int NotificationId { get; set; }
         public int UserFor { get; set; }
         public bool Watched { get; set; }
+        public AnswerType Answer { get; set; }
     }
 }
