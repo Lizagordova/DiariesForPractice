@@ -8,4 +8,5 @@ export class UserNotificationReadModel
 	public notificationId: number;
 	public userFor: number;
 	public watched: boolean;
+	public answer: number;
 }

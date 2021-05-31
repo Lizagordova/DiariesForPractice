@@ -8,4 +8,5 @@ export class CommentReadModel
 	public userId: number;
 	public text: string;
 	public publishDate: any;
+	public groupId: number;
 }

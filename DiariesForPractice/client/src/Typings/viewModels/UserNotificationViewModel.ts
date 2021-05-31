@@ -11,4 +11,5 @@ export class UserNotificationViewModel
 	public notification: NotificationViewModel;
 	public userFor: UserViewModel;
 	public watched: boolean;
+	public answer: number;
 }

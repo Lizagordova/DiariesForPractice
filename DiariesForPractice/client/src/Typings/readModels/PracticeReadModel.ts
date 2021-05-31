@@ -3,15 +3,26 @@
 //     the code is regenerated.
 
 import { OrganizationReadModel } from './OrganizationReadModel';
+import { ReportingForm } from '../enums/ReportingForm';
 import { StaffReadModel } from './StaffReadModel';
+import { PracticeType } from '../enums/PracticeType';
+import { CalendarPlanReadModel } from './CalendarPlanReadModel';
+import { StudentCharacteristicReadModel } from './StudentCharacteristicReadModel';
 
 export class PracticeReadModel
 {
 	public id: number;
 	public studentId: number;
 	public organization: OrganizationReadModel;
-	public reportingForm: string;
+	public reportingForm: ReportingForm;
 	public contractNumber: string;
 	public responsibleForStudent: StaffReadModel;
 	public signsTheContract: StaffReadModel;
+	public practiceType: PracticeType;
+	public startDate: any;
+	public endDate: any;
+	public structuralDivision: string;
+	public orderOfPassingPractice: string;
+	public calendarPlan: CalendarPlanReadModel;
+	public studentCharacteristic: StudentCharacteristicReadModel;
 }

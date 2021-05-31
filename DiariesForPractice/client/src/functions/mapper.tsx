@@ -20,19 +20,45 @@ import {CalendarWeekPlanViewModel} from "../Typings/viewModels/CalendarWeekPlanV
 import {CalendarWeekPlanReadModel} from "../Typings/readModels/CalendarWeekPlanReadModel";
 import {DiaryViewModel} from "../Typings/viewModels/DiaryViewModel";
 import {DiaryReadModel} from "../Typings/readModels/DiaryReadModel";
+import {CafedraViewModel} from "../Typings/viewModels/CafedraViewModel";
+import {CafedraReadModel} from "../Typings/readModels/CafedraReadModel";
 
 export function mapToInstituteReadModel(instituteViewModel: InstituteViewModel): InstituteReadModel {
-    //todo: реализовать
-    return new InstituteReadModel();
+    let institute = new InstituteReadModel();
+    institute.id = instituteViewModel.id;
+    institute.name = instituteViewModel.name;
+    institute.cafedras = instituteViewModel.cafedras.map((cafedra) => {
+        return mapToCafedraReadModel(cafedra);
+    });
+    
+    return institute;
 }
 
 export function mapUserReadModel(userViewModel: UserViewModel): UserReadModel {
-    //todo: реализовать
+    let user = new UserReadModel();
+    user.id = userViewModel.id;
+    user.email = userViewModel.email;
+    user.firstName = userViewModel.firstName;
+    user.lastName = userViewModel.lastName;
+    user.secondName = userViewModel.secondName;
     return new UserReadModel();
 }
 
 export function mapToPracticeDetailsReadModel(practiceViewModel: PracticeViewModel): PracticeReadModel {
-    //todo: реализовать
+    let practice = new PracticeReadModel();
+    practice.id = practiceViewModel.id;
+    practice.organization = mapToOrganizationReadModel(practiceViewModel.organization);
+    practice.contractNumber = practiceViewModel.contractNumber;
+    practice.reportingForm = practiceViewModel.reportingForm;
+    practice.signsTheContract = mapToStaffReadModel(practiceViewModel.signsTheContract);
+    practice.responsibleForStudent = mapToStaffReadModel(practiceViewModel.responsibleForStudent);
+    practice.endDate = practiceViewModel.endDate;
+    practice.startDate = practiceViewModel.startDate;
+    practice.structuralDivision = practiceViewModel.structuralDivision;
+   // practice.studentId = practiceViewModel.studentId;
+    practice.calendarPlan = mapToCalendarPlanReadModel(practiceViewModel.calendarPlan);
+    practice.studentCharacteristic = mapToStudentCharacteristicReadModel(practiceViewModel.studentCharacteristic);
+    practice.studentTask = mapToStudentTaskReadModel(practiceViewModel.studentTask);
     return new PracticeReadModel(); 
 }
 
@@ -74,4 +100,8 @@ export function mapToCalendarWeekPlanReadModel(calendarWeekPlan: CalendarWeekPla
 export function mapToDiaryReadModel(diary: DiaryViewModel): DiaryReadModel {
     //todo: реализовать
     return new DiaryReadModel();
+}
+
+export function mapToCafedraReadModel(cafedraViewModel: CafedraViewModel): CafedraReadModel {
+    return new CafedraReadModel();
 }

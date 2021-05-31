@@ -5,7 +5,6 @@
 export class CalendarWeekPlanViewModel
 {
 	public id: number;
-	public calendarPlanId: number;
 	public startDate: any;
 	public endDate: any;
 	public nameOfTheWork: string;
