@@ -8,6 +8,7 @@ import { StaffReadModel } from './StaffReadModel';
 import { PracticeType } from '../enums/PracticeType';
 import { CalendarPlanReadModel } from './CalendarPlanReadModel';
 import { StudentCharacteristicReadModel } from './StudentCharacteristicReadModel';
+import { StudentTaskReadModel } from './StudentTaskReadModel';
 
 export class PracticeReadModel
 {
@@ -25,4 +26,5 @@ export class PracticeReadModel
 	public orderOfPassingPractice: string;
 	public calendarPlan: CalendarPlanReadModel;
 	public studentCharacteristic: StudentCharacteristicReadModel;
+	public studentTask: StudentTaskReadModel;
 }

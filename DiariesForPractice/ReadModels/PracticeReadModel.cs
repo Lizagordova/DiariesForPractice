@@ -21,5 +21,6 @@ namespace DiariesForPractice.ReadModels
         public string OrderOfPassingPractice { get; set; }
         public CalendarPlanReadModel CalendarPlan { get; set; }
         public StudentCharacteristicReadModel StudentCharacteristic { get; set; }
+        public StudentTaskReadModel StudentTask { get; set; }
     }
 }
