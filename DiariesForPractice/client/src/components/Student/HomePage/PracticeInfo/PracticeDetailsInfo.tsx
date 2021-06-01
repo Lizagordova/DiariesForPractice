@@ -9,8 +9,6 @@ import {PracticeType} from "../../../../Typings/enums/PracticeType";
 import Calendar from "react-calendar";
 import PracticeStore from "../../../../stores/PracticeStore";
 import { mapToPracticeDetailsReadModel} from "../../../../functions/mapper";
-import {UserReadModel} from "../../../../Typings/readModels/UserReadModel";
-import {PracticeReadModel} from "../../../../Typings/readModels/PracticeReadModel";
 import {ProgressBar} from "react-bootstrap";
 import {CalendarPlanViewModel} from "../../../../Typings/viewModels/CalendarPlanViewModel";
 import CalendarPlan from "./CalendarPlan/CalendarPlan";
@@ -191,7 +189,10 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
 
     renderCalendarPlan(calendarPlan: CalendarPlanViewModel) {
         return (
-            <CalendarPlan calendarPlan={calendarPlan} edit={this.edit} updateCalendarPlan={this.updateCalendarPlan}/>
+            <CalendarPlan
+                calendarPlan={calendarPlan} practiceDetailsId={this.practiceDetails.id}
+                practiceStore={this.props.practiceStore}
+            />
         );
     }
     

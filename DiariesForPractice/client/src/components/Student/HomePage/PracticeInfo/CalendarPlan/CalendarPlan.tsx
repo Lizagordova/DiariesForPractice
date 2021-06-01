@@ -7,7 +7,7 @@ import { ProgressBar } from "react-bootstrap";
 import { CalendarWeekPlanViewModel } from "../../../../../Typings/viewModels/CalendarWeekPlanViewModel";
 import CalendarWeekPlan from "./CalendarWeekPlan";
 import PracticeStore from "../../../../../stores/PracticeStore";
-import {mapToCalendarPlanReadModel} from "../../../../../functions/mapper";
+import { mapToCalendarPlanReadModel } from "../../../../../functions/mapper";
 
 class CalendarPlanProps {
     practiceStore: PracticeStore;
@@ -114,9 +114,9 @@ class CalendarPlan extends Component<CalendarPlanProps> {
 
     save() {
         //this.edit = false;
-        let calendarPlan = mapToCalendarPlanReadModel(this.calendarPlan);
+        let calendarPlan = mapToCalendarPlanReadModel(this.calendarPlan, this.props.practiceDetailsId);
         this.props.practiceStore
-            .addOrUpdateCalendarPlan()
+            .addOrUpdateCalendarPlan();
     }
 
     addCalendarWeekPlan() {
