@@ -11,8 +11,21 @@ class PracticeStore {
     }   
     
    async addOrUpdatePracticeDetails(practiceDetails: PracticeReadModel): Promise<number> {
-       //todo: реализовать
-        return 200;
+       const response = await fetch("/addorupdatestudenttask", {
+           method: "POST",
+           headers: {
+               'Content-Type': 'application/json;charset=utf-8'
+           },
+           body: JSON.stringify({
+               practiceDetails //todo: опять хз сработает или нет
+           })
+       });
+       let id = 0;
+       if(response.status === 200) {
+           id = await response.json();
+       }
+
+       return id;
     }
     
     async getPracticeDetails(studentId: number): Promise<PracticeViewModel> {

@@ -7,4 +7,5 @@ export class NotificationViewModel
 	public id: number;
 	public message: string;
 	public date: any;
+	public type: number;
 }

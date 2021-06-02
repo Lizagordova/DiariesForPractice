@@ -4,6 +4,7 @@ using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Queries;
 using DiariesForPractice.Domain.Services.Notifications;
+using DiariesForPractice.ReadModels;
 using DiariesForPractice.ReadModels.Queries;
 using DiariesForPractice.Services;
 using DiariesForPractice.Services.Mapper;
@@ -52,6 +53,25 @@ namespace DiariesForPractice.Controllers
             catch (Exception e)
             {
                 _logService.AddGetUserNotificationsLog(_logger, e, LogType.Base, queryReadModel.UserForId.Value);
+                
+                return new StatusCodeResult(500);
+            }
+        }
+        
+        [HttpPost]
+        [Route("/addorudpateusernotification")]
+        public ActionResult AddOrUpdateUserNotification([FromBody]UserNotificationReadModel userNotificationReadModel)
+        {
+            try
+            {
+                var userNotification = _mapper.Map<UserNotificationReadModel, UserNotification>(userNotificationReadModel);
+                _notificationEditor.AddOrUpdateUserNotification(userNotification);
+                
+                return new OkResult();
+            }
+            catch (Exception e)
+            {
+                _logService.AddOrUpdateNotificationLog(_logger, e, LogType.Base, userNotificationReadModel.Id);
                 
                 return new StatusCodeResult(500);
             }

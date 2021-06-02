@@ -77,6 +77,12 @@ namespace DiariesForPractice.Services
             AddLog(logger, exception, customMessage, logType);
         }
         
+        public void AddOrUpdateNotificationLog(ILogger logger, Exception exception, LogType logType, int notificationId)
+        {
+            var customMessage = $"Не удалось добавить или удалить уведомление";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
         public void AddOrUpdateOrganizationLog(ILogger logger, Exception exception, LogType logType)
         {
             var customMessage = $"Не удалось добавить или обновить организацию ";
@@ -132,6 +138,42 @@ namespace DiariesForPractice.Services
             var customMessage = $"Не удалось получить группу комментариев id={commentGroup.Id}, userId={commentGroup.UserId}," +
                                 $" commentedEntityId={commentGroup.CommentedEntityId}, " +
                                 $"commentedEntityType={commentGroup.CommentedEntityType}";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateInstituteLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = "Не удалось добавить институт";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateCafedraLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = "Не удалось добавить кафедру";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateDirectionLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = "Не удалось добавить направление";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateGroupLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = "Не удалось добавить группу";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateCourseLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = "Не удалось добавить курс";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
+        public void AddOrUpdateDegreeLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = "Не удалось добавить степень";
             AddLog(logger, exception, customMessage, logType);
         }
         

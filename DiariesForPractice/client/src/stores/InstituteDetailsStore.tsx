@@ -8,6 +8,10 @@ import { DirectionViewModel } from "../Typings/viewModels/DirectionViewModel";
 import {InstituteReadModel} from "../Typings/readModels/InstituteReadModel";
 import {UserViewModel} from "../Typings/viewModels/UserViewModel";
 import {GroupReadModel} from "../Typings/readModels/GroupReadModel";
+import {CafedraReadModel} from "../Typings/readModels/CafedraReadModel";
+import {DirectionReadModel} from "../Typings/readModels/DirectionReadModel";
+import {CourseReadModel} from "../Typings/readModels/CourseReadModel";
+import {DegreeReadModel} from "../Typings/readModels/DegreeReadModel";
 
 class InstituteDetailsStore {
     degrees: DegreeViewModel[] = new Array<DegreeViewModel>();
@@ -53,11 +57,130 @@ class InstituteDetailsStore {
     }
     
     async addOrUpdateInstitute(institute: InstituteReadModel): Promise<number> {
-        return 200;
+        const response = await fetch("/addorupdateinstitute", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                institute //todo: хз можно ли так
+            })
+        });
+        let id = 0;
+        if(response.status === 200) {
+            id = await response.json();
+        }
+        
+        return id;
     }
 
     async addOrUpdateGroup(group: GroupReadModel): Promise<number> {
-        return 200;
+        const response = await fetch("/addorupdategroup", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                group //todo: хз можно ли так
+            })
+        });
+        let id = 0;
+        if(response.status === 200) {
+            id = await response.json();
+        }
+
+        return id;
+    }
+
+    async addOrUpdateCafedra(cafedra: CafedraReadModel): Promise<number> {
+        const response = await fetch("/addorupdatecafedra", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                cafedra //todo: хз можно ли так
+            })
+        });
+        let id = 0;
+        if(response.status === 200) {
+            id = await response.json();
+        }
+
+        return id;
+    }
+
+    async addOrUpdateDirection(direction: DirectionReadModel): Promise<number> {
+        const response = await fetch("/addorupdatedirection", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                direction //todo: хз можно ли так
+            })
+        });
+        let id = 0;
+        if(response.status === 200) {
+            id = await response.json();
+        }
+
+        return id;
+    }
+
+    async addOrUpdateCourse(course: CourseReadModel): Promise<number> {
+        const response = await fetch("/addorupdatecourse", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                course //todo: хз можно ли так
+            })
+        });
+        let id = 0;
+        if(response.status === 200) {
+            id = await response.json();
+        }
+
+        return id;
+    }
+
+    async addOrUpdateDegree(degree: DegreeReadModel): Promise<number> {
+        const response = await fetch("/addorupdatedegree", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                degree //todo: хз можно ли так
+            })
+        });
+        let id = 0;
+        if(response.status === 200) {
+            id = await response.json();
+        }
+
+        return id;
+    }
+
+    async attachStudentToGroup(studentId: number, groupId: number): Promise<number> {
+        const response = await fetch("/attachstudenttogroup", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                studentId: studentId,
+                groupId: groupId
+            })
+        });
+        let id = 0;
+        if(response.status === 200) {
+            id = await response.json();
+        }
+
+        return id;
     }
 }
 

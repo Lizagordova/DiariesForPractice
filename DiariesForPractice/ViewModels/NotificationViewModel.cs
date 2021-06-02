@@ -1,5 +1,6 @@
 ﻿using System;
 using DiariesForPractice.Configuration.Typings.Attributes;
+using DiariesForPractice.Domain.enums;
 
 namespace DiariesForPractice.ViewModels
 {
@@ -9,5 +10,6 @@ namespace DiariesForPractice.ViewModels
         public int Id { get; set; }
         public string Message { get; set; }
         public DateTime Date { get; set; }
+        public NotificationType Type { get; set; }
     }
 }

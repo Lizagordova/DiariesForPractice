@@ -6,4 +6,5 @@ export class CourseReadModel
 {
 	public id: number;
 	public name: string;
+	public degreeId: number;
 }

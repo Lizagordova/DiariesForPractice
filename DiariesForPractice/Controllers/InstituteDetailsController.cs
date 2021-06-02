@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Services.InstituteDetails;
+using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services;
 using DiariesForPractice.Services.Mapper;
 using DiariesForPractice.ViewModels;
@@ -13,21 +15,21 @@ namespace DiariesForPractice.Controllers
 {
 	public class InstituteDetailsController : Controller
 	{
-		private readonly IInstituteDetailsEditorService _detailsEditor;
-		private readonly IInstituteDetailsReaderService _detailsReader;
+		private readonly IInstituteDetailsEditorService _instituteDetailsEditor;
+		private readonly IInstituteDetailsReaderService _instituteDetailsReader;
 		private readonly MapperService _mapper;
 		private readonly ILogger<InstituteDetailsController> _logger;
 		private readonly LogService _logService;
 
 		public InstituteDetailsController(
-			IInstituteDetailsEditorService detailsEditor,
-			IInstituteDetailsReaderService detailsReader,
+			IInstituteDetailsEditorService instituteDetailsEditor,
+			IInstituteDetailsReaderService instituteDetailsReader,
 			MapperService mapper,
 			ILogger<InstituteDetailsController> logger,
 			LogService logService)
 		{
-			_detailsEditor = detailsEditor;
-			_detailsReader = detailsReader;
+			_instituteDetailsEditor = instituteDetailsEditor;
+			_instituteDetailsReader = instituteDetailsReader;
 			_mapper = mapper;
 			_logger = logger;
 			_logService = logService;
@@ -51,14 +53,146 @@ namespace DiariesForPractice.Controllers
 			}
 		}
 
+		[HttpPost]
+		[Route("/addorupdateinstitute")]
+		public ActionResult AddOrUpdateInstitute([FromBody]InstituteReadModel instituteReadModel)
+		{
+			try
+			{
+				var institute = _mapper.Map<InstituteReadModel, Institute>(instituteReadModel);
+				var instituteId = _instituteDetailsEditor.AddOrUpdateInstitute(institute);
+
+				return new JsonResult(instituteId);
+			}
+			catch (Exception e)
+			{
+				_logService.AddOrUpdateInstituteLog(_logger, e, LogType.Base);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
+		[HttpPost]
+		[Route("/addorupdategroup")]
+		public ActionResult AddOrUpdateGroup([FromBody]GroupReadModel groupReadModel)
+		{
+			try
+			{
+				var group = _mapper.Map<GroupReadModel, Group>(groupReadModel);
+				var groupId = _instituteDetailsEditor.AddOrUpdateGroup(group);
+
+				return new JsonResult(groupId);
+			}
+			catch (Exception e)
+			{
+				_logService.AddOrUpdateInstituteLog(_logger, e, LogType.Base);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
+		[HttpPost]
+		[Route("/addorupdatecafedra")]
+		public ActionResult AddOrUpdateCafedra([FromBody]CafedraReadModel cafedraReadModel)
+		{
+			try
+			{
+				var cafedra = _mapper.Map<CafedraReadModel, Cafedra>(cafedraReadModel);
+				var cafedraId = _instituteDetailsEditor.AddOrUpdateCafedra(cafedra);
+
+				return new JsonResult(cafedraId);
+			}
+			catch (Exception e)
+			{
+				_logService.AddOrUpdateCafedraLog(_logger, e, LogType.Base);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
+		[HttpPost]
+		[Route("/addorupdatedirection")]
+		public ActionResult AddOrUpdateDirection([FromBody]DirectionReadModel directionReadModel)
+		{
+			try
+			{
+				var direction = _mapper.Map<DirectionReadModel, Direction>(directionReadModel);
+				var directionId = _instituteDetailsEditor.AddOrUpdateDirection(direction);
+
+				return new JsonResult(directionId);
+			}
+			catch (Exception e)
+			{
+				_logService.AddOrUpdateDirectionLog(_logger, e, LogType.Base);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
+		[HttpPost]
+		[Route("/addorupdatecourse")]
+		public ActionResult AddOrUpdateCourse([FromBody]CourseReadModel courseReadModel)
+		{
+			try
+			{
+				var course = _mapper.Map<CourseReadModel, Course>(courseReadModel);
+				var courseId = _instituteDetailsEditor.AddOrUpdateCourse(course, courseReadModel.DegreeId);
+
+				return new JsonResult(courseId);
+			}
+			catch (Exception e)
+			{
+				_logService.AddOrUpdateCourseLog(_logger, e, LogType.Base);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
+		[HttpPost]
+		[Route("/addorupdatedegree")]
+		public ActionResult AddOrUpdateDegree([FromBody]DegreeReadModel degreeReadModel)
+		{
+			try
+			{
+				var degree = _mapper.Map<DegreeReadModel, Degree>(degreeReadModel);
+				var degreeId = _instituteDetailsEditor.AddOrUpdateDegree(degree);
+
+				return new JsonResult(degreeId);
+			}
+			catch (Exception e)
+			{
+				_logService.AddOrUpdateDegreeLog(_logger, e, LogType.Base);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
+		[HttpPost]
+		[Route("/attachstudenttogroup")]
+		public ActionResult AttachStudentToGroup([FromBody]int studentId, [FromBody]int groupId)
+		{
+			try
+			{
+				_instituteDetailsEditor.AttachStudentToGroup(studentId, groupId);
+
+				return new OkResult();
+			}
+			catch (Exception e)
+			{
+				_logService.AddOrUpdateCourseLog(_logger, e, LogType.Base);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
 		private InstituteDataViewModel GetInstituteDataViewModel()
 		{
-			var institutes = _detailsReader.GetInstitutes();
-			var cafedras = _detailsReader.GetCafedras();
-			var directions = _detailsReader.GetDirections();
-			var groups = _detailsReader.GetGroups();
-			var courses = _detailsReader.GetCourses();
-			var degrees = _detailsReader.GetDegrees();
+			var institutes = _instituteDetailsReader.GetInstitutes();
+			var cafedras = _instituteDetailsReader.GetCafedras();
+			var directions = _instituteDetailsReader.GetDirections();
+			var groups = _instituteDetailsReader.GetGroups();
+			var courses = _instituteDetailsReader.GetCourses();
+			var degrees = _instituteDetailsReader.GetDegrees();
 			var instituteDataViewModel = new InstituteDataViewModel()
 			{
 				Institutes = institutes.Select(_mapper.Map<Institute, InstituteViewModel>).ToList(),

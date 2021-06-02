@@ -1,4 +1,5 @@
 ﻿using System;
+using DiariesForPractice.Domain.enums;
 
 namespace DiariesForPractice.Persistence.DTO.UDT
 {
@@ -7,5 +8,6 @@ namespace DiariesForPractice.Persistence.DTO.UDT
         public int Id { get; set; }
         public string Message { get; set; }
         public DateTime Date { get; set; }
+        public NotificationType Type { get; set; }
     }
 }

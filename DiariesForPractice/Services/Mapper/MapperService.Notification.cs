@@ -14,6 +14,7 @@ namespace DiariesForPractice.Services.Mapper
                 cfg.CreateMap<NotificationReadModel, Notification>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.Message))
+                    .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                     .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date));
             });
             
@@ -22,6 +23,7 @@ namespace DiariesForPractice.Services.Mapper
                 cfg.CreateMap<Notification, NotificationViewModel>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.Message))
+                    .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                     .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date));
             });
             
