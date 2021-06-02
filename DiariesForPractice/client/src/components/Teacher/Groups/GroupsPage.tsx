@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { RootStore } from "../../../stores/RootStore";
 import { GroupViewModel } from "../../../Typings/viewModels/GroupViewModel";
 import { makeObservable, observable } from "mobx";
-import GroupDetails from "./GroupDetails";
+import Group from "./Group";
 
 class GroupsPageProps {
     store: RootStore;
@@ -47,11 +47,11 @@ class GroupsPage extends Component<GroupsPageProps> {
                 {groups.map((group) => {
                     return (
                         <div className="row justify-content-center">
-                        <span
-                            onClick={() => {this.chooseGroupToTransfer(group, TransferDirection.FromMyGroups)}}
-                            onDoubleClick={() => this.groupDetailsToggle(group)}>
-                            {group.name}
-                        </span>
+                            <span
+                                onClick={() => {this.chooseGroupToTransfer(group, TransferDirection.FromMyGroups)}}
+                                onDoubleClick={() => this.groupDetailsToggle(group)}>
+                                {group.name}
+                            </span>
                         </div>
                     );
                 })}
@@ -77,17 +77,20 @@ class GroupsPage extends Component<GroupsPageProps> {
         );
     }
     
-    renderGroupDetails(group: GroupViewModel) {
-        let isResponsible = this.props.store.userStore.currentUser.id === group.responsible.id;
+    renderGroup(group: GroupViewModel) {
         return (
-            <GroupDetails group={group} isResponsible={isResponsible} toggle={this.groupShowToggle} />
+            <Group
+                group={group} 
+                toggle={this.groupShowToggle}  
+                instituteStore={this.props.store.instituteDetailsStore} 
+                userStore={this.props.store.userStore} />
         );
     }
     
     render() {
         return (
             <>
-                {this.showGroup && this.renderGroupDetails(this.groupToShow)}
+                {this.showGroup && this.renderGroup(this.groupToShow)}
                 <div className="row justify-content-center">
                     <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                         {this.renderMyGroups(this.myGroups)}
@@ -121,6 +124,7 @@ class GroupsPage extends Component<GroupsPageProps> {
 
     groupDetailsToggle(group: GroupViewModel) {
         this.groupToShow = group;
+        this.groupShowToggle();
     }
 
     groupHasResponsibleAlreadyToggle() {

@@ -59,5 +59,10 @@ namespace DiariesForPractice.Persistence.Services.InstituteDetail
 		{
 			_instituteDetailsRepository.AttachStudentToGroup(studentId, groupId);
 		}
+
+		public void RemoveStudentFromGroup(int studentId, int groupId)
+		{
+			_instituteDetailsRepository.RemoveStudentFromGroup(studentId, groupId);
+		}
 	}
 }

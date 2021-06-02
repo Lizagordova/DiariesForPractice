@@ -35,6 +35,7 @@ namespace DiariesForPractice.Persistence.Repositories
 		private const string GetDegreeSp = "InstituteDetailsRepository_GetDegree";
 		private const string GetCourseSp = "InstituteDetailsRepository_GetCourse";
 		private const string AttachStudentToGroupSp = "InstituteDetailsRepository_AttachStudentToGroup";
+		private const string RemoveStudentFromGroupSp = "InstituteDetailsRepository_RemoveStudentFromGroup";
 		public InstituteDetailsRepository(
 			MapperService mapper)
 		{
@@ -326,6 +327,14 @@ namespace DiariesForPractice.Persistence.Repositories
 			DatabaseHelper.CloseConnection(conn);
 		}
 
+		public void RemoveStudentFromGroup(int studentId, int groupId)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetStudentGroupParam(studentId, groupId);
+			conn.Query(RemoveStudentFromGroupSp, param, commandType: CommandType.StoredProcedure);
+			DatabaseHelper.CloseConnection(conn);
+		}
+
 		private DegreeData GetDegreesData(SqlMapper.GridReader reader)
 		{
 			var degreesData = new DegreeData()
@@ -442,6 +451,12 @@ namespace DiariesForPractice.Persistence.Repositories
 						return param;
 					case InstituteEntity.Course:
 						param.Add("courseId", entityId);
+						return param;
+					case InstituteEntity.Degree:
+						param.Add("degreeId", entityId);
+						return param;
+					case InstituteEntity.Institute:
+						param.Add("instituteId", entityId);
 						return param;
 				}
 			}

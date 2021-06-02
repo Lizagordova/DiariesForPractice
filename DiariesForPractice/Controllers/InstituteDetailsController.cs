@@ -185,6 +185,24 @@ namespace DiariesForPractice.Controllers
 			}
 		}
 		
+		[HttpPost]
+		[Route("/removestudentfromgroup")]
+		public ActionResult RemoveStudentFromGroup([FromBody]int studentId, [FromBody]int groupId)
+		{
+			try
+			{
+				_instituteDetailsEditor.AttachStudentToGroup(studentId, groupId);
+
+				return new OkResult();
+			}
+			catch (Exception e)
+			{
+				_logService.AddOrUpdateCourseLog(_logger, e, LogType.Base);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
 		private InstituteDataViewModel GetInstituteDataViewModel()
 		{
 			var institutes = _instituteDetailsReader.GetInstitutes();

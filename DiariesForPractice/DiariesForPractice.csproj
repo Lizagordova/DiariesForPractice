@@ -46,6 +46,7 @@
 		<None Include="client\src\components\Common\Home\Students\Student.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Students.tsx" />
 		<None Include="client\src\components\Common\Notifications\NotificationWindow.tsx" />
+		<None Include="client\src\components\Common\Search\StudentSearch.tsx" />
 		<None Include="client\src\components\Common\UserProfile.tsx" />
 		<None Include="client\src\components\Student\HomePage\Diary\Diary.tsx" />
 		<None Include="client\src\components\Student\HomePage\Diary\DiaryPreview.tsx" />
@@ -61,9 +62,11 @@
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentPracticeInfo.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\StudentTask.tsx" />
 		<None Include="client\src\components\Student\HomePage\PracticeInfo\PracticeDetailsInfo.tsx" />
+		<None Include="client\src\components\Teacher\Groups\Group.tsx" />
 		<None Include="client\src\components\Teacher\Groups\GroupDetails.tsx" />
 		<None Include="client\src\components\Teacher\Groups\GroupsPage.tsx" />
 		<None Include="client\src\components\Teacher\Groups\Student.tsx" />
+		<None Include="client\src\components\Teacher\Groups\Students.tsx" />
 		<None Include="client\src\components\Teacher\Home\HomePage.tsx" />
 		<None Include="client\src\components\Teacher\TeacherMain.tsx" />
 		<None Include="client\src\components\User\UserMain.tsx" />
@@ -71,8 +74,10 @@
 		<None Include="client\src\consts\InstituteEntity.tsx" />
 		<None Include="client\src\consts\StaffDataType.tsx" />
 		<None Include="client\src\consts\StudentCharacteristicType.tsx" />
+		<None Include="client\src\consts\WarningType.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
 		<None Include="client\src\functions\translater.tsx" />
+		<None Include="client\src\functions\warningTypeRenderer.tsx" />
 		<None Include="client\src\models\InstituteEnitityProps.tsx" />
 		<None Include="client\src\models\MainProps.tsx" />
 		<None Include="client\src\stores\CommentStore.tsx" />

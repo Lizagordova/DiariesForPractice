@@ -8,7 +8,6 @@ import {translateAction} from "../../../functions/translater";
 
 class StudentProps {
     student: UserViewModel;
-    alreadyInGroup: boolean;
     action: any;
 }
 
@@ -23,7 +22,6 @@ class Student extends Component<StudentProps> {
             <tr key={student.id}>
                 <th>{student.id}</th>
                 <th>{this.renderControlForStudent(alreadyInGroup)}</th>
-                <th>{this.renderChat()}</th>
             </tr>
         );
     }
@@ -39,8 +37,8 @@ class Student extends Component<StudentProps> {
             </Button>
         );
     }
-
-    renderChat() {
+    
+    renderStudentDetails() {
         return (
             <></>
         );
@@ -48,7 +46,8 @@ class Student extends Component<StudentProps> {
     
     render() {
         return (
-            <></>
+            <>
+            </>
         );
     }
 

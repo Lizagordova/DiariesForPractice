@@ -12,6 +12,7 @@ import {CafedraReadModel} from "../Typings/readModels/CafedraReadModel";
 import {DirectionReadModel} from "../Typings/readModels/DirectionReadModel";
 import {CourseReadModel} from "../Typings/readModels/CourseReadModel";
 import {DegreeReadModel} from "../Typings/readModels/DegreeReadModel";
+import {StudentViewModel} from "../Typings/viewModels/StudentViewModel";
 
 class InstituteDetailsStore {
     degrees: DegreeViewModel[] = new Array<DegreeViewModel>();
@@ -20,6 +21,7 @@ class InstituteDetailsStore {
     institutes: InstituteViewModel[] = new Array<InstituteViewModel>();
     cafedras: CafedraViewModel[] = new Array<CafedraViewModel>();
     directions: DirectionViewModel[] = new Array<DirectionViewModel>();
+    students: StudentViewModel[] = new Array<StudentViewModel>();
 
     constructor() {
         makeObservable(this, {
@@ -29,12 +31,14 @@ class InstituteDetailsStore {
             institutes: observable,
             cafedras: observable,
             directions: observable,
+            students: observable,
         });
         this.setInitialData();
     }
 
     setInitialData() {
         this.getInstituteData();
+        this.getStudents();
     }
 
     async getInstituteData() {
@@ -181,6 +185,32 @@ class InstituteDetailsStore {
         }
 
         return id;
+    }
+
+    async removeStudentFromGroup(studentId: number, groupId: number): Promise<number> {
+        const response = await fetch("/removestudentfromgroup", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                studentId: studentId,
+                groupId: groupId
+            })
+        });
+        let id = 0;
+        if(response.status === 200) {
+            id = await response.json();
+        }
+
+        return id;
+    }
+
+    async getStudents() {
+        const response = await fetch("/getstudents");
+        if(response.status === 200) {
+            this.students = await response.json();
+        }
     }
 }
 
