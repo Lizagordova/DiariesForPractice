@@ -1,5 +1,4 @@
 ﻿import React, { Component } from "react";
-import { RootStore } from "../../../../stores/RootStore";
 import { observer } from "mobx-react";
 import { DiaryViewModel } from "../../../../Typings/viewModels/DiaryViewModel";
 import DiaryCompletion from "./DiaryCompletion";
@@ -7,9 +6,10 @@ import DiaryPreview from "./DiaryPreview";
 import { makeObservable, observable } from "mobx";
 import { Button, Alert } from "reactstrap";
 import { mapToDiaryReadModel } from "../../../../functions/mapper";
+import DiariesStore from "../../../../stores/DiariesStore";
 
 class DiaryProps {
-    store: RootStore;
+    diariesStore: DiariesStore;
     studentId: number;
 }
 
@@ -28,8 +28,8 @@ class Diary extends Component<DiaryProps> {
     }
     
     setDiary() {
-        let { store } = this.props;
-        let diary = store.diariesStore.diaries.find(d => d.studentId = this.props.studentId);
+        let { diariesStore } = this.props;
+        let diary = diariesStore.diaries.find(d => d.studentId = this.props.studentId);
         if(diary !== undefined) {
             this.diary = diary;
         }
@@ -87,7 +87,7 @@ class Diary extends Component<DiaryProps> {
                     <DiaryCompletion diary={diary} />
                 </div>
                 <div className="row justify-content-center">
-                    <DiaryPreview diary={diary} diariesStore={this.props.store.diariesStore} />
+                    <DiaryPreview diary={diary} diariesStore={this.props.diariesStore} />
                 </div>
                 <div className="row justify-content-center">
                     {this.renderControls()}
@@ -106,7 +106,7 @@ class Diary extends Component<DiaryProps> {
     }
 
     regenerate() {
-        this.props.store.diariesStore
+        this.props.diariesStore
             .generateDiary(this.props.studentId)
             .then((status) => {
                 if(status === 200) {
@@ -120,7 +120,7 @@ class Diary extends Component<DiaryProps> {
     download() {
         let diary = mapToDiaryReadModel(this.diary);
         diary.perceivedDate = Date.now();//todo: может, по-другому
-        this.props.store.diariesStore
+        this.props.diariesStore
             .addOrUpdateDiary(diary);
     }
 }

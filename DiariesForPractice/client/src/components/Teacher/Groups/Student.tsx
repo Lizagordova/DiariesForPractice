@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
 import { ActionType } from "../../../consts/ActionType";
 import { Button } from "reactstrap";
+import StudentWindow from "./StudentWindow";
 
 class StudentProps {
     student: UserViewModel;
@@ -26,8 +27,8 @@ class Student extends Component<StudentProps> {
             <tr key={student.id} onDoubleClick={() => this.studentWindowToggle()}>
                 <th>{student.id}</th>
                 <th>{student.fio}</th>
-                <th>{student.fio}</th>
-                <th>{student.fio}</th>
+                <th>{student.fio}</th>дополнить
+                <th>{student.fio}</th>дополнить
                 <th>
                     <Button
                         color="primary"
@@ -39,9 +40,16 @@ class Student extends Component<StudentProps> {
         );
     }
     
+    renderStudentWindow(student: UserViewModel) {
+        return (
+            <StudentWindow student={student} toggle={this.studentWindowToggle} />
+        );
+    }
+    
     render() {
         return (
             <>
+                {this.studentWindowOpen && this.renderStudentWindow(this.props.student)}
                 {this.renderStudent(this.props.student)}
             </>
         );

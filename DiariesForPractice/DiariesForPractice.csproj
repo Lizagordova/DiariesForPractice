@@ -40,7 +40,7 @@
 		<None Include="client\src\components\Authorization\AuthorizationWindow.tsx" />
 		<None Include="client\src\components\Authorization\RegistrationWindow.tsx" />
 		<None Include="client\src\components\Common\AdditionalInformation.tsx" />
-		<None Include="client\src\components\Common\Home\Filters.tsx" />
+		<None Include="client\src\components\Common\Comments\Chat.tsx" />
 		<None Include="client\src\components\Common\Home\Filters\Filters.tsx" />
 		<None Include="client\src\components\Common\Home\HomePage.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Student.tsx" />
@@ -67,7 +67,9 @@
 		<None Include="client\src\components\Teacher\Groups\GroupsPage.tsx" />
 		<None Include="client\src\components\Teacher\Groups\Student.tsx" />
 		<None Include="client\src\components\Teacher\Groups\Students.tsx" />
+		<None Include="client\src\components\Teacher\Groups\StudentWindow.tsx" />
 		<None Include="client\src\components\Teacher\Home\HomePage.tsx" />
+		<None Include="client\src\components\Teacher\StudentDiary.tsx" />
 		<None Include="client\src\components\Teacher\TeacherMain.tsx" />
 		<None Include="client\src\components\User\UserMain.tsx" />
 		<None Include="client\src\consts\ActionType.tsx" />
@@ -104,7 +106,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="client\src\components\Common\Comments" />
+	  <Folder Include="client\src\components\Common\controls" />
 	  <Folder Include="Configuration" />
 	</ItemGroup>
 
