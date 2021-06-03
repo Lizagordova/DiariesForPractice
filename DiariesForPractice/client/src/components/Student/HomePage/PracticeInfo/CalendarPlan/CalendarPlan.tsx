@@ -2,12 +2,14 @@
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
 import { CalendarPlanViewModel } from "../../../../../Typings/viewModels/CalendarPlanViewModel";
-import { Label, Button } from "reactstrap";
+import {Label, Button, Alert} from "reactstrap";
 import { ProgressBar } from "react-bootstrap";
 import { CalendarWeekPlanViewModel } from "../../../../../Typings/viewModels/CalendarWeekPlanViewModel";
 import CalendarWeekPlan from "./CalendarWeekPlan";
 import PracticeStore from "../../../../../stores/PracticeStore";
 import { mapToCalendarPlanReadModel } from "../../../../../functions/mapper";
+import { WarningType } from "../../../../../consts/WarningType";
+import { warningTypeRenderer } from "../../../../../functions/warningTypeRenderer";
 
 class CalendarPlanProps {
     practiceStore: PracticeStore;
@@ -19,12 +21,16 @@ class CalendarPlanProps {
 class CalendarPlan extends Component<CalendarPlanProps> {
     calendarPlan: CalendarPlanViewModel = new CalendarPlanViewModel();
     edit: boolean;
+    saved: boolean;
+    notSaved: boolean;
 
     constructor(props: CalendarPlanProps) {
         super(props);
         makeObservable(this, {
             calendarPlan: observable,
-            edit: observable
+            edit: observable,
+            saved: observable,
+            notSaved: observable,
         });
         this.setCalendarPlan();
     }
@@ -33,6 +39,19 @@ class CalendarPlan extends Component<CalendarPlanProps> {
         this.calendarPlan = this.props.calendarPlan;
     }
 
+    renderWarnings() {
+        setTimeout(() => {
+            this.notSaved = false;
+            this.saved = false;
+        }, 6000)
+        return (
+            <>
+                {this.notSaved && warningTypeRenderer(WarningType.NotSaved)}
+                {this.saved && warningTypeRenderer(WarningType.Saved)}
+            </>
+        );
+    }
+    
     renderSectionProgress() {
         let progress = this.computeProgress(this.calendarPlan);
         return (
@@ -88,6 +107,7 @@ class CalendarPlan extends Component<CalendarPlanProps> {
     render() {
         return (
             <>
+                {this.renderWarnings()}
                 <div className="row justify-content-center">
                     {this.renderHeader()}
                 </div>
@@ -116,7 +136,11 @@ class CalendarPlan extends Component<CalendarPlanProps> {
         //this.edit = false;
         let calendarPlan = mapToCalendarPlanReadModel(this.calendarPlan, this.props.practiceDetailsId);
         this.props.practiceStore
-            .addOrUpdateCalendarPlan();
+            .addOrUpdateCalendarPlan(calendarPlan)
+            .then((status) => {
+                this.saved = status === 200;
+                this.notSaved = status !== 200;
+            });
     }
 
     addCalendarWeekPlan() {

@@ -131,7 +131,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     }
 
     save() {
-        let studentCharacteristic = mapToStudentCharacteristicReadModel(this.studentCharacteristics);
+        let studentCharacteristic = mapToStudentCharacteristicReadModel(this.studentCharacteristics, this.props.practiceDetailsId);
         this.props.practiceStore.addOrUpdateStudentCharacteristic(studentCharacteristic)
             .then((status) => {
                 this.saved = status === 200;

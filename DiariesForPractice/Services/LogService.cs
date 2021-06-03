@@ -171,6 +171,12 @@ namespace DiariesForPractice.Services
             AddLog(logger, exception, customMessage, logType);
         }
         
+        public void GetGroupLog(ILogger logger, Exception exception, LogType logType, int groupId)
+        {
+            var customMessage = $"Не удалось получить группу с id={groupId}";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
         public void AddOrUpdateDegreeLog(ILogger logger, Exception exception, LogType logType)
         {
             var customMessage = "Не удалось добавить степень";

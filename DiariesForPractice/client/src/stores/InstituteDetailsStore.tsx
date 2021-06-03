@@ -6,13 +6,12 @@ import { GroupViewModel } from "../Typings/viewModels/GroupViewModel";
 import { CafedraViewModel } from "../Typings/viewModels/CafedraViewModel";
 import { DirectionViewModel } from "../Typings/viewModels/DirectionViewModel";
 import {InstituteReadModel} from "../Typings/readModels/InstituteReadModel";
-import {UserViewModel} from "../Typings/viewModels/UserViewModel";
 import {GroupReadModel} from "../Typings/readModels/GroupReadModel";
 import {CafedraReadModel} from "../Typings/readModels/CafedraReadModel";
 import {DirectionReadModel} from "../Typings/readModels/DirectionReadModel";
 import {CourseReadModel} from "../Typings/readModels/CourseReadModel";
 import {DegreeReadModel} from "../Typings/readModels/DegreeReadModel";
-import {StudentViewModel} from "../Typings/viewModels/StudentViewModel";
+import {UserViewModel} from "../Typings/viewModels/UserViewModel";
 
 class InstituteDetailsStore {
     degrees: DegreeViewModel[] = new Array<DegreeViewModel>();
@@ -21,7 +20,7 @@ class InstituteDetailsStore {
     institutes: InstituteViewModel[] = new Array<InstituteViewModel>();
     cafedras: CafedraViewModel[] = new Array<CafedraViewModel>();
     directions: DirectionViewModel[] = new Array<DirectionViewModel>();
-    students: StudentViewModel[] = new Array<StudentViewModel>();
+    students: UserViewModel[] = new Array<UserViewModel>();
 
     constructor() {
         makeObservable(this, {
@@ -211,6 +210,24 @@ class InstituteDetailsStore {
         if(response.status === 200) {
             this.students = await response.json();
         }
+    }
+
+    async getGroup(groupId: number): Promise<GroupViewModel> {
+        const response = await fetch("/getgroup", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                id: groupId
+            })
+        });
+        let group = new GroupViewModel();
+        if(response.status === 200) {
+            group = await response.json();
+        }
+        
+        return group;
     }
 }
 

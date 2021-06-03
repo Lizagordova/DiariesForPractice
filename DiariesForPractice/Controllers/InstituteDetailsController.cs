@@ -203,6 +203,25 @@ namespace DiariesForPractice.Controllers
 			}
 		}
 		
+		[HttpPost]
+		[Route("/getgroup")]
+		public ActionResult GetGroup([FromBody]GroupReadModel groupReadModel)
+		{
+			try
+			{
+				var group = _instituteDetailsReader.GetGroup(groupReadModel.Id);
+				var groupViewModel = _mapper.Map<Group, GroupViewModel>(group);
+
+				return new JsonResult(groupViewModel);
+			}
+			catch (Exception e)
+			{
+				_logService.GetGroupLog(_logger, e, LogType.Base, groupReadModel.Id);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
 		private InstituteDataViewModel GetInstituteDataViewModel()
 		{
 			var institutes = _instituteDetailsReader.GetInstitutes();

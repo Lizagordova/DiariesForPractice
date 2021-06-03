@@ -156,7 +156,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
     }
 
     save() {
-        let organization = mapToOrganizationReadModel(this.organization);
+        let organization = mapToOrganizationReadModel(this.organization, this.props.practiceDetailsId);
         this.props.store.organizationStore.addOrUpdateOrganization(organization)
             .then((organizationId) => {
                 if(organizationId === 0) {

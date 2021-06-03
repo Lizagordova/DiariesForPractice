@@ -4,7 +4,6 @@ import { Label } from "reactstrap";
 import { StudentsQueryReadModel } from "../../../Typings/readModels/StudentsQueryReadModel";
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
-import Students from "./Students/Students";
 import Filters from "./Filters/Filters";
 
 class IHomePageProps {
@@ -40,7 +39,7 @@ class HomePage extends Component<IHomePageProps> {
 
     renderStudents() {
         return (
-            <Students store={this.props.store} studentsQuery={this.studentsQuery} />
+           <></>
         );
     }
 
@@ -56,7 +55,6 @@ class HomePage extends Component<IHomePageProps> {
 
     updateFilters(query: StudentsQueryReadModel) {
         this.studentsQuery = query;
-        this.props.store.studentStore.searchStudentsByQuery(query);
     }
 }
 

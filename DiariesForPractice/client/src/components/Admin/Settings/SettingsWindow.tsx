@@ -23,64 +23,12 @@ class SettingsWindow extends Component<ISettingsWindowProps> {
             notSaved: observable,
             saved: observable,
         });
-        this.setGoogleDetails(this.props.groupId);
     }
 
     componentDidUpdate(prevProps: Readonly<ISettingsWindowProps>, prevState: Readonly<{}>, snapshot?: any): void {
         if(prevProps.groupId !== this.props.groupId) {
-            this.setGoogleDetails(this.props.groupId);
+            
         }
-    }
-
-    setGoogleDetails(groupId: number) {
-        this.props.store.googleDetailsStore.getGoogleDetailsByGroup(groupId)
-            .then((googleDetails) => {
-                this.googleDetails = googleDetails;
-            });
-    }
-
-    renderSpreadSheetIdInput() {
-        return (
-            <div className="row justify-content-center">
-                <Input
-                    onChange={(e) => this.inputSetting(e, SettingType.SpreadSheetId)}
-                    className="settingInput"
-                    placeholder="Введите SpreadSheetId" />
-            </div>
-        );
-    }
-
-    renderSpreadSheetNameInput() {
-        return (
-            <div className="row justify-content-center">
-                <Input
-                    onChange={(e) => this.inputSetting(e, SettingType.SheetName)}
-                    className="settingInput"
-                    placeholder="Введите SheetName"/>
-            </div>
-        );
-    }
-
-    renderFirstCellInput() {
-        return (
-            <div className="row justify-content-center">
-                <Input
-                    onChange={(e) => this.inputSetting(e, SettingType.FirstCell)}
-                    className="settingInput"
-                    placeholder="Введите адрес первой ячейки"/>
-            </div>
-        );
-    }
-
-    renderLastCellInput() {
-        return (
-            <div className="row justify-content-center">
-                <Input
-                    className="settingInput"
-                    onChange={(e) => this.inputSetting(e, SettingType.LastCell)}
-                    placeholder="Введите адрес последней ячейки"/>
-            </div>
-        );
     }
     
     renderSaveButton() {
@@ -111,22 +59,7 @@ class SettingsWindow extends Component<ISettingsWindowProps> {
         return (
             <div className="settingsWindow">
                 {this.renderWarnings()}
-                <div className="row justify-content-center" >
-                    <div className="col-lg-6 col-md-6 col-sm-12 text-center">
-                        {this.renderSpreadSheetIdInput()}
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-sm-12 text-center">
-                        {this.renderSpreadSheetNameInput()}
-                    </div>
-                </div>
-                <div className="row justify-content-center">
-                    <div className="col-lg-6 col-md-6 col-sm-12 text-center">
-                        {this.renderFirstCellInput()}
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-sm-12 text-center">
-                        {this.renderLastCellInput()}
-                    </div>
-                </div>
+                
                 <div className="row justify-content-center" style={{padding: "15px 15px 15px 15px"}}>
                     {this.renderSaveButton()}
                 </div>

@@ -38,7 +38,7 @@ class DiaryWindow extends Component<DiaryWindowProps> {
     
     renderDiaryPreview(diary: DiaryViewModel) {
         return (
-            <DiaryPreview diary={diary} />
+            <DiaryPreview diary={diary} diariesStore={this.props.diaryStore} />
         );
     }
 

@@ -4,13 +4,8 @@ import { GroupViewModel } from "../../../Typings/viewModels/GroupViewModel";
 import InstituteDetailsStore from "../../../stores/InstituteDetailsStore";
 import UserStore from "../../../stores/UserStore";
 import GroupDetails from "./GroupDetails";
-import { UserViewModel } from "../../../Typings/viewModels/UserViewModel";
-import { Modal, Table } from "reactstrap";
-import Student from "./Student";
-import { ActionType } from "../../../consts/ActionType";
-import { makeObservable, observable } from "mobx";
-import { warningTypeRenderer } from "../../../functions/warningTypeRenderer";
-import { WarningType } from "../../../consts/WarningType";
+import Students from "./Students";
+import { Modal } from "reactstrap";
 
 class GroupProps {
     group: GroupViewModel;
@@ -22,38 +17,9 @@ class GroupProps {
 @observer
 class Group extends Component<GroupProps> {
     group: GroupViewModel = new GroupViewModel();
-    notSaved: boolean;
-    saved: boolean;
-    edit: boolean;
-    removed: boolean;
-    notRemoved: boolean;
     
     constructor(props: GroupProps) {
         super(props);
-        makeObservable(this, {
-            group: observable,
-            notSaved: observable,
-            saved: observable,
-            removed: observable,
-            notRemoved: observable,
-            edit: observable,
-        })
-    }
-
-    renderWarnings() {
-        setTimeout(() => {
-            this.notSaved = false;
-            this.saved = false;
-            this.edit = false;
-        }, 6000);
-        return(
-            <>
-                {this.saved && warningTypeRenderer(WarningType.Saved)}
-                {this.notSaved && warningTypeRenderer(WarningType.NotSaved)}
-                {this.removed && warningTypeRenderer(WarningType.Removed)}
-                {this.notRemoved && warningTypeRenderer(WarningType.NotRemoved)}
-            </>
-        );
     }
     
     renderGroupDetails() {
@@ -65,13 +31,9 @@ class Group extends Component<GroupProps> {
         );
     }
 
-    
-
     renderStudents() {
         return (
-            <>
-                {this.renderStudentsTable(new Array<UserViewModel>())}
-            </>
+            <Students group={this.group} instituteStore={this.props.instituteStore} groupUpdate={this.groupUpdate}/>
         );
     }
     
@@ -101,22 +63,14 @@ class Group extends Component<GroupProps> {
         );
     }
 
-    performActionWithStudent(action: ActionType, student: UserViewModel) {
-        if(action === ActionType.Remove) {
-            this.props.instituteStore
-                .removeStudentFromGroup(student.id, this.group.id)
-                .then((status) => {
-                    this.removed = status === 200;
-                    this.notRemoved = status !== 200;
-                });
-        } else if(action === ActionType.Add) {
-            this.props.instituteStore
-                .attachStudentToGroup(student.id, this.group.id)
-                .then((status) => {
-                    this.saved = status === 200;
-                    this.notSaved = status !== 200;
-                });
-        }
+    groupUpdate() {
+        this.props.instituteStore
+            .getGroup(this.group.id)
+            .then((group) => {
+                if(group.id !== 0) {
+                    this.group = group;
+                }
+            })
     }
 }
 

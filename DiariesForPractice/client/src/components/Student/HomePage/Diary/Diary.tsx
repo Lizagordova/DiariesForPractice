@@ -87,7 +87,7 @@ class Diary extends Component<DiaryProps> {
                     <DiaryCompletion diary={diary} />
                 </div>
                 <div className="row justify-content-center">
-                    <DiaryPreview diary={diary} store={this.props.store} />
+                    <DiaryPreview diary={diary} diariesStore={this.props.store.diariesStore} />
                 </div>
                 <div className="row justify-content-center">
                     {this.renderControls()}

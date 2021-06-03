@@ -6,6 +6,8 @@ import PracticeStore from "../../../../stores/PracticeStore";
 import { Button, Alert, Input, Label } from "reactstrap";
 import { mapToStudentTaskReadModel } from "../../../../functions/mapper";
 import {ProgressBar} from "react-bootstrap";
+import {WarningType} from "../../../../consts/WarningType";
+import {warningTypeRenderer} from "../../../../functions/warningTypeRenderer";
 
 class StudentTaskProps {
     practiceStore: PracticeStore;
@@ -57,8 +59,8 @@ class IndividualTask extends Component<StudentTaskProps> {
         }, 6000)
         return (
             <>
-                <Alert color="success">Данные успешно обновлены!</Alert>
-                <Alert color="danger">Что-то пошло не так и данные не обновились!</Alert>
+                {this.saved && warningTypeRenderer(WarningType.Saved)}
+                {this.notSaved && warningTypeRenderer(WarningType.NotSaved)}
             </>
         );
     }
@@ -116,7 +118,7 @@ class IndividualTask extends Component<StudentTaskProps> {
     }
     
     save() {
-        let studentTask = mapToStudentTaskReadModel(this.studentTask);
+        let studentTask = mapToStudentTaskReadModel(this.studentTask, this.props.practiceDetailsId);
         this.props.practiceStore
             .addOrUpdateStudentTask(studentTask)
             .then((status) => {

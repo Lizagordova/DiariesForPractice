@@ -2,11 +2,10 @@
 import { observer } from "mobx-react";
 import { DiaryViewModel } from "../../../../Typings/viewModels/DiaryViewModel";
 import { makeObservable, observable } from "mobx";
-import { Button } from "reactstrap";
-import { RootStore } from "../../../../stores/RootStore";
+import DiariesStore from "../../../../stores/DiariesStore";
 
 class DiaryPreviewProps {
-    store: RootStore;
+    diariesStore: DiariesStore;
     diary: DiaryViewModel;
 }
 

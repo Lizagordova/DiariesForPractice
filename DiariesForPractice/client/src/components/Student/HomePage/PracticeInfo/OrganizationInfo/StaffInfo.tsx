@@ -194,7 +194,7 @@ class StaffInfo extends Component<StaffInfoProps> {
     }
     
     getStaffReadModel(): StaffReadModel {
-        let staff = mapToStaffReadModel(this.staff);
+        let staff = mapToStaffReadModel(this.staff, this.props.practiceDetailsId);
         staff.practiceDetailsId = this.props.practiceDetailsId;
         
         return staff;

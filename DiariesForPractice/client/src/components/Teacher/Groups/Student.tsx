@@ -1,10 +1,9 @@
-﻿import React, {Component} from "react";
-import {UserViewModel} from "../../../Typings/viewModels/UserViewModel";
-import {observer} from "mobx-react";
-import {StudentViewModel} from "../../../Typings/viewModels/StudentViewModel";
-import {Button} from "reactstrap";
-import {ActionType} from "../../../consts/ActionType";
-import {translateAction} from "../../../functions/translater";
+﻿import React, { Component } from "react";
+import { UserViewModel } from "../../../Typings/viewModels/UserViewModel";
+import { observer } from "mobx-react";
+import { makeObservable, observable } from "mobx";
+import { ActionType } from "../../../consts/ActionType";
+import { Button } from "reactstrap";
 
 class StudentProps {
     student: UserViewModel;
@@ -13,46 +12,50 @@ class StudentProps {
 
 @observer
 class Student extends Component<StudentProps> {
+    studentWindowOpen: boolean;
+    
     constructor(props: StudentProps) {
         super(props);
+        makeObservable(this, {
+            studentWindowOpen: observable
+        });
     }
     
-    renderStudent(student: StudentViewModel, alreadyInGroup: boolean) {
+    renderStudent(student: UserViewModel) {
         return (
-            <tr key={student.id}>
+            <tr key={student.id} onDoubleClick={() => this.studentWindowToggle()}>
                 <th>{student.id}</th>
-                <th>{this.renderControlForStudent(alreadyInGroup)}</th>
+                <th>{student.fio}</th>
+                <th>{student.fio}</th>
+                <th>{student.fio}</th>
+                <th>
+                    <Button
+                        color="primary"
+                        onClick={() => this.removeStudent()}>
+                        Удалить
+                    </Button>
+                </th>
             </tr>
-        );
-    }
-
-    renderControlForStudent(alreadyInGroup: boolean) {
-        let action = alreadyInGroup ? ActionType.Remove : ActionType.Add;
-        return (
-            <Button
-                outline color="secondary"
-                onClick={() => this.performAction(action)}
-            >
-                {translateAction(action)}
-            </Button>
-        );
-    }
-    
-    renderStudentDetails() {
-        return (
-            <></>
         );
     }
     
     render() {
         return (
             <>
+                {this.renderStudent(this.props.student)}
             </>
         );
     }
 
-    performAction(action: ActionType) {
-        this.props.action(action, this.props.student);
+    removeStudent() {
+        let result = window.confirm(`Вы уверены, что хотите удалить этого студента?`);
+        if(result) {
+            this.props.action(ActionType.Remove, this.props.student);
+        }
+    }
+
+    studentWindowToggle() {
+        this.studentWindowOpen = !this.studentWindowOpen;
     }
 }
 
