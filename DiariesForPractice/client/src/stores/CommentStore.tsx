@@ -1,6 +1,7 @@
 ﻿import { makeObservable, observable } from "mobx";
 import {CommentReadModel} from "../Typings/readModels/CommentReadModel";
 import {CommentGroupReadModel} from "../Typings/readModels/CommentGroupReadModel";
+import {CommentGroupViewModel} from "../Typings/viewModels/CommentGroupViewModel";
 
 class CommentStore {
     constructor() {
@@ -58,7 +59,7 @@ class CommentStore {
         return response.status;
     }
 
-    async getCommentGroup(commentGroup: CommentGroupReadModel): Promise<number> {
+    async getCommentGroup(commentGroup: CommentGroupReadModel): Promise<CommentGroupViewModel> {
         const response = await fetch("/getcommentgroup", {
             method: "POST",
             headers: {
@@ -68,8 +69,16 @@ class CommentStore {
                commentGroup //todo: хз можно ли так
             })
         });
+        let perceivedCommentGroup = new CommentGroupViewModel();
+        if(response.status === 200) {
+            perceivedCommentGroup = await response.json();
+        } else {
+            perceivedCommentGroup.commentedEntityId = commentGroup.commentedEntityId;
+            perceivedCommentGroup.commentedEntityType = commentGroup.commentedEntityType;
+            perceivedCommentGroup.userId = commentGroup.userId;
+        }
 
-        return response.status;
+        return perceivedCommentGroup;
     }
 }
 

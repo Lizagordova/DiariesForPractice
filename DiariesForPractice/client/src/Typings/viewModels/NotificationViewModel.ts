@@ -2,10 +2,12 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
+import { NotificationType } from '../enums/NotificationType';
+
 export class NotificationViewModel
 {
 	public id: number;
 	public message: string;
 	public date: any;
-	public type: number;
+	public type: NotificationType;
 }

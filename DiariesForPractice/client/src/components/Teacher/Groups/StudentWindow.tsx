@@ -1,10 +1,12 @@
 ﻿import React, { Component } from "react";
 import { UserViewModel } from "../../../Typings/viewModels/UserViewModel";
 import { observer } from "mobx-react";
-import { Modal, } from "reactstrap";
+import { Modal } from "reactstrap";
 import StudentDiary from "../StudentDiary";
 import { RootStore } from "../../../stores/RootStore";
-import Chat from "../../Common/Comments/Chat";
+import CommentGroup from "../../Common/Comments/CommentGroup";
+import { CommentedEntityType } from "../../../Typings/enums/CommentedEntityType";
+import { makeObservable, observable } from "mobx";
 
 class StudentWindowProps {
     student: UserViewModel;
@@ -14,8 +16,13 @@ class StudentWindowProps {
 
 @observer
 class StudentWindow extends Component<StudentWindowProps> {
+    chatOpen: boolean;
+    
     constructor(props: StudentWindowProps) {
         super(props);
+        makeObservable(this, {
+            chatOpen: observable
+        });
     }
 
     renderStudentDiary() {
@@ -27,9 +34,20 @@ class StudentWindow extends Component<StudentWindowProps> {
     }
 
     renderChat() {
-        return (
-            <Chat />
-        );
+        if(this.chatOpen) {
+            return (
+                <CommentGroup
+                    commentedEntityId={1} commentedEntityType={CommentedEntityType.Diary}
+                    onToggle={this.chatToggle} store={this.props.store} userId={this.props.student.id}
+                />
+            )
+        } else {
+            return (
+                <i
+                    onClick={() => this.chatToggle()}
+                    className="fas fa-comment fa-2x" />
+            );
+        }
     }
     
     renderStudentWindow(student: UserViewModel) {
@@ -57,6 +75,10 @@ class StudentWindow extends Component<StudentWindowProps> {
                 {this.renderStudentWindow(this.props.student)}
             </>
         );
+    }
+
+    chatToggle = () => {
+        this.chatOpen = !this.chatOpen;
     }
 }
 

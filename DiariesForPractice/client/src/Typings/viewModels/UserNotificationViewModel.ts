@@ -4,6 +4,7 @@
 
 import { NotificationViewModel } from './NotificationViewModel';
 import { UserViewModel } from './UserViewModel';
+import { AnswerType } from '../enums/AnswerType';
 
 export class UserNotificationViewModel
 {
@@ -11,5 +12,5 @@ export class UserNotificationViewModel
 	public notification: NotificationViewModel;
 	public userFor: UserViewModel;
 	public watched: boolean;
-	public answer: number;
+	public answer: AnswerType;
 }

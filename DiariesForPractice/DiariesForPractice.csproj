@@ -40,7 +40,7 @@
 		<None Include="client\src\components\Authorization\AuthorizationWindow.tsx" />
 		<None Include="client\src\components\Authorization\RegistrationWindow.tsx" />
 		<None Include="client\src\components\Common\AdditionalInformation.tsx" />
-		<None Include="client\src\components\Common\Comments\Chat.tsx" />
+		<None Include="client\src\components\Common\Comments\Comment.tsx" />
 		<None Include="client\src\components\Common\Home\Filters\Filters.tsx" />
 		<None Include="client\src\components\Common\Home\HomePage.tsx" />
 		<None Include="client\src\components\Common\Home\Students\Student.tsx" />

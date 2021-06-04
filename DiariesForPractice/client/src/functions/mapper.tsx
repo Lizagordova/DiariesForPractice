@@ -25,6 +25,7 @@ import {CafedraReadModel} from "../Typings/readModels/CafedraReadModel";
 import {DirectionViewModel} from "../Typings/viewModels/DirectionViewModel";
 import {DirectionReadModel} from "../Typings/readModels/DirectionReadModel";
 import CalendarPlan from "../components/Student/HomePage/PracticeInfo/CalendarPlan/CalendarPlan";
+import {CommentViewModel} from "../Typings/viewModels/CommentViewModel";
 
 export function mapToInstituteReadModel(instituteViewModel: InstituteViewModel): InstituteReadModel {
     let institute = new InstituteReadModel();
