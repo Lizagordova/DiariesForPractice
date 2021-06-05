@@ -1,6 +1,4 @@
-﻿using System;
-using DiariesForPractice.Domain.Models.Data;
-using Syncfusion.DocIO;
+﻿using DiariesForPractice.Domain.Models.Data;
 using Syncfusion.DocIO.DLS;
 using System.IO;
 
@@ -16,6 +14,8 @@ namespace DiariesForPractice.DiariesGenerator.Builders
         public WordDocument BuildDiary(PracticeData practiceData)
         {
             var document = new WordDocument();
+            var section = document.AddSection();
+            section.PageSetup.Orientation = PageOrientation.Landscape;
             BuildFirstPage(document);
             BuildSecondPage(document);
             BuildThirdPage(document);
@@ -30,13 +30,10 @@ namespace DiariesForPractice.DiariesGenerator.Builders
 
         public void BuildFirstPage(WordDocument document)
         {
-            var section = document.AddSection();
-            section.PageSetup.Margins.All = 72;
-            section.PageSetup.PageSize = new Syncfusion.Drawing.Size(691, 792);
             var style = document.AddParagraphStyle("normal");
             style.CharacterFormat.FontSize = 12f;
             style.CharacterFormat.FontName = "Times New Roman";
-            var paragraph = section.HeadersFooters.Header.AddParagraph();
+            var paragraph = document.Sections[0].HeadersFooters.Header.AddParagraph();
             paragraph.AppendText("МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ");
             var imageStream = new FileStream("images/MISIS_logo.PNG", FileMode.Open, FileAccess.Read);
             var picture = paragraph.AppendPicture(imageStream);
@@ -47,9 +44,12 @@ namespace DiariesForPractice.DiariesGenerator.Builders
             picture.HorizontalPosition = 263.5f;
             picture.WidthScale = 20;
             picture.HeightScale = 15;
-            
         }
 
+        private void AddTitle(WordDocument document)
+        {
+            var section = document.AddSection();
+        }
         public void BuildSecondPage(WordDocument document)
         {
             

@@ -7,5 +7,6 @@ namespace DiariesForPractice.Domain.Repositories
         int AddOrUpdateCalendarPlan(CalendarPlan calendarPlan);
         int AddOrUpdateCalendarWeekPlan(CalendarPlanWeek calendarPlanWeek);
         CalendarPlan GetCalendarPlan(int calendarPlanId);
+        void AttachCalendarPlanToPractice(int calendarPlanId, int practiceDetailsId);
     }
 }

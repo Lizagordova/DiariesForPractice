@@ -1,4 +1,6 @@
 using DiariesForPractice.Domain.Repositories;
+using DiariesForPractice.Domain.Services.CalendarPlans;
+using DiariesForPractice.Domain.Services.Comments;
 using DiariesForPractice.Domain.Services.Diaries;
 using DiariesForPractice.Domain.Services.InstituteDetails;
 using DiariesForPractice.Domain.Services.Notifications;
@@ -8,6 +10,8 @@ using DiariesForPractice.Domain.Services.StudentTasks;
 using DiariesForPractice.Domain.Services.Users;
 using DiariesForPractice.Domain.StudentCharacteristics;
 using DiariesForPractice.Persistence.Repositories;
+using DiariesForPractice.Persistence.Services.CalendarPlans;
+using DiariesForPractice.Persistence.Services.Comments;
 using DiariesForPractice.Persistence.Services.Diaries;
 using DiariesForPractice.Persistence.Services.InstituteDetail;
 using DiariesForPractice.Persistence.Services.MapperService;
@@ -96,6 +100,8 @@ namespace DiariesForPractice
 			services.AddSingleton<IStudentTaskRepository, StudentTaskRepository>();
 			services.AddSingleton<IOrganizationRepository, OrganizationRepository>();
 			services.AddSingleton<IUserRepository, UserRepository>();
+			services.AddSingleton<ICalendarPlanRepository, CalendarPlanRepository>();
+			services.AddSingleton<ICommentRepository, CommentRepository>();
 		}
 
 		private void AddServices(IServiceCollection services)
@@ -117,6 +123,10 @@ namespace DiariesForPractice
 			services.AddSingleton<IStudentTaskReaderService, StudentTaskReaderService>();
 			services.AddSingleton<IUserEditorService, UserEditorService>();
 			services.AddSingleton<IUserReaderService, UserReaderService>();
+			services.AddSingleton<ICalendarPlanEditor, CalendarPlanEditor>();
+			services.AddSingleton<ICalendarPlanReader, CalendarPlanReader>();
+			services.AddSingleton<ICommentEditorService, CommentEditorService>();
+			services.AddSingleton<ICommentReaderService, CommentReaderService>();
 			services.AddSingleton<MainMapperService>();
 			services.AddSingleton<MapperService>();
 		}

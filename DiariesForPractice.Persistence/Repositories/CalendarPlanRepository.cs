@@ -15,6 +15,8 @@ namespace DiariesForPractice.Persistence.Repositories
         private const string AddOrUpdateCalendarPlanSp = "CalendarPlanRepository_AddOrUpdateCalendarPlan";
         private const string AddOrUpdateCalendarWeekPlanSp = "CalendarPlanRepository_AddOrUpdateCalendarWeekPlan";
         private const string GetCalendarPlanSp = "CalendarPlanRepository_GetCalendarPlan";
+        private const string AttachCalendarPlanToPracticeSp = "CalendarPlanRepository_AttachCalendarPlanToPractice";
+        
         private readonly MapperService _mapper;
         public CalendarPlanRepository(
             MapperService mapper)
@@ -64,13 +66,26 @@ namespace DiariesForPractice.Persistence.Repositories
             return calendarPlan;
         }
 
+        public void AttachCalendarPlanToPractice(int calendarPlanId, int practiceDetailsId)
+        {
+            var conn = DatabaseHelper.OpenConnection();
+            var param = CalendarPlanPracticeParam(calendarPlanId, practiceDetailsId);
+            conn.Query(AddOrUpdateCalendarPlanSp, param, commandType: CommandType.StoredProcedure);
+            DatabaseHelper.CloseConnection(conn);
+        }
+
         private DynamicTvpParameters CalendarPlanParam(CalendarPlan calendarPlan)
         {
             var param = new DynamicTvpParameters();
             param.Add("calendarPlanId", calendarPlan.Id);
             var tvp = new TableValuedParameter("calendarWeeksPlan", "UDT_CalendarWeekPlan");
             var udt = calendarPlan.CalendarPlanWeeks
-                .Select(_mapper.Map<CalendarPlanWeek, CalendarWeekPlanUdt>)
+                .Select(c => new CalendarPlanUdt()
+                {
+                    Id = calendarPlan.Id,
+                    CalendarWeekPlanId = c.Id,
+                    Order = c.Order
+                })
                 .ToList();
             tvp.AddGenericList(udt);
             param.Add(tvp);
@@ -93,6 +108,15 @@ namespace DiariesForPractice.Persistence.Repositories
         {
             var param = new DynamicTvpParameters();
             param.Add("calendarPlanId", calendarPlanId);
+
+            return param;
+        }
+
+        private DynamicTvpParameters CalendarPlanPracticeParam(int calendarPlanId, int practiceId)
+        {
+            var param = new DynamicTvpParameters();
+            param.Add("calendarPlanId", calendarPlanId);
+            param.Add("practiceDetailsId", practiceId);
 
             return param;
         }

@@ -3,6 +3,7 @@
     public class CalendarPlanUdt
     {
         public int Id { get; set; }
-        public int PracticeDetailsId { get; set; }
+        public int CalendarWeekPlanId { get; set; }
+        public int Order { get; set; }
     }
 }
