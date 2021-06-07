@@ -8,5 +8,5 @@ export class CalendarPlanReadModel
 {
 	public id: number;
 	public practiceDetailsId: number;
-	public calendarWeelPlans: CalendarWeekPlanReadModel[];
+	public calendarWeekPlans: CalendarWeekPlanReadModel[];
 }

@@ -5,10 +5,12 @@ import { makeObservable, observable } from "mobx";
 import { ActionType } from "../../../consts/ActionType";
 import { Button } from "reactstrap";
 import StudentWindow from "./StudentWindow";
+import { RootStore } from "../../../stores/RootStore";
 
 class StudentProps {
     student: UserViewModel;
     action: any;
+    store: RootStore;
 }
 
 @observer
@@ -42,7 +44,10 @@ class Student extends Component<StudentProps> {
     
     renderStudentWindow(student: UserViewModel) {
         return (
-            <StudentWindow student={student} toggle={this.studentWindowToggle} />
+            <StudentWindow 
+                student={student}
+                toggle={this.studentWindowToggle} 
+                store={this.props.store}/>
         );
     }
     

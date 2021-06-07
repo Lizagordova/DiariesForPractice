@@ -70,13 +70,19 @@ class App extends Component<AppProps> {
         );
     }
     
+    renderWord() {
+        return (
+            <embed src="C:\d\test.docx" />
+        );
+    }
+    
     render() {
         const { store } = this.props;
         return (
             <div>
                 <BrowserRouter>
                     <div className="app">
-                        {this.renderPage(store)}
+                        {this.renderWord()}
                     </div>
                 </BrowserRouter>
             </div>

@@ -10,7 +10,7 @@ namespace DiariesForPractice.Persistence.Services.CalendarPlans
         private readonly ICalendarPlanRepository _calendarPlanRepository;
         
         public CalendarPlanEditor(
-            CalendarPlanRepository calendarPlanRepository)
+            ICalendarPlanRepository calendarPlanRepository)
         {
             _calendarPlanRepository = calendarPlanRepository;
         }

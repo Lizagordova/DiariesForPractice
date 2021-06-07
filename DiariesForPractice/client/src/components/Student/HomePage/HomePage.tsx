@@ -29,7 +29,10 @@ class HomePage extends Component<HomePageProps> {
                         <StudentPracticeInfo store={this.props.store} />
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <Diary store={this.props.store} studentId={this.props.store.userStore.currentUser.id}/>
+                        <Diary 
+                            diariesStore={this.props.store.diariesStore}
+                            studentId={this.props.store.userStore.currentUser.id}
+                        />
                     </div>
                 </div>
             </>

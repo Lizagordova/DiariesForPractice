@@ -82,8 +82,7 @@ class GroupsPage extends Component<GroupsPageProps> {
             <Group
                 group={group} 
                 toggle={this.groupShowToggle}  
-                instituteStore={this.props.store.instituteDetailsStore} 
-                userStore={this.props.store.userStore} />
+                store={this.props.store} />
         );
     }
     

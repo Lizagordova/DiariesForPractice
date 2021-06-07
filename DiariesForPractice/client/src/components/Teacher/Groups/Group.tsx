@@ -1,17 +1,15 @@
 ﻿import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { GroupViewModel } from "../../../Typings/viewModels/GroupViewModel";
-import InstituteDetailsStore from "../../../stores/InstituteDetailsStore";
-import UserStore from "../../../stores/UserStore";
 import GroupDetails from "./GroupDetails";
 import Students from "./Students";
 import { Modal } from "reactstrap";
+import { RootStore } from "../../../stores/RootStore";
 
 class GroupProps {
     group: GroupViewModel;
     toggle: any;
-    instituteStore: InstituteDetailsStore;
-    userStore: UserStore;
+    store: RootStore;
 }
 
 @observer
@@ -26,14 +24,17 @@ class Group extends Component<GroupProps> {
         return (
             <GroupDetails  
                 group={this.props.group}
-                instituteStore={this.props.instituteStore}
-                userStore={this.props.userStore}/>
+                instituteStore={this.props.store.instituteDetailsStore}
+                userStore={this.props.store.userStore}/>
         );
     }
 
     renderStudents() {
         return (
-            <Students group={this.group} instituteStore={this.props.instituteStore} groupUpdate={this.groupUpdate}/>
+            <Students 
+                group={this.group} 
+                store={this.props.store} 
+                groupUpdate={this.groupUpdate}/>
         );
     }
     
@@ -64,13 +65,13 @@ class Group extends Component<GroupProps> {
     }
 
     groupUpdate() {
-        this.props.instituteStore
+        this.props.store.instituteDetailsStore
             .getGroup(this.group.id)
             .then((group) => {
                 if(group.id !== 0) {
                     this.group = group;
                 }
-            })
+            });
     }
 }
 

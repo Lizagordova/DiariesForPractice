@@ -17,6 +17,7 @@ namespace DiariesForPractice.Persistence.Repositories
         private const string AddOrUpdateCommentGroupSp = "CommentRepository_AddOrUpdateCommentGroup";
         private const string RemoveCommentSp = "CommentRepository_RemoveComment";
         private const string GetCommentGroupSp = "CommentRepository_GetCommentGroup";
+
         private readonly MapperService _mapper;
         
         public CommentRepository(

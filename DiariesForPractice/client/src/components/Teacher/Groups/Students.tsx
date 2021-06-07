@@ -5,15 +5,15 @@ import {Table} from "reactstrap";
 import Student from "./Student";
 import {GroupViewModel} from "../../../Typings/viewModels/GroupViewModel";
 import StudentSearch from "../../Common/Search/StudentSearch";
-import InstituteDetailsStore from "../../../stores/InstituteDetailsStore";
 import {ActionType} from "../../../consts/ActionType";
 import {makeObservable, observable} from "mobx";
 import {warningTypeRenderer} from "../../../functions/warningTypeRenderer";
 import {WarningType} from "../../../consts/WarningType";
+import {RootStore} from "../../../stores/RootStore";
 
 class StudentsProps {
     group: GroupViewModel;
-    instituteStore: InstituteDetailsStore;
+    store: RootStore;
     groupUpdate: any;
 }
 
@@ -59,7 +59,7 @@ class Students extends Component<StudentsProps> {
     renderSearch() {
         return (
             <StudentSearch 
-                instituteStore={this.props.instituteStore}
+                instituteStore={this.props.store.instituteDetailsStore}
             />
         );
     }
@@ -79,7 +79,10 @@ class Students extends Component<StudentsProps> {
                 <tbody>
                     {students.map((student) => {
                         return (
-                            <Student student={student} action={this.performActionWithStudent}/>
+                            <Student 
+                                student={student} 
+                                action={this.performActionWithStudent} 
+                                store={this.props.store}/>
                         );
                     })}
                 </tbody>
@@ -96,22 +99,23 @@ class Students extends Component<StudentsProps> {
     }
 
     performActionWithStudent(action: ActionType, student: UserViewModel) {
+        let { instituteDetailsStore } = this.props.store;
         if(action === ActionType.Remove) {
-            this.props.instituteStore
+            instituteDetailsStore
                 .removeStudentFromGroup(student.id, this.group.id)
                 .then((status) => {
                     this.removed = status === 200;
                     this.notRemoved = status !== 200;
                 });
         } else if(action === ActionType.Add) {
-            this.props.instituteStore
+            instituteDetailsStore
                 .attachStudentToGroup(student.id, this.group.id)
                 .then((status) => {
                     this.saved = status === 200;
                     this.notSaved = status !== 200;
                 });
         }
-        this.props.instituteStore.getStudents();
+        instituteDetailsStore.getStudents();
         this.props.groupUpdate();
     }
 }

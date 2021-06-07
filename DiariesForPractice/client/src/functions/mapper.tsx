@@ -128,7 +128,7 @@ export function mapToCalendarPlanReadModel(calendarPlanViewModel: CalendarPlanVi
     let calendarPlan = new CalendarPlanReadModel();
     calendarPlan.id = calendarPlanViewModel.id;
     calendarPlan.practiceDetailsId = practiceDetailsId;
-    calendarPlan.calendarWeelPlans = calendarPlanViewModel.calendarWeekPlans.map((calendarPlanWeek) => {
+    calendarPlan.calendarWeekPlans = calendarPlanViewModel.calendarWeekPlans.map((calendarPlanWeek) => {
         return mapToCalendarWeekPlanReadModel(calendarPlanWeek);
     });
     
