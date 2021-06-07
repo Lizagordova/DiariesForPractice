@@ -39,7 +39,7 @@ namespace DiariesForPractice.Controllers
             try
             {
                 var calendarPlan = _mapper.Map<CalendarPlanReadModel, CalendarPlan>(calendarPlanReadModel);
-                var calendarPlanId = _calendarPlanEditor.AddOrUpdateCalendarPlan(calendarPlan);
+                var calendarPlanId = _calendarPlanEditor.AddOrUpdateCalendarPlan(calendarPlan, calendarPlanReadModel.PracticeDetailsId);
 
                 return new JsonResult(calendarPlanId);
             }

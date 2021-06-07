@@ -10,6 +10,6 @@ namespace DiariesForPractice.ReadModels
         public int Id { get; set; }
         public int PracticeDetailsId { get; set; }
 
-        public IReadOnlyCollection<CalendarWeekPlanReadModel> CalendarWeelPlans { get; set; } = Array.Empty<CalendarWeekPlanReadModel>();
+        public IReadOnlyCollection<CalendarWeekPlanReadModel> CalendarWeekPlans { get; set; } = Array.Empty<CalendarWeekPlanReadModel>();
     }
 }

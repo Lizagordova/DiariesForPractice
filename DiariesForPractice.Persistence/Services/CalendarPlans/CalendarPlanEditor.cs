@@ -15,18 +15,16 @@ namespace DiariesForPractice.Persistence.Services.CalendarPlans
             _calendarPlanRepository = calendarPlanRepository;
         }
         
-        public int AddOrUpdateCalendarPlan(CalendarPlan calendarPlan)
+        public CalendarPlan AddOrUpdateCalendarPlan(CalendarPlan calendarPlan, int practiceDetailsId)
         {
-            var calendarPlanId = _calendarPlanRepository.AddOrUpdateCalendarPlan(calendarPlan);
+            var calendarPlanId = _calendarPlanRepository.AddOrUpdateCalendarPlan(calendarPlan.Id, practiceDetailsId);
+            foreach (var calendarPlanWeek in calendarPlan.CalendarPlanWeeks)
+            {
+               calendarPlanWeek.Id = _calendarPlanRepository.AddOrUpdateCalendarWeekPlan(calendarPlanWeek, calendarPlanId);
+            }
 
-            return calendarPlanId;
-        }
-
-        public int AddOrUpdateCalendarWeekPlan(CalendarPlanWeek calendarPlanWeek)
-        {
-            var calendarPlanWeekId = _calendarPlanRepository.AddOrUpdateCalendarWeekPlan(calendarPlanWeek);
-
-            return calendarPlanWeekId;
+            var updatedCalendarPlan = _calendarPlanRepository.GetCalendarPlan(calendarPlan.Id);
+            return updatedCalendarPlan;
         }
     }
 }

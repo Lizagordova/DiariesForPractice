@@ -150,7 +150,8 @@ CREATE TABLE [CalendarPlan]
 CREATE TABLE [CalendarPlan_CalendarWeekPlan]
 (
     [CalendarPlanId] INT REFERENCES [CalendarPlan]([Id]) ON DELETE CASCADE ,
-    [CalendarWeekPlanId] INT REFERENCES [CalendarWeekPlan]([Id]) ON DELETE CASCADE 
+    [CalendarWeekPlanId] INT REFERENCES [CalendarWeekPlan]([Id]) ON DELETE CASCADE,
+	[Order] INT
 );
 
 CREATE TABLE [Student_Group]
@@ -337,8 +338,9 @@ CREATE TYPE [UDT_CalendarWeekPlan] AS TABLE
     [StartDate] DATETIME2,
     [EndDate] DATETIME2,
     [NameOfTheWork] NVARCHAR(MAX),
-    [StructuralDivision] NVARCHAR(MAX)
-    );
+    [StructuralDivision] NVARCHAR(MAX),
+	[Order] INT
+   );
 
 CREATE TYPE [UDT_CalendarPlan] AS TABLE
 (
@@ -399,7 +401,7 @@ CREATE TYPE [UDT_StudentTask] AS TABLE
     [Id] INT,
     [StudentId] INT,
     [Task] NVARCHAR(MAX)
-    );
+);
 
 CREATE TYPE [UDT_Comment] AS TABLE
 (
@@ -1855,53 +1857,119 @@ BEGIN
 end
 
 
-        CREATE PROCEDURE [CalendarPlanRepository_AddOrUpdateCalendarPlan]
-        @calendarPlans [UDT_CalendarPlan] READONLY
-        AS
-        BEGIN
-            DECLARE @mergedIds TABLE([Id] INT);
+CREATE PROCEDURE [CalendarPlanRepository_AddOrUpdateCalendarPlan]
+    @calendarPlan [UDT_CalendarPlan] READONLY
+AS
+BEGIN
+    DECLARE @mergedIds TABLE([Id] INT);
 
-            MERGE
-            INTO [CalendarPlan] AS [dest]
-            USING @calendarPlans AS [src]
-            ON [dest].[CalendarWeekPlanId] = [src].[CalendarWeekPlanId]
-                AND [dest].[Id] = [src].[Id]
-            WHEN NOT MATCHED THEN
-                INSERT (
-                    [Id],
-                    [CalendarWeekPlanId],
-                    [Order]
-                ) VALUES (
-                             [Id],
-                             [CalendarWeekPlanId],
-                             [Order]
-                         )
-                OUTPUT INSERTED.ID INTO @mergedIds;
+	MERGE
+	INTO [CalendarPlan] AS [dest]
+	USING @calendarPlan AS [src]
+	ON [dest].[Id] = [src].[Id]
+		OR [dest].[PracticeDetailsId] = [src].[PracticeDetailsId]
+	WHEN NOT MATCHED THEN
+		INSERT (
+			[PracticeDetailsId]
+		) VALUES (
+			[src].[PracticeDetailsId]
+		)
+    OUTPUT INSERTED.ID INTO @mergedIds;
 
-            DECLARE @calendarPlanId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
+   DECLARE @calendarPlanId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-            SELECT @calendarPlanId;
-        END
+   SELECT @calendarPlanId;
+END
 
-            CREATE PROCEDURE [CalendarPlanRepository_AddOrUpdateCalendarWeekPlan]
-            @calendarWeekPlan [UDT_CalendarWeekPlan] READONLY
-            AS
-            BEGIN
-                DECLARE @mergedIds TABLE([Id] INT);
+CREATE PROCEDURE [CalendarPlanRepository_AddOrUpdateCalendarWeekPlan]
+	@calendarPlanId INT,
+    @calendarWeekPlan [UDT_CalendarWeekPlan] READONLY
+AS
+BEGIN
+    DECLARE @mergedIds TABLE([Id] INT);
 
-                MERGE
-                INTO [CalendarWeekPlan] AS [dest]
-                USING @calendarWeekPlan
-            END
+    MERGE
+    INTO [CalendarWeekPlan] AS [dest]
+    USING @calendarWeekPlan AS [src]
+	ON [dest].[Id] = [src].[Id]
+	WHEN NOT MATCHED THEN
+		INSERT (
+		[StartDate],
+		[EndDate],
+		[NameOfTheWork],
+		[StructuralDivision]
+	) VALUES (
+		[src].[StartDate],
+		[src].[EndDate],
+		[src].[NameOfTheWork],
+		[src].[StructuralDivision]
+	)
+	WHEN MATCHED THEN
+		UPDATE
+		SET
+			[dest].[StartDate] = [src].[StartDate],
+			[dest].[EndDate] = [src].[EndDate],
+			[dest].[NameOfTheWork] = [src].[NameOfTheWork],
+			[dest].[StructuralDivision] = [src].[StructuralDivision]
+	OUTPUT INSERTED.ID INTO @mergedIds;
 
-                CREATE PROCEDURE [CalendarPlanRepository_GetCalendarPlan]
-                AS
-                BEGIN
-                END
+	DECLARE @calendarPlanWeekId INT = (SELECT TOP 1 [Id] FROM @mergedIds);
 
-                    CREATE PROCEDURE [CalendarPlanRepository_AttachCalendarPlanToPractice]
-                        @calendarPlanId INT,
-                        @practiceDetailsId INT
-                    AS
-                    BEGIN
-                    END
+	MERGE
+	INTO [CalendarPlan_CalendarWeekPlan] AS [dest]
+	USING @calendarWeekPlan AS [src]
+	ON [dest].[CalendarPlanId] = @calendarPlanId
+		OR [dest].[CalendarWeekPlanId] = @calendarPlanWeekId
+	WHEN NOT MATCHED THEN
+		INSERT (
+			[CalendarPlanId],
+			[CalendarWeekPlanId]
+		)
+		VALUES (
+			@calendarPlanId,
+			@calendarPlanWeekId
+		);
+	
+    SELECT @calendarPlanWeekId;
+END
+
+CREATE PROCEDURE [CalendarPlanRepository_GetCalendarPlan]
+	@practiceDetailsId INT
+AS
+BEGIN
+	DECLARE @calendarPlanId INT = (
+		SELECT [Id] 
+		FROM [CalendarPlan]
+		WHERE [PracticeDetailsId] = @practiceDetailsId
+	);
+
+	DECLARE @calendarPlanWeeks [UDT_CalendarWeekPlan];
+
+	INSERT
+	INTO @calendarPlanWeeks (
+		[Id],
+		[StartDate],
+		[EndDate],
+		[NameOfTheWork],
+		[StructuralDivision],
+		[Order]
+	)
+	SELECT
+		[Id],
+		[StartDate],
+		[EndDate],
+		[NameOfTheWork],
+		[StructuralDivision],
+		[cp_cwp].[Order]
+	FROM [CalendarWeekPlan] AS [cp]
+	JOIN [CalendarPlan_CalendarWeekPlan] AS [cp_cwp]
+	ON [cp_cwp].[CalendarWeekPlanId] = [cp].[Id]
+	WHERE [Id] IN (
+		SELECT [Id] 
+		FROM [CalendarPlan_CalendarWeekPlan]
+		WHERE [CalendarPlanId] = @calendarPlanId
+	);	
+
+	SELECT @calendarPlanId;
+	SELECT * FROM @calendarPlanWeeks;
+END

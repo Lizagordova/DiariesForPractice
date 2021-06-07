@@ -4,9 +4,8 @@ namespace DiariesForPractice.Domain.Repositories
 {
     public interface ICalendarPlanRepository
     {
-        int AddOrUpdateCalendarPlan(CalendarPlan calendarPlan);
-        int AddOrUpdateCalendarWeekPlan(CalendarPlanWeek calendarPlanWeek);
+        int AddOrUpdateCalendarPlan(int calendarPlanId, int practiceDetailsId);
+        int AddOrUpdateCalendarWeekPlan(CalendarPlanWeek calendarPlanWeek, int calendarPlanId);
         CalendarPlan GetCalendarPlan(int calendarPlanId);
-        void AttachCalendarPlanToPractice(int calendarPlanId, int practiceDetailsId);
     }
 }
