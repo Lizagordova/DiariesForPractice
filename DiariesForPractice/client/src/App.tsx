@@ -72,7 +72,15 @@ class App extends Component<AppProps> {
     
     renderWord() {
         return (
-            <embed src="C:\d\test.docx" />
+            <div id="content">
+                <div style={{height: "800px"}}>
+                    <iframe id="optomaFeed" src="Content/doc00290620210604141114.html" scrolling="yes"
+                            frameBorder="0" height="100%" width="100%" 
+                            style={{position: "absolute", clip: "rect(190px,1100px,800px,250px)"}}
+                    />
+                </div>
+            </div>
+            
         );
     }
     
@@ -82,7 +90,7 @@ class App extends Component<AppProps> {
             <div>
                 <BrowserRouter>
                     <div className="app">
-                        {this.renderWord()}
+                        {this.renderPage(store)}
                     </div>
                 </BrowserRouter>
             </div>

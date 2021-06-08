@@ -47,7 +47,7 @@ namespace DiariesForPractice.Controllers
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);//todo: СЮДА
+				_logService.AddGetInstituteDataLog(_logger, e, LogType.Base);
 
 				return new StatusCodeResult(500);
 			}

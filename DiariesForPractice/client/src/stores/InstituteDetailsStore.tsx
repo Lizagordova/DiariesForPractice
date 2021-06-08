@@ -42,8 +42,9 @@ class InstituteDetailsStore {
 
     async getInstituteData() {
         const response = await fetch("/getinstitutedata");
-        /*if(response.status === 200) {
+        if(response.status === 200) {
             let data = response.json();
+            console.log("data", data);
             // @ts-ignore
             this.institutes = data.institutes;
             // @ts-ignore
@@ -56,7 +57,7 @@ class InstituteDetailsStore {
             this.cafedras = data.cafedras;
             // @ts-ignore
             this.groups = data.groups;
-        }*/
+        }
     }
     
     async addOrUpdateInstitute(institute: InstituteReadModel): Promise<number> {

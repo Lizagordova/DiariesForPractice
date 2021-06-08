@@ -141,6 +141,12 @@ namespace DiariesForPractice.Services
             AddLog(logger, exception, customMessage, logType);
         }
         
+        public void AddGetInstituteDataLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = "Не удалось получить данные про институт";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
         public void AddOrUpdateInstituteLog(ILogger logger, Exception exception, LogType logType)
         {
             var customMessage = "Не удалось добавить институт";
