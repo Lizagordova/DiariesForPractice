@@ -11,6 +11,7 @@
         public Course Course { get; set; }
         public StudentCharacteristic StudentCharacteristic { get; set; }
         public StudentTask StudentTask { get; set; }
+        public Order Order { get; set; }
         public string Comment { get; set; }
     }
 }

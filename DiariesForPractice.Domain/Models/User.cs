@@ -16,5 +16,6 @@ namespace DiariesForPractice.Domain.Models
 		public string Password { get; set; }
 		public string EmailConfirmed { get; set; }
 		public List<UserRole> Roles { get; set; }
+		public string FullName => $"{FirstName} {SecondName} {LastName}";
 	}
 }

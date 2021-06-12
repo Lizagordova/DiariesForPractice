@@ -77,6 +77,22 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.StructuralDivision, opt => opt.MapFrom(src => src.StructuralDivision))
                     .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.Order));
             });
+            
+            AddMapping<OrderUdt, Order>(cfg =>
+            {
+                cfg.CreateMap<OrderUdt, Order>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
+                    .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src.OrderDate));
+            });
+            
+            AddMapping<Order, OrderUdt>(cfg =>
+            {
+                cfg.CreateMap<Order, OrderUdt>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
+                    .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src.OrderDate));
+            });
         }
     }
 }
