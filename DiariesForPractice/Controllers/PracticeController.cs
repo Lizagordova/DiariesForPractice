@@ -4,6 +4,7 @@ using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Queries;
 using DiariesForPractice.Domain.Services.PracticeDetail;
+using DiariesForPractice.Helpers;
 using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services;
 using DiariesForPractice.Services.Mapper;
@@ -17,22 +18,22 @@ namespace DiariesForPractice.Controllers
     {
         private readonly IPracticeEditorService _practiceEditor;
         private readonly IPracticeReaderService _practiceReader;
-        private readonly MapperService _mapper;
         private readonly ILogger<PracticeController> _logger;
         private readonly LogService _logService;
+        private readonly MapHelper _mapHelper;
 
         public PracticeController(
             IPracticeEditorService practiceEditor,
             IPracticeReaderService practiceReader,
-            MapperService mapper,
             ILogger<PracticeController> logger,
-            LogService logService)
+            LogService logService,
+            MapHelper mapHelper)
         {
             _practiceEditor = practiceEditor;
             _practiceReader = practiceReader;
-            _mapper = mapper;
             _logger = logger;
             _logService = logService;
+            _mapHelper = mapHelper;
         }
 
         [HttpPost]
@@ -41,7 +42,7 @@ namespace DiariesForPractice.Controllers
         {
             try
             {
-                var practiceDetails = _mapper.Map<PracticeReadModel, PracticeDetails>(practiceReadModel);
+                var practiceDetails = _mapHelper.MapPracticeDetails(practiceReadModel);
                 var practiceDetailsId = _practiceEditor.AddOrUpdatePracticeDetails(practiceDetails);
 
                 return new JsonResult(practiceDetailsId);
@@ -65,7 +66,7 @@ namespace DiariesForPractice.Controllers
             try
             {
                 var practiceDetails = _practiceReader.GetPracticeDetails(practiceReadModel.StudentId);
-                var practiceDetailsViewModel = _mapper.Map<PracticeDetails, PracticeViewModel>(practiceDetails);
+                var practiceDetailsViewModel = _mapHelper.MapPracticeViewModel(practiceDetails);
 
                 return new JsonResult(practiceDetailsViewModel);
             }

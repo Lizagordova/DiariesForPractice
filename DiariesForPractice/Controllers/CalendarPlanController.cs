@@ -2,6 +2,7 @@
 using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Services.CalendarPlans;
+using DiariesForPractice.Helpers;
 using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services;
 using DiariesForPractice.Services.Mapper;
@@ -17,19 +18,22 @@ namespace DiariesForPractice.Controllers
         private readonly LogService _logService;
         private readonly ICalendarPlanEditor _calendarPlanEditor;
         private readonly ICalendarPlanReader _calendarPlanReader;
+        private readonly MapHelper _mapHelper;
         
         public CalendarPlanController(
             MapperService mapper,
             ILogger<CalendarPlanController> logger,
             LogService logService,
             ICalendarPlanEditor calendarPlanEditor,
-            ICalendarPlanReader calendarPlanReader)
+            ICalendarPlanReader calendarPlanReader,
+            MapHelper mapHelper)
         {
             _mapper = mapper;
             _logger = logger;
             _logService = logService;
             _calendarPlanEditor = calendarPlanEditor;
             _calendarPlanReader = calendarPlanReader;
+            _mapHelper = mapHelper;
         }
         
         [HttpPost]
@@ -38,7 +42,7 @@ namespace DiariesForPractice.Controllers
         {
             try
             {
-                var calendarPlan = _mapper.Map<CalendarPlanReadModel, CalendarPlan>(calendarPlanReadModel);
+                var calendarPlan = _mapHelper.MapCalendarPlan(calendarPlanReadModel);
                 var calendarPlanId = _calendarPlanEditor.AddOrUpdateCalendarPlan(calendarPlan, calendarPlanReadModel.PracticeDetailsId);
 
                 return new JsonResult(calendarPlanId);

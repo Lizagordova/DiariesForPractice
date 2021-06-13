@@ -4,6 +4,7 @@ using System.Linq;
 using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Services.InstituteDetails;
+using DiariesForPractice.Helpers;
 using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services;
 using DiariesForPractice.Services.Mapper;
@@ -21,19 +22,22 @@ namespace DiariesForPractice.Controllers
 		private readonly MapperService _mapper;
 		private readonly ILogger<InstituteDetailsController> _logger;
 		private readonly LogService _logService;
+		private readonly MapHelper _mapHelper;
 
 		public InstituteDetailsController(
 			IInstituteDetailsEditorService instituteDetailsEditor,
 			IInstituteDetailsReaderService instituteDetailsReader,
 			MapperService mapper,
 			ILogger<InstituteDetailsController> logger,
-			LogService logService)
+			LogService logService,
+			MapHelper mapHelper)
 		{
 			_instituteDetailsEditor = instituteDetailsEditor;
 			_instituteDetailsReader = instituteDetailsReader;
 			_mapper = mapper;
 			_logger = logger;
 			_logService = logService;
+			_mapHelper = mapHelper;
 		}
 		
 		[HttpGet]
@@ -60,7 +64,7 @@ namespace DiariesForPractice.Controllers
 		{
 			try
 			{
-				var institute = _mapper.Map<InstituteReadModel, Institute>(instituteReadModel);
+				var institute = _mapHelper.MapInstitute(instituteReadModel);
 				var instituteId = _instituteDetailsEditor.AddOrUpdateInstitute(institute);
 
 				return new JsonResult(instituteId);
@@ -98,7 +102,7 @@ namespace DiariesForPractice.Controllers
 		{
 			try
 			{
-				var cafedra = _mapper.Map<CafedraReadModel, Cafedra>(cafedraReadModel);
+				var cafedra = _mapHelper.MapCafedra(cafedraReadModel);
 				var cafedraId = _instituteDetailsEditor.AddOrUpdateCafedra(cafedra);
 
 				return new JsonResult(cafedraId);
@@ -117,7 +121,7 @@ namespace DiariesForPractice.Controllers
 		{
 			try
 			{
-				var direction = _mapper.Map<DirectionReadModel, Direction>(directionReadModel);
+				var direction = _mapHelper.MapDirection(directionReadModel);
 				var directionId = _instituteDetailsEditor.AddOrUpdateDirection(direction);
 
 				return new JsonResult(directionId);
@@ -155,7 +159,7 @@ namespace DiariesForPractice.Controllers
 		{
 			try
 			{
-				var degree = _mapper.Map<DegreeReadModel, Degree>(degreeReadModel);
+				var degree = _mapHelper.MapDegree(degreeReadModel);
 				var degreeId = _instituteDetailsEditor.AddOrUpdateDegree(degree);
 
 				return new JsonResult(degreeId);
@@ -233,12 +237,12 @@ namespace DiariesForPractice.Controllers
 			var degrees = _instituteDetailsReader.GetDegrees();
 			var instituteDataViewModel = new InstituteDataViewModel()
 			{
-				Institutes = institutes.Select(_mapper.Map<Institute, InstituteViewModel>).ToList(),
-				Cafedras = cafedras.Select(_mapper.Map<Cafedra, CafedraViewModel>).ToList(),
-				Directions = directions.Select(_mapper.Map<Direction, DirectionViewModel>).ToList(),
+				Institutes = institutes.Select(_mapHelper.MapInstituteViewModel).ToList(),
+				Cafedras = cafedras.Select(_mapHelper.MapCafedraViewModel).ToList(),
+				Directions = directions.Select(_mapHelper.MapDirectionViewModel).ToList(),
 				Groups = groups.Select(_mapper.Map<Group, GroupViewModel>).ToList(),
 				Courses = courses.Select(_mapper.Map<Course, CourseViewModel>).ToList(),
-				Degrees = degrees.Select(_mapper.Map<Degree, DegreeViewModel>).ToList(),
+				Degrees = degrees.Select(_mapHelper.MapDegreeViewModel).ToList(),
 			};
 
 			return instituteDataViewModel;

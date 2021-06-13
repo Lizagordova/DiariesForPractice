@@ -2,6 +2,7 @@
 using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Services.Comments;
+using DiariesForPractice.Helpers;
 using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services;
 using DiariesForPractice.Services.Mapper;
@@ -18,15 +19,22 @@ namespace DiariesForPractice.Controllers
         private readonly LogService _logService;
         private readonly ICommentEditorService _commentEditor;
         private readonly ICommentReaderService _commentReader;
+        private readonly MapHelper _mapHelper;
         
         public CommentController(
             MapperService mapper,
             ILogger<CommentController> logger,
-            LogService logService)
+            LogService logService,
+            ICommentEditorService commentEditor,
+            ICommentReaderService commentReader,
+            MapHelper mapHelper)
         {
             _mapper = mapper;
             _logger = logger;
             _logService = logService;
+            _commentEditor = commentEditor;
+            _commentReader = commentReader;
+            _mapHelper = mapHelper;
         }
         
         [HttpPost]
@@ -52,7 +60,7 @@ namespace DiariesForPractice.Controllers
         [Route("/addorupdatecommentgroup")]
         public ActionResult AddOrUpdateCommentGroup([FromBody]CommentGroupReadModel commentGroupReadModel)
         {
-            var commentGroup = _mapper.Map<CommentGroupReadModel, CommentGroup>(commentGroupReadModel);
+            var commentGroup = _mapHelper.MapCommentGroup(commentGroupReadModel);
             try
             {
                 var commentGroupId = _commentEditor.AddOrUpdateCommentGroup(commentGroup);
@@ -89,11 +97,11 @@ namespace DiariesForPractice.Controllers
         [Route("/getcommentgroup")]
         public ActionResult GetCommentGroup([FromBody]CommentGroupReadModel commentGroupReadModel)
         {
-            var commentGroup = _mapper.Map<CommentGroupReadModel, CommentGroup>(commentGroupReadModel);
+            var commentGroup = _mapHelper.MapCommentGroup(commentGroupReadModel);
             try
             {
                 var perceivedCommentGroup = _commentReader.GetCommentGroup(commentGroup);
-                var commentGroupViewModel = _mapper.Map<CommentGroup, CommentGroupViewModel>(perceivedCommentGroup);
+                var commentGroupViewModel = _mapHelper.MapCommentGroupViewModel(perceivedCommentGroup);
 				
                 return new JsonResult(commentGroupViewModel);
             }
