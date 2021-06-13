@@ -36,6 +36,16 @@ namespace DiariesForPractice.Services.Mapper
                     .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
                     .ForMember(dest => dest.Comments, opt => opt.Ignore()); //TODO: в специальном хелпере надо прописать заполнение этого поля ИЛИ ДОПИСАТЬ ЗДЕСЬ
             });
+            
+            AddMapping<CommentGroup, CommentGroupViewModel>(cfg =>
+            {
+                cfg.CreateMap<CommentGroup, CommentGroupViewModel>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.CommentedEntityType, opt => opt.MapFrom(src => src.CommentedEntityType))
+                    .ForMember(dest => dest.CommentedEntityId, opt => opt.MapFrom(src => src.CommentedEntityId))
+                    .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                    .ForMember(dest => dest.Comments, opt => opt.Ignore()); //TODO: в специальном хелпере надо прописать заполнение этого поля ИЛИ ДОПИСАТЬ ЗДЕСЬ
+            });
         }
     }
 }

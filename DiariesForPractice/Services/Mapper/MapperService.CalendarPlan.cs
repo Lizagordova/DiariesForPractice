@@ -13,14 +13,14 @@ namespace DiariesForPractice.Services.Mapper
             {
                 cfg.CreateMap<CalendarPlanReadModel, CalendarPlan>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.CalendarPlanWeeks, opt => opt.Ignore());//TODO: выяснить, как здесь можно мапить коллекцию
+                    .ForMember(dest => dest.CalendarPlanWeeks, opt => opt.Ignore());
             });
             
             AddMapping<CalendarPlan, CalendarPlanViewModel>(cfg =>
             {
                 cfg.CreateMap<CalendarPlan, CalendarPlanViewModel>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.CalendarWeekPlans, opt => opt.Ignore());;//TODO: выяснить, как здесь можно мапить коллекцию
+                    .ForMember(dest => dest.CalendarWeekPlans, opt => opt.Ignore());;
             });
             
             AddMapping<CalendarWeekPlanReadModel, CalendarPlanWeek>(cfg =>

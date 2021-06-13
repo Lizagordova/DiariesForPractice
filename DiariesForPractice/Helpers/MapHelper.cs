@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services.Mapper;
@@ -49,6 +50,99 @@ namespace DiariesForPractice.Helpers
                 .ToList();
 
             return calendarPlanViewModel;
+        }
+
+        public CalendarPlan MapCalendarPlan(CalendarPlanReadModel calendarPlanReadModel)
+        {
+            var calendarPlan = _mapper.Map<CalendarPlanReadModel, CalendarPlan>(calendarPlanReadModel);
+            calendarPlan.CalendarPlanWeeks = calendarPlanReadModel.CalendarWeekPlans
+                .Select(_mapper.Map<CalendarWeekPlanReadModel, CalendarPlanWeek>)
+                .ToList();
+
+            return calendarPlan;
+        }
+
+        public CommentGroup MapCommentGroup(CommentGroupReadModel commentGroupReadModel)
+        {
+            var commentGroup = _mapper.Map<CommentGroupReadModel, CommentGroup>(commentGroupReadModel);
+            commentGroup.Comments = new List<Comment>()
+            {
+                _mapper.Map<CommentReadModel, Comment>(commentGroupReadModel.Comment)
+            };
+
+            return commentGroup;
+        }
+        
+        public CommentGroupViewModel MapCommentGroupViewModel(CommentGroup commentGroup)
+        {
+            var commentGroupViewModel = _mapper.Map<CommentGroup, CommentGroupViewModel>(commentGroup);
+            commentGroupViewModel.Comments = commentGroup.Comments.Select(_mapper.Map<Comment, CommentViewModel>).ToList();
+
+            return commentGroupViewModel;
+        }
+
+        public Institute MapInstitute(InstituteReadModel instituteReadModel)
+        {
+            var institute = _mapper.Map<InstituteReadModel, Institute>(instituteReadModel);
+            institute.Cafedras = instituteReadModel.Cafedras.Select(MapCafedra).ToList();
+            
+            return institute;
+        }
+        
+        public InstituteViewModel MapInstituteViewModel(Institute institute)
+        {
+            var instituteViewModel = _mapper.Map<Institute, InstituteViewModel>(institute);
+            instituteViewModel.Cafedras = institute.Cafedras.Select(MapCafedraViewModel).ToList();
+            
+            return instituteViewModel;
+        }
+        
+        public Cafedra MapCafedra(CafedraReadModel cafedraReadModel)
+        {
+            var cafedra = _mapper.Map<CafedraReadModel, Cafedra>(cafedraReadModel);
+            cafedra.Directions = cafedraReadModel.Directions.Select(MapDirection).ToList();
+            
+            return cafedra;
+        }
+        
+        public CafedraViewModel MapCafedraViewModel(Cafedra cafedra)
+        {
+            var cafedraViewModel = _mapper.Map<Cafedra, CafedraViewModel>(cafedra);
+            cafedraViewModel.Directions = cafedra.Directions.Select(MapDirectionViewModel).ToList();
+            
+            return cafedraViewModel;
+        }
+        
+        public Direction MapDirection(DirectionReadModel directionReadModel)
+        {
+            var direction = _mapper.Map<DirectionReadModel, Direction>(directionReadModel);
+            direction.Groups = directionReadModel.Groups.Select( _mapper.Map<GroupReadModel, Group>).ToList();
+            
+            return direction;
+        }
+        
+        public DirectionViewModel MapDirectionViewModel(Direction direction)
+        {
+            var directionViewModel = _mapper.Map<Direction, DirectionViewModel>(direction);
+            directionViewModel.Groups = direction.Groups.Select(_mapper.Map<Group, GroupViewModel>).ToList();
+            
+            return directionViewModel;
+        }
+        
+        public Degree MapDegree(DegreeReadModel degreeReadModel)
+        {
+            var degree = _mapper.Map<DegreeReadModel, Degree>(degreeReadModel);
+            degree.Courses = degreeReadModel.Courses.Select(_mapper.Map<CourseReadModel, Course>).ToList();
+            
+            return degree;
+        }
+        
+        public DegreeViewModel MapDegreeViewModel(Degree degree)
+        {
+            var degreeViewModel = _mapper.Map<Degree, DegreeViewModel>(degree);
+            degreeViewModel.Courses = degree.Courses.Select(_mapper.Map<Course, CourseViewModel>).ToList();
+            
+            return degreeViewModel;
         }
     }
 }
