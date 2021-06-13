@@ -57,7 +57,7 @@ namespace DiariesForPractice.DiariesGenerator.Builders
             var section = CreateSection(document);
             var table = CreateTable(section, 1, 2);
             BuildFirstCellThirdPage(table, data);
-            BuildSecondCellThirdPage(table);
+            BuildSecondCellThirdPage(table, data);
         }
 
         private void BuildFirstCellFirstPage(IWTable table)
@@ -89,7 +89,7 @@ namespace DiariesForPractice.DiariesGenerator.Builders
         public void BuildSecondCellSecondPage(IWTable table, PracticeData data)
         {
             var paragraph = table[0, 1].AddParagraph();
-            AddIndividualPracticeTask(paragraph);
+            AddIndividualPracticeTask(table, data);
         }
 
         public void BuildFirstCellThirdPage(IWTable table, PracticeData data)
@@ -291,32 +291,32 @@ namespace DiariesForPractice.DiariesGenerator.Builders
             organizationMarkBodyParagraph.AddLineBreaks(1);
             organizationMarkBodyParagraph.AppendText($"{data.PracticeDetails.ResponsibleForStudent.Job}");
             organizationMarkBodyParagraph.AddLineBreaks(1);
-            organizationMarkBodyParagraph.AppendText($"Подпись......... {data.PracticeDetails.ResponsibleForStudent.FullName}");
-        }
-        private void AddIndividualPracticeTask(IWParagraph paragraph)
-        {
-            paragraph.BreakCharacterFormat.FontSize = 12f;
-            paragraph.BreakCharacterFormat.Bold = true;
-            paragraph.AppendText("ИНДИВИДУАЛЬНОЕ ЗАДАНИЕ НА ПРАКТИКУ");
-            paragraph.BreakCharacterFormat.FontSize = 10f;
-            paragraph.BreakCharacterFormat.Bold = false;
-            paragraph.AppendText("Содержание индивидуального задания");
-            paragraph.AppendText("такое вот .........");
-            paragraph.AppendText("Отзыв руководителя практики от кафедры");
-            paragraph.AppendText("Лиза лучшая, нечего добавить");
-            paragraph.AppendText("Оценка выполнения индивидуального задания");
-            paragraph.AppendText("Оценка выполнения индивидуального задания");
-            paragraph.AppendText("подпись");
-            paragraph.AppendText("Оценка выполнения индивидуального задания (фио)");
+            organizationMarkBodyParagraph.AppendText($"Подпись {data.PracticeDetails.ResponsibleForStudent.FullName}");
         }
         
-        private void AddCalendarPlanForPractice(WordDocument document, PracticeData data)
+        private void AddIndividualPracticeTask(IWTable table, PracticeData data)
         {
-            var section = CreateSection(document);
+            var individualPracticeTaskTitleParagraph = table[0, 1].AddParagraph();
+            individualPracticeTaskTitleParagraph.ApplyStyle("boldStyle");
+            individualPracticeTaskTitleParagraph.AppendText("ИНДИВИДУАЛЬНОЕ ЗАДАНИЕ НА ПРАКТИКУ");
+            var individualPracticeTaskParagraph = table[0, 1].AddParagraph();
+            individualPracticeTaskParagraph.ApplyStyle("commonData");//todo: другой, потому что шрифт 10
+            individualPracticeTaskParagraph.AppendText($"Содержание индивидуального задания {data.StudentTask.Task}");
+            individualPracticeTaskParagraph.AddLineBreaks(2);
+            individualPracticeTaskParagraph.AppendText($"Отзыв руководителя практики от кафедры {data.StudentCharacteristic.DescriptionByCafedraHead}");
+            individualPracticeTaskParagraph.AddLineBreaks(2);
+            individualPracticeTaskParagraph.AppendText($"Оценка выполнения индивидуального задания {data.StudentTask.Mark}");
+            individualPracticeTaskParagraph.AddLineBreaks(2);
+            individualPracticeTaskParagraph.AppendText("подпись");
+        }
+        
+        private void AddCalendarPlanForPractice(IWTable table, PracticeData data)
+        {
+           /* var section = CreateSection(document);
             var table = CreateTable(section, 17, 3);
             table[0, 0].AddParagraph().AppendText("Сроки работы");
             table[0, 1].AddParagraph().AppendText("Наименование видов работ");
-            table[0, 2].AddParagraph().AppendText("Отметка о выполнении");
+            table[0, 2].AddParagraph().AppendText("Отметка о выполнении");*/
         }
         
         private IWTable CreateTable(IWSection section, int rows, int columns)

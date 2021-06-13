@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
@@ -42,7 +43,7 @@ namespace DiariesForPractice.Controllers
 			try
 			{
 				var instituteDataViewModel = GetInstituteDataViewModel();
-
+				
 				return new JsonResult(instituteDataViewModel);
 			}
 			catch (Exception e)

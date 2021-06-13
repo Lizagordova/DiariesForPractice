@@ -14,6 +14,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                 cfg.CreateMap<StudentTaskUdt, StudentTask>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
+                    .ForMember(dest => dest.Mark, opt => opt.MapFrom(src => src.Mark))
                     .ForMember(dest => dest.Task, opt => opt.MapFrom(src => src.Task));
             });
             
@@ -22,6 +23,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                 cfg.CreateMap<StudentTask, StudentTaskUdt>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
+                    .ForMember(dest => dest.Mark, opt => opt.MapFrom(src => src.Mark))
                     .ForMember(dest => dest.Task, opt => opt.MapFrom(src => src.Task));
             });
         }

@@ -76,6 +76,7 @@ namespace DiariesForPractice.Services.Mapper
                     .ForMember(dest => dest.ContractNumber, opt => opt.MapFrom(src => src.ContractNumber))
                     .ForMember(dest => dest.ResponsibleForStudent, opt => opt.Ignore())
                     .ForMember(dest => dest.SignsTheContract, opt => opt.Ignore())
+                    .ForMember(dest => dest.StudentTask, opt => opt.Ignore())
                     .ForMember(dest => dest.PracticeType, opt => opt.MapFrom(src => src.PracticeType))
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
