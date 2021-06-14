@@ -2,6 +2,7 @@
 {
     public class PracticeData
     {
+        public Diary Diary { get; set; }
         public User Student { get; set; }
         public PracticeDetails PracticeDetails { get; set; }
         public Group Group { get; set; }

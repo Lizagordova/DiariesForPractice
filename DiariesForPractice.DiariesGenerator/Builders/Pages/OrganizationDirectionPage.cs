@@ -72,8 +72,8 @@ namespace DiariesForPractice.DiariesGenerator.Builders.Pages
             bodyParagraph.AppendText(@$"с {data.PracticeDetails.StartDate.ToString()} по {data.PracticeDetails.EndDate.ToString()}");
             bodyParagraph.AddLineBreaks(1);
             bodyParagraph.AppendText($"приказ по НИТУ МИСиС от {data.Order.OrderDate} № {data.Order.Number}");
-            bodyParagraph.AppendText($"Директор института: {data.Diary.DirectorSigned}");
-            bodyParagraph.AppendText($"Рук. практики от кафедры: {data.PracticeDetails.CafedraHeadSigned}");
+            bodyParagraph.AppendText($"Директор института: {data.Diary.Signatures.DirectorTravelPermitSigned}");
+            bodyParagraph.AppendText($"Рук. практики от кафедры: {data.Diary.Signatures.CafedraHeadTravelPermitSigned}");
         }
     }
 }

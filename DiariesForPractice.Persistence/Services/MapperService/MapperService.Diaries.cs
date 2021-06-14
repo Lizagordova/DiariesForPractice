@@ -12,7 +12,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
             {
                 cfg.CreateMap<DiaryUdt, Diary>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.Student, opt => opt.MapFrom(src => new User() { Id = src.StudentId} ))
+                    .ForMember(dest => dest.Student, opt => opt.MapFrom(src => new User() {Id = src.StudentId}))
                     .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path))
                     .ForMember(dest => dest.Generated, opt => opt.MapFrom(src => src.Generated))
                     .ForMember(dest => dest.Send, opt => opt.MapFrom(src => src.Send))
@@ -21,7 +21,8 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.SendDate, opt => opt.MapFrom(src => src.SendDate))
                     .ForMember(dest => dest.GeneratedDate, opt => opt.MapFrom(src => src.GeneratedDate))
                     .ForMember(dest => dest.Completion, opt => opt.MapFrom(src => src.Completion))
-                    .ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment));
+                    .ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment))
+                    .ForMember(dest => dest.Signatures, opt => opt.Ignore());
             });
             
             AddMapping<Diary, DiaryUdt>(cfg =>

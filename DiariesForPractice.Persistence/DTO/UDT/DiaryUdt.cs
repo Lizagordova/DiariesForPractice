@@ -16,7 +16,5 @@ namespace DiariesForPractice.Persistence.DTO.UDT
 		public DateTime PerceivedDate { get; set; }
 		public int Completion { get; set; }
 		public string Comment { get; set; }
-		public bool DirectorSigned { get; set; }
-		public bool CafedraHeadSigned { get; set; }
 	}
 }

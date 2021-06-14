@@ -36,9 +36,11 @@ namespace DiariesForPractice.DiariesGenerator.Services
             practiceData.Student = student;
             practiceData.PracticeDetails = GetPracticeDetailsForStudent(student);
             practiceData.Group = group;
-            practiceData.Institute = GetInstitute(group.InstituteId);
-            practiceData.Cafedra = GetCafedra(group.CafedraId);
-            practiceData.Direction = GetDirection(group.DirectionId);
+            var direction = GetDirection(group.DirectionId);
+            practiceData.Direction = direction;
+            var cafedra = GetCafedra(direction.CafedraId);
+            practiceData.Cafedra = cafedra;
+            practiceData.Institute = GetInstitute(cafedra.InstituteId);
             practiceData.Course = GetCourse(group.CourseId);
             practiceData.StudentCharacteristic = GetStudentCharacteristic(student.Id);
             practiceData.StudentTask = GetStudentTask(student.Id);

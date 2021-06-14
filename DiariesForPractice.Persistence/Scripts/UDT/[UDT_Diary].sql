@@ -11,7 +11,5 @@
     [SendDate] DATETIME2,
     [PerceivedDate] DATETIME2,
     [Completion] INT,
-    [Comment] NVARCHAR(MAX),
-    [DirectorSigned] BIT,
-    [CafedraHeadSigned] BIT
+    [Comment] NVARCHAR(MAX)
 );
