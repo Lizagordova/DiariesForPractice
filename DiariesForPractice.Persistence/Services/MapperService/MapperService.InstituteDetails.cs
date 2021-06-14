@@ -73,7 +73,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
             {
                 cfg.CreateMap<Group, GroupUdt>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.DirectionId, opt => opt.MapFrom(src => src.Name))
+                    .ForMember(dest => dest.DirectionId, opt => opt.MapFrom(src => src.DirectionId))
                     .ForMember(dest => dest.CourseId, opt => opt.MapFrom(src => src.CourseId))
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
             });
@@ -89,14 +89,6 @@ namespace DiariesForPractice.Persistence.Services.MapperService
             {
                 cfg.CreateMap<CourseUdt, Course>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
-            });
-            
-            AddMapping<Course, CourseUdt>(cfg =>
-            {
-                cfg.CreateMap<Course, CourseUdt>()
-                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.DegreeId, opt => opt.Ignore())
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
             });
             

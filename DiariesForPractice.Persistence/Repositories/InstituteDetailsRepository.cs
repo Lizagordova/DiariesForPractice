@@ -127,7 +127,7 @@ namespace DiariesForPractice.Persistence.Repositories
 		{
 			var conn = DatabaseHelper.OpenConnection();
 			var param = GetInstituteEntityParam(InstituteEntity.Cafedra, cafedraId);
-			var directionUdts = conn.Query<DirectionUdt>(GetDirectionsSp, commandType: CommandType.StoredProcedure);
+			var directionUdts = conn.Query<DirectionUdt>(GetDirectionsSp, param, commandType: CommandType.StoredProcedure);
 			var directions = directionUdts.Select(_mapper.Map<DirectionUdt, Direction>).ToList();
 			DatabaseHelper.CloseConnection(conn);
 
@@ -161,16 +161,17 @@ namespace DiariesForPractice.Persistence.Repositories
 
 		private IReadOnlyCollection<Group> MapGroups(GroupData groupData)
 		{
-			var groups = groupData.Groups
-				.Join(groupData.GroupsDetails,
-					g => g.Id,
-					gd => gd.GroupId,
-					MapGroup)
-				.Join(groupData.StudentGroups,
-					g => g.Id,
-					sg => sg.GroupId,
-					MapGroup
-					)
+
+			var groups = groupData.Groups.Select(_mapper.Map<GroupUdt, Group>).ToList();
+			// .Join(groupData.GroupsDetails,
+				// 	g => g.Id,
+				// 	gd => gd.GroupId,
+				// 	MapGroup)
+				// .Join(groupData.StudentGroups,
+				// 	g => g.Id,
+				// 	sg => sg.GroupId,
+				// 	MapGroup
+				// 	)
 				// todo: дописать
 				// .Join(groupData.Students,
 				// 	g => g.Students,
@@ -182,7 +183,6 @@ namespace DiariesForPractice.Persistence.Repositories
 				// 			MapGroup(g, s);
 				// 		}
 				// 	})
-				.ToList();
 
 			return groups;
 		}
@@ -309,7 +309,7 @@ namespace DiariesForPractice.Persistence.Repositories
 		public Degree GetDegree(int degreeId)
 		{
 			var conn = DatabaseHelper.OpenConnection();
-			var param = GetInstituteEntityParam(InstituteEntity.Institute, degreeId);
+			var param = GetInstituteEntityParam(InstituteEntity.Degree, degreeId);
 			var degreeUdt = conn
 				.Query<DegreeUdt>(GetDegreeSp, param, commandType: CommandType.StoredProcedure)
 				.FirstOrDefault();

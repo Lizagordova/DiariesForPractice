@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiariesForPractice.Monitori
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiariesForPractice.DiariesGenerator", "DiariesForPractice.DiariesGenerator\DiariesForPractice.DiariesGenerator.csproj", "{3DD6B37E-C697-4F0D-A749-FEAA8AEA024B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiariesForPractice.Tests", "DiariesForPractice.Tests\DiariesForPractice.Tests.csproj", "{78E12416-D8DC-4264-AE7D-269396D2C027}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{3DD6B37E-C697-4F0D-A749-FEAA8AEA024B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DD6B37E-C697-4F0D-A749-FEAA8AEA024B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DD6B37E-C697-4F0D-A749-FEAA8AEA024B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78E12416-D8DC-4264-AE7D-269396D2C027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E12416-D8DC-4264-AE7D-269396D2C027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E12416-D8DC-4264-AE7D-269396D2C027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E12416-D8DC-4264-AE7D-269396D2C027}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

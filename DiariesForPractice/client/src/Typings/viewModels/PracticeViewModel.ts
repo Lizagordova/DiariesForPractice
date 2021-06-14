@@ -24,7 +24,6 @@ export class PracticeViewModel
 	public startDate: any;
 	public endDate: any;
 	public structuralDivision: string;
-	public orderOfPassingPractice: string;
 	public calendarPlan: CalendarPlanViewModel;
 	public studentTask: StudentTaskViewModel;
 	public studentCharacteristic: StudentCharacteristicViewModel;

@@ -9,5 +9,6 @@ namespace DiariesForPractice.Domain.Repositories
         List<User> GetUsers();
         int AddOrUpdateUser(User user);
         List<User> GetUsersByIds(List<int> ids);
+        int Authorize(User user);
     }
 }

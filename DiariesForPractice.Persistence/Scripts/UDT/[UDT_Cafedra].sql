@@ -1,6 +1,6 @@
 ﻿CREATE TYPE [UDT_Cafedra] AS TABLE
 (
-    [Id] INT PRIMARY KEY IDENTITY,
+    [Id] INT,
     [Name] NVARCHAR(100),
     [InstituteId] INT
 );

@@ -18,7 +18,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Scripts\Procedures" />
+	  <Folder Include="Scripts\Procedures\PracticeRepository" />
+	  <Folder Include="Scripts\Procedures\StudentCharacteristicRepository" />
 	</ItemGroup>
 
 </Project>

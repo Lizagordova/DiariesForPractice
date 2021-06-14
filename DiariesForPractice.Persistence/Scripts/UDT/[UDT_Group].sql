@@ -3,5 +3,5 @@
     [Id] INT,
     [Name] NVARCHAR(100),
     [DirectionId] INT,
-    [CourseId] INT,
+    [CourseId] INT
 );

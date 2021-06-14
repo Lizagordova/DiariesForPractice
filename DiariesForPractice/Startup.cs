@@ -9,6 +9,7 @@ using DiariesForPractice.Domain.Services.PracticeDetail;
 using DiariesForPractice.Domain.Services.StudentTasks;
 using DiariesForPractice.Domain.Services.Users;
 using DiariesForPractice.Domain.StudentCharacteristics;
+using DiariesForPractice.Helpers;
 using DiariesForPractice.Persistence.Repositories;
 using DiariesForPractice.Persistence.Services.CalendarPlans;
 using DiariesForPractice.Persistence.Services.Comments;
@@ -21,6 +22,7 @@ using DiariesForPractice.Persistence.Services.PracticeDetail;
 using DiariesForPractice.Persistence.Services.StudentCharacteristics;
 using DiariesForPractice.Persistence.Services.StudentTasks;
 using DiariesForPractice.Persistence.Services.Users;
+using DiariesForPractice.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -102,6 +104,7 @@ namespace DiariesForPractice
 			services.AddSingleton<IUserRepository, UserRepository>();
 			services.AddSingleton<ICalendarPlanRepository, CalendarPlanRepository>();
 			services.AddSingleton<ICommentRepository, CommentRepository>();
+			services.AddSingleton<ILogRepository, LogRepository>();
 		}
 
 		private void AddServices(IServiceCollection services)
@@ -129,6 +132,8 @@ namespace DiariesForPractice
 			services.AddSingleton<ICommentReaderService, CommentReaderService>();
 			services.AddSingleton<MainMapperService>();
 			services.AddSingleton<MapperService>();
+			services.AddSingleton<LogService>();
+			services.AddSingleton<MapHelper>();
 		}
 	}
 }

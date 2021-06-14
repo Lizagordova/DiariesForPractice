@@ -78,6 +78,11 @@ namespace DiariesForPractice.Persistence.Repositories
             return users;
         }
 
+        public int Authorize(User user)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private DynamicTvpParameters GetUsersByIdsParam(List<int> ids)
         {
             var param = new DynamicTvpParameters();
