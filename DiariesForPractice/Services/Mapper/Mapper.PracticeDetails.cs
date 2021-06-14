@@ -61,7 +61,7 @@ namespace DiariesForPractice.Services.Mapper
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.StructuralDivision, opt => opt.MapFrom(src => src.StructuralDivision))
-                    .ForMember(dest => dest.OrderOfPassingPractice, opt => opt.MapFrom(src => src.OrderOfPassingPractice))
+                    .ForMember(dest => dest.Order, opt => opt.Ignore())
                     .ForMember(dest => dest.CalendarPlan, opt => opt.Ignore())
                     .ForMember(dest => dest.StudentCharacteristic, opt => opt.Ignore());
             });
@@ -81,7 +81,6 @@ namespace DiariesForPractice.Services.Mapper
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.StructuralDivision, opt => opt.MapFrom(src => src.StructuralDivision))
-                    .ForMember(dest => dest.OrderOfPassingPractice, opt => opt.MapFrom(src => src.OrderOfPassingPractice))
                     .ForMember(dest => dest.CalendarPlan, opt => opt.Ignore())
                     .ForMember(dest => dest.StudentCharacteristic, opt => opt.Ignore());
             });

@@ -16,7 +16,7 @@ namespace DiariesForPractice.Domain.Models
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
 		public string StructuralDivision { get; set; }
-		public string OrderOfPassingPractice { get; set; }
+		public Order Order { get; set; }
 		public CalendarPlan CalendarPlan { get; set; }
 		public StudentCharacteristic StudentCharacteristic { get; set; }
 		public StudentTask StudentTask { get; set; }

@@ -22,7 +22,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.StructuralDivision, opt => opt.MapFrom(src => src.StructuralDivision))
-                    .ForMember(dest => dest.OrderOfPassingPractice, opt => opt.MapFrom(src => src.OrderOfPassingPractice));
+                    .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.Order.Id));
             });
             
             AddMapping<PracticeDetailsUdt, PracticeDetails>(cfg =>
@@ -39,7 +39,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.StructuralDivision, opt => opt.MapFrom(src => src.StructuralDivision))
-                    .ForMember(dest => dest.OrderOfPassingPractice, opt => opt.MapFrom(src => src.OrderOfPassingPractice));
+                    .ForMember(dest => dest.Order, opt => opt.Ignore());
             });
             
             AddMapping<CalendarPlanUdt, CalendarPlan>(cfg =>
