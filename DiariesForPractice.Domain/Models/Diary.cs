@@ -16,5 +16,7 @@ namespace DiariesForPractice.Domain.Models
 		public DateTime PerceivedDate { get; set; }
 		public string Completion { get; set; }
 		public string Comment { get; set; }
+		public bool DirectorSigned { get; set; }
+		public bool CafedraHeadSigned { get; set; }
 	}
 }

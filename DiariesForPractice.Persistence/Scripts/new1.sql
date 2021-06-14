@@ -1,25 +1,9 @@
-﻿CREATE TABLE [User]
-(
-    [Id] INT PRIMARY KEY IDENTITY,
-    [FirstName] NVARCHAR(100),
-    [SecondName] NVARCHAR(100),
-    [LastName] NVARCHAR(100),
-    [Email] NVARCHAR(100),
-    [Phone] NVARCHAR(100),
-    [EmailConfirmed] BIT
-    );
-
-CREATE TABLE [User_Role]
+﻿CREATE TABLE [User_Role]
 (
     [UserId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
     [Role] INTEGER
     );
 
-CREATE TABLE [Institute]
-(
-    [Id] INT PRIMARY KEY IDENTITY,
-    [Name] NVARCHAR(100)
-    );
 
 CREATE TABLE [Cafedra]
 (
@@ -209,35 +193,12 @@ CREATE TABLE [CommentGroup]
 	[UserId] INT REFERENCES [User]([Id]) ON DELETE CASCADE
 );
 
-CREATE TYPE [UDT_User] AS TABLE
-    (
-    [Id] INT,
-    [FirstName] NVARCHAR(100),
-    [SecondName] NVARCHAR(100),
-    [LastName] NVARCHAR(100),
-    [Email] NVARCHAR(100),
-    [Phone] NVARCHAR(100),
-    [EmailConfirmed] BIT
-    );
 
 CREATE TYPE [UDT_User_Role] AS TABLE
 (
     [UserId] INT,
     [Role] INT
 );
-
-CREATE TYPE [UDT_Institute] AS TABLE
-    (
-    [Id] INT PRIMARY KEY IDENTITY,
-    [Name] NVARCHAR(100)
-    );
-
-CREATE TYPE [UDT_Cafedra] AS TABLE
-    (
-    [Id] INT PRIMARY KEY IDENTITY,
-    [Name] NVARCHAR(100),
-    [InstituteId] INT
-    );
 
 CREATE TYPE [UDT_Direction] AS TABLE
     (

@@ -1,0 +1,5 @@
+﻿CREATE TABLE [Degree]
+(
+    [Id] INT PRIMARY KEY IDENTITY,
+    [Name] NVARCHAR(100)
+);
