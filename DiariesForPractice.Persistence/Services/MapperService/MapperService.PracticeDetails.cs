@@ -63,6 +63,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.NameOfTheWork, opt => opt.MapFrom(src => src.NameOfTheWork))
+                    .ForMember(dest => dest.Mark, opt => opt.MapFrom(src => src.Mark))
                     .ForMember(dest => dest.StructuralDivision, opt => opt.MapFrom(src => src.StructuralDivision))
                     .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.Order));
             });
@@ -74,6 +75,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.NameOfTheWork, opt => opt.MapFrom(src => src.NameOfTheWork))
+                    .ForMember(dest => dest.Mark, opt => opt.MapFrom(src => src.Mark))
                     .ForMember(dest => dest.StructuralDivision, opt => opt.MapFrom(src => src.StructuralDivision))
                     .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.Order));
             });
