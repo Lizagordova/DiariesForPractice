@@ -43,8 +43,7 @@ class InstituteDetailsStore {
     async getInstituteData() {
         const response = await fetch("/getinstitutedata");
         if(response.status === 200) {
-            let data = response.json();
-            console.log("data", data);
+            let data = await response.json();
             // @ts-ignore
             this.institutes = data.institutes;
             // @ts-ignore

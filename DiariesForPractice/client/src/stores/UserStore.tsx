@@ -4,7 +4,7 @@ import { UserReadModel } from "../Typings/readModels/UserReadModel";
 
 class UserStore {
     currentUser: UserViewModel = new UserViewModel();
-    checkedToken: boolean;
+    checkedToken: boolean = false;
     authorized: boolean = false;
     users: UserViewModel[] = new Array<UserViewModel>();
 

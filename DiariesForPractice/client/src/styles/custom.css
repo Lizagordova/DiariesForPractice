@@ -37,12 +37,12 @@ footer {
 
 .nav-link {
     font-size: 1.8em;
-    color: black;
+    color: white;
     text-decoration: none;
 }
 
 .nav-link:hover {
-    color: black;
+    color: #F0F0F0;
 }
 
 .settingInput {
@@ -83,7 +83,7 @@ footer {
 }
 
 .authInput {
-    width: 70%;
+    width: 80%;
 }
 
 @media (max-width: 800px) {
@@ -96,4 +96,29 @@ footer {
     width: auto;
     margin-left: 5px;
     margin-top: 10px;
+}
+
+.authorizationForm {
+    background-color: #282c34;
+    color: #F0F0F0;
+}
+
+.dataBlock {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.dataLabel {
+    font-size: 1.2em;
+    text-align: center;
+    width: 100%;
+}
+
+.authButton {
+    border: #282c34;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: white;
+    background-color: #2E74B5;
+    width: 80%;
 }

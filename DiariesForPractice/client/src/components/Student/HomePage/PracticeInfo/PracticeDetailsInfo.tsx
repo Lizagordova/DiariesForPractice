@@ -288,9 +288,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
         if(practiceDetails.contractNumber !== "") {
             progress += 20;
         }
-        if(practiceDetails.orderOfPassingPractice !== "") {
-            progress += 20;
-        }
+       
         return progress;
     }
     

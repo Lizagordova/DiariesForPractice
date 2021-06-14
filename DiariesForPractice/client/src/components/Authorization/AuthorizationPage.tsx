@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import { makeObservable, observable } from "mobx";
 import RegistrationWindow from "./RegistrationWindow";
 import AuthorizationWindow from "./AuthorizationWindow";
+import { AuthorizationMode } from "../../consts/AuthorizationMode";
 
 class AuthorizationPageProps {
     store: RootStore;
@@ -15,7 +16,7 @@ class AuthorizationPageProps {
 
 @observer
 class AuthorizationPage extends Component<AuthorizationPageProps> {
-    authorizationMode: AuthorizationMode;
+    authorizationMode: AuthorizationMode = AuthorizationMode.Authorization;
     
     constructor(props: AuthorizationPageProps) {
         super(props);
@@ -26,33 +27,33 @@ class AuthorizationPage extends Component<AuthorizationPageProps> {
 
     renderOptionTabs() {
         return(
-            <div className="row justify-content-center">
+            <>
                 <Nav tabs defaultValue={1}>
                     <NavItem>
-                        <NavLink to={"#"}
-                                 style={{color: 'white'}}
-                                 onClick={() => this.authorizationModeToggle(AuthorizationMode.Authorization)}
-                                 className="nav-link"
-                                 activeClassName="selected"
+                        <NavLink
+                            to={"#"}
+                            onClick={() => this.authorizationModeToggle(AuthorizationMode.Authorization)}
+                            className="nav-link"
+                            activeClassName="selected"
                         >Вход</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink to={"#"}
-                                 style={{color: 'white'}}
-                                 onClick={() => this.authorizationModeToggle(AuthorizationMode.Registration)}
-                                 className="nav-link"
-                                 activeClassName="selected">Регистрация</NavLink>
+                        <NavLink
+                            to={"#"}
+                            onClick={() => this.authorizationModeToggle(AuthorizationMode.Registration)}
+                            className="nav-link"
+                            activeClassName="selected">Регистрация</NavLink>
                     </NavItem>
                 </Nav>
                 {this.renderOption()}
-            </div>
+            </>
         );
     }
     
     renderOption() {
         return (
             <>
-                {this.authorizationMode === AuthorizationMode.Registration && <RegistrationWindow store={this.props.store} />}
+                {this.authorizationMode === AuthorizationMode.Registration && <RegistrationWindow store={this.props.store} modeToggle={this.authorizationModeToggle}/>}
                 {this.authorizationMode === AuthorizationMode.Authorization && <AuthorizationWindow store={this.props.store} />}
             </>
         );
@@ -60,20 +61,22 @@ class AuthorizationPage extends Component<AuthorizationPageProps> {
 
     renderAuthorizationWindow() {
         return (
-            <>
+            <div className="row justify-content-center authorizationForm">
                 {this.renderOptionTabs()}
                 <div className="row justify-content-center">
                     <a href="#">Забыли пароль?</a>
                 </div>
-            </>
+            </div>
         );
     }
     
     render() {
+        let { checkedToken } = this.props.store.userStore;
         return(
             <>
-                {this.props.store.userStore.checkedToken && this.renderAuthorizationWindow()}
-                {!this.props.store.userStore.checkedToken && <LoadingWindow />}
+                {this.renderAuthorizationWindow()}
+                {checkedToken && this.renderAuthorizationWindow()}
+                {!checkedToken && <LoadingWindow />}
             </>
         );
     }
@@ -84,8 +87,3 @@ class AuthorizationPage extends Component<AuthorizationPageProps> {
 }
 
 export default AuthorizationPage;
-
-enum AuthorizationMode {
-    Registration,
-    Authorization
-}

@@ -1,4 +1,5 @@
 using DiariesForPractice.Domain.Repositories;
+using DiariesForPractice.Domain.Services.Authorization;
 using DiariesForPractice.Domain.Services.CalendarPlans;
 using DiariesForPractice.Domain.Services.Comments;
 using DiariesForPractice.Domain.Services.Diaries;
@@ -11,6 +12,7 @@ using DiariesForPractice.Domain.Services.Users;
 using DiariesForPractice.Domain.StudentCharacteristics;
 using DiariesForPractice.Helpers;
 using DiariesForPractice.Persistence.Repositories;
+using DiariesForPractice.Persistence.Services.Authorization;
 using DiariesForPractice.Persistence.Services.CalendarPlans;
 using DiariesForPractice.Persistence.Services.Comments;
 using DiariesForPractice.Persistence.Services.Diaries;
@@ -130,6 +132,7 @@ namespace DiariesForPractice
 			services.AddSingleton<ICalendarPlanReader, CalendarPlanReader>();
 			services.AddSingleton<ICommentEditorService, CommentEditorService>();
 			services.AddSingleton<ICommentReaderService, CommentReaderService>();
+			services.AddSingleton<IAuthorizationService, AuthorizationService>();
 			services.AddSingleton<MainMapperService>();
 			services.AddSingleton<MapperService>();
 			services.AddSingleton<LogService>();

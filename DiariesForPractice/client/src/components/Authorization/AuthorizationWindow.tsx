@@ -2,7 +2,7 @@
 import { RootStore } from "../../stores/RootStore";
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
-import { Input, Button, Alert } from "reactstrap";
+import { Input, Button, Alert, Label } from "reactstrap";
 import { UserReadModel } from "../../Typings/readModels/UserReadModel";
 
 class AuthorizationWindowProps {
@@ -29,56 +29,73 @@ class AuthorizationWindow extends Component<AuthorizationWindowProps> {
             this.notAuthorized = false;
         }, 6000);
         return (
-            <Alert>
-                Неправильно введён логин или пароль
-            </Alert>
+            <>
+                {this.notAuthorized && <Alert>
+                    Неправильно введён логин или пароль
+                </Alert>}
+            </>
         );
     }
     
     renderLoginInput() {
         return (
-            <Input
-                onChange={(event) => this.authorizationDataInput(event, AuthorizationData.Login)}
-                placeholder="Введите логин"
-                className="authInput" />
+            <div className="row justify-content-center dataBlock">
+                <Label className="dataLabel">
+                    Логин
+                </Label>
+                <Input
+                    onChange={(event) => this.authorizationDataInput(event, AuthorizationData.Login)}
+                    placeholder="Введите логин"
+                    className="authInput" />
+            </div>
         );
     }
     
     renderPasswordInput() {
         return (
-            <Input
-                onChange={(event) => this.authorizationDataInput(event, AuthorizationData.Password)}
-                placeholder="Введите пароль"
-                type="password"
-                className="authInput" />
+            <div className="row justify-content-center dataBlock">
+                <Label className="dataLabel">
+                    Пароль
+                </Label>
+                <Input
+                    onChange={(event) => this.authorizationDataInput(event, AuthorizationData.Password)}
+                    placeholder="Введите пароль"
+                    type="password"
+                    className="authInput" />
+            </div>
         );
     }
 
     renderButton() {
         return (
-            <Button
-                outline color="secondary"
-                onClick={() => this.enter()}>
-                Войти
-            </Button>
+            <div className="row justify-content-center">
+                <Button
+                    className="authButton"
+                    outline color="secondary"
+                    onClick={() => this.enter()}>
+                    Войти
+                </Button>
+            </div>
         );
     }
 
     renderAuthorizationWindow() {
         return (
-            <>
+            <div className="container-fluid">
                 {this.renderLoginInput()}
                 {this.renderPasswordInput()}
                 {this.renderButton()}
-            </>
+            </div>
         );
     }
 
     render() {
         return (
             <div className="container-fluid">
+                <div className="row justify-content-center">
                 {this.renderWarnings()}
                 {this.renderAuthorizationWindow()}
+                </div>
             </div>
         );
     }
@@ -98,7 +115,7 @@ class AuthorizationWindow extends Component<AuthorizationWindowProps> {
         this.props.store.userStore.authorize(user)
             .then((status) => {
                 this.notAuthorized = status !== 200;
-            })
+            });
     }
 }
 

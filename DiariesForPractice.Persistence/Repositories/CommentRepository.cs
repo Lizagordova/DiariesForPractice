@@ -64,12 +64,19 @@ namespace DiariesForPractice.Persistence.Repositories
             var param = CommentGroupParam(commentGroup);
             var response = conn.QueryMultiple(GetCommentGroupSp, param, commandType: CommandType.StoredProcedure);
             var commentGroupData = GetCommentGroupData(response);
-            commentGroup = _mapper.Map<CommentGroupData, CommentGroup>(commentGroupData);
+            commentGroup = MapCommentGroup(commentGroupData);
             DatabaseHelper.CloseConnection(conn);
 
             return commentGroup;
         }
 
+        private CommentGroup MapCommentGroup(CommentGroupData data)
+        {
+            var commentGroup = _mapper.Map<CommentGroupUdt, CommentGroup>(data.CommentGroup);
+            commentGroup.Comments = data.Comments.Select(_mapper.Map<CommentUdt, Comment>).ToList();
+
+            return commentGroup;
+        }
         private CommentGroupData GetCommentGroupData(SqlMapper.GridReader reader)
         {
             var commentGroupData = new CommentGroupData()
@@ -88,6 +95,7 @@ namespace DiariesForPractice.Persistence.Repositories
             var udt = _mapper.Map<Comment, CommentUdt>(comment);
             udt.GroupId = groupId;
             tvp.AddObjectAsRow(udt);
+            param.Add(tvp);
             
             return param;
         }
@@ -106,6 +114,7 @@ namespace DiariesForPractice.Persistence.Repositories
             var tvp = new TableValuedParameter("commentGroup", "UDT_CommentGroup");
             var udt = _mapper.Map<CommentGroup, CommentGroupUdt>(group);
             tvp.AddObjectAsRow(udt);
+            param.Add(tvp);
             
             return param;
         }

@@ -17,6 +17,7 @@ namespace DiariesForPractice.Services.Mapper
                     .ForMember(dest => dest.SecondName, opt => opt.MapFrom(src => src.SecondName))
                     .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
                     .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                    .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone))
                     .ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.Token))
                     .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.Login))
                     .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))

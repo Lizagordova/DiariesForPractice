@@ -24,6 +24,10 @@ namespace DiariesForPractice.Persistence.Services.Comments
         public int AddOrUpdateCommentGroup(CommentGroup commentGroup)
         {
             var commentGroupId = _commentRepository.AddOrUpdateCommentGroup(commentGroup);
+            foreach (var comment in commentGroup.Comments)
+            {
+                comment.Id = _commentRepository.AddOrUpdateComment(comment, commentGroupId);
+            }
 
             return commentGroupId;
         }
