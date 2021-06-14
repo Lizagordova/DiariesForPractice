@@ -99,7 +99,7 @@ namespace DiariesForPractice.Persistence.Repositories
         private DynamicTvpParameters GetUserNotificationParam(UserNotification userNotification)
         {
             var param = new DynamicTvpParameters();
-            var tvp = new TableValuedParameter("userNotification", "UDT_UserNotification");
+            var tvp = new TableValuedParameter("userNotification", "UDT_User_Notification");
             var udt = _mapper.Map<UserNotification, UserNotificationUdt>(userNotification);
             tvp.AddObjectAsRow(udt);
             param.Add(tvp);

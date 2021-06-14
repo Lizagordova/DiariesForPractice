@@ -3,5 +3,6 @@
     [Id] INT,
     [NotificationId] INT,
     [UserFor] INT,
-    [Watched] BIT
+    [Watched] BIT,
+    [Answer] INT
 );

@@ -39,7 +39,8 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                 cfg.CreateMap<UserNotification, UserNotificationUdt>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.NotificationId, opt => opt.MapFrom(src => src.Notification.Id))
-                    .ForMember(dest => dest.UserFor, opt => opt.Ignore())
+                    .ForMember(dest => dest.Answer, opt => opt.MapFrom(src => src.Answer))
+                    .ForMember(dest => dest.UserFor, opt => opt.MapFrom(src => src.UserFor.Id))
                     .ForMember(dest => dest.Watched, opt => opt.MapFrom(src => src.Watched));
             });
 

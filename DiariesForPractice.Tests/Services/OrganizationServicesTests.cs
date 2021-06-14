@@ -53,5 +53,15 @@ namespace DiariesForPractice.Tests.Services
             Console.WriteLine($"staffId={staffId}");
             Assert.That(result == true);
         }
+
+        [Test]
+        public void GetOrganizations_Test()
+        {
+            var organizations = _organizationReader.GetOrganizations();
+            foreach (var organization in organizations)
+            {
+                Console.WriteLine($"Id={organization.Id};Name={organization.Name};LegalAddress={organization.LegalAddress}");
+            }
+        }
     }
 }

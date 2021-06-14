@@ -76,6 +76,7 @@ namespace DiariesForPractice.Persistence.Repositories
             var tvp = new TableValuedParameter("studentTask", "UDT_StudentTask");
             var udt = _mapper.Map<StudentTask, StudentTaskUdt>(studentTask);
             tvp.AddObjectAsRow(udt);
+            param.Add(tvp);
             
             return param;
         }

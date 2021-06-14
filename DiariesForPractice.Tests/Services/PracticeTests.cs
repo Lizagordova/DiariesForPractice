@@ -2,7 +2,6 @@
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Persistence.Repositories;
 using DiariesForPractice.Persistence.Services.MapperService;
-using DiariesForPractice.Persistence.Services.Organizations;
 using DiariesForPractice.Persistence.Services.PracticeDetail;
 using NUnit.Framework;
 
@@ -18,7 +17,6 @@ namespace DiariesForPractice.Tests.Services
             var practiceRepository = new PracticeRepository(mapper);
             _practiceEditor = new PracticeEditorService(practiceRepository);
             _practiceReader = new PracticeReaderService(practiceRepository);
-
         }
         
         [Test]
