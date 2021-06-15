@@ -33,5 +33,10 @@ namespace DiariesForPractice.Persistence.Services.Users
 
             return userId;
         }
+
+        public void RemoveUser(int userId)
+        {
+            _userRepository.RemoveUser(userId);
+        }
     }
 }

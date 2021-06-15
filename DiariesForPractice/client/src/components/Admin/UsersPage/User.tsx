@@ -29,13 +29,21 @@ class User extends Component<IUserProps> {
     
     renderUser(user: UserViewModel) {
         return (
-            <tr onClick={() => this.toggleAddOrUpdateUserWindow()}>
-                <th>{user.id}</th>
-                <th>{user.firstName} {user.secondName} {user.lastName}</th>
-                <th>{user.email}</th>
-                <th>{user.phone}</th>
-                <th>{this.getRolesString(user.role)}</th>
-            </tr>
+            <>
+                <tr onClick={() => this.toggleAddOrUpdateUserWindow()}>
+                    <th>{user.id}</th>
+                    <th>{user.firstName} {user.secondName} {user.lastName}</th>
+                    <th>{user.email}</th>
+                    <th>{user.phone}</th>
+                    <th>{this.getRolesString(user.role)}</th>
+                    <th>
+                        <i style={{marginLeft: '45%', width: '2%'}}
+                           onClick={() => this.removeUser(user.id)}
+                           className="fa fa-window-close fa-2x" aria-hidden="true"/>
+                    </th>
+                </tr>
+                
+            </>
         );
     }
     
@@ -49,8 +57,12 @@ class User extends Component<IUserProps> {
         );
     }
 
-    toggleAddOrUpdateUserWindow() {
+    toggleAddOrUpdateUserWindow = () => {
         this.addOrUpdateWindowOpen = !this.addOrUpdateWindowOpen;
+    }
+
+    removeUser(userId: number) {
+        this.props.userStore.removeUser(userId)
     }
 }
 

@@ -2,8 +2,20 @@
 import {observer} from "mobx-react";
 import UserStore from "../../../stores/UserStore";
 import {UserViewModel} from "../../../Typings/viewModels/UserViewModel";
-import {Alert, Button, CustomInput, Form, FormGroup, Label, Modal, ModalBody, ModalFooter} from "reactstrap";
-import {makeObservable, observable} from "mobx";
+import {
+    Alert,
+    Button,
+    CustomInput,
+    Dropdown, DropdownItem, DropdownMenu,
+    DropdownToggle,
+    Form,
+    FormGroup,
+    Label,
+    Modal,
+    ModalBody,
+    ModalFooter
+} from "reactstrap";
+import {makeObservable, observable, toJS} from "mobx";
 import {mapUserReadModel} from "../../../functions/mapper";
 import {UserRole} from "../../../Typings/enums/UserRole";
 import {translateUserRole} from "../../../functions/translater";
@@ -19,14 +31,21 @@ class AddOrUpdateUserWindow extends Component<AddOrUpdateUserWindowProps> {
     user: UserViewModel = new UserViewModel();
     notSaved: boolean;
     saved: boolean;
+    roleOpen: boolean;
 
     constructor(props: AddOrUpdateUserWindowProps) {
         super(props);
         makeObservable(this, {
             user: observable,
             notSaved: observable,
-            saved: observable
+            saved: observable,
+            roleOpen: observable,
         });
+        this.setDefault();
+    }
+
+    setDefault() {
+        this.user = this.props.user;
     }
     
     renderWarnings() {
@@ -42,27 +61,36 @@ class AddOrUpdateUserWindow extends Component<AddOrUpdateUserWindowProps> {
         );
     }
     
-    renderUserData() {
+    renderUserRole(userRole: UserRole) {
+        console.log("userRole", userRole);
         return (
-            <Form>
-                <FormGroup>
-                    <Label for="exampleCheckbox">Роли</Label>
-                    <div>
-                        <CustomInput 
-                            type="checkbox"
-                            checked={this.determineCheckOrNot(UserRole.User)}
-                            id={`${UserRole.User}`}
-                            label={`${translateUserRole(UserRole.User)}`}
-                            onChange={(e) => this.chooseRole(e, UserRole.User)} />
-                        <CustomInput 
-                            type="checkbox" 
-                            id={`${UserRole.Admin}`}
-                            checked={this.determineCheckOrNot(UserRole.Admin)}
-                            label={`${translateUserRole(UserRole.Admin)}`}
-                            onChange={(e) => this.chooseRole(e, UserRole.Admin)}/>
-                    </div>
-                </FormGroup>
-            </Form>
+            <div className="row justify-content-center dataBlock">
+                <Label className="dataLabel">
+                    Роль
+                </Label>
+                <Dropdown isOpen={this.roleOpen} toggle={() => this.userRoleToggle()} className="dropdownMenu">
+                    <DropdownToggle caret className="dropdownToggle">
+                        {translateUserRole(userRole)}
+                    </DropdownToggle>
+                    <DropdownMenu className="">
+                        <DropdownItem
+                            key={1}
+                            onClick={() => this.chooseRole(UserRole.Student)}>
+                            {translateUserRole(UserRole.Student)}
+                        </DropdownItem>
+                        <DropdownItem
+                            key={2}
+                            onClick={() => this.chooseRole(UserRole.Teacher)}>
+                            {translateUserRole(UserRole.Teacher)}
+                        </DropdownItem>
+                        <DropdownItem
+                            key={3}
+                            onClick={() => this.chooseRole(UserRole.Admin)}>
+                            {translateUserRole(UserRole.Admin)}
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
         );
     }
 
@@ -70,26 +98,27 @@ class AddOrUpdateUserWindow extends Component<AddOrUpdateUserWindowProps> {
         return this.user.role === userRole;
     }
     
-    chooseRole(event: React.ChangeEvent<HTMLInputElement>, userRole: UserRole) {        
+    chooseRole(userRole: UserRole) {        
         this.user.role = userRole;
     }
 
-    renderAddOrUpdateUserWindow() {
+    renderAddOrUpdateUserWindow(user: UserViewModel) {
         return (
-            <Modal isOpen={true} onClick={() => this.props.toggle()}>
+            <Modal isOpen={true} toggle={() => this.props.toggle()}>
                 <div className="row justify-content-center">
-                    
+                    {user.fio}
                 </div>
                 <ModalBody>
-                    {this.renderUserData()}
+                    {this.renderUserRole(user.role)}
                 </ModalBody>
-                <ModalFooter>
+                <div className="row justify-content-center">
                     <Button
+                        className="authButton"
                         outline color="secondary"
                         onClick={() => this.save()}>
                         Сохранить
                     </Button>
-                </ModalFooter>
+                </div>
             </Modal>
         );
     }
@@ -97,7 +126,7 @@ class AddOrUpdateUserWindow extends Component<AddOrUpdateUserWindowProps> {
     render() {
         return (
             <>
-                {this.renderAddOrUpdateUserWindow()}
+                {this.renderAddOrUpdateUserWindow(this.user)}
             </>
         );
     }
@@ -109,6 +138,10 @@ class AddOrUpdateUserWindow extends Component<AddOrUpdateUserWindowProps> {
                this.saved = status === 200;
                this.notSaved = status !== 200;
             });
+    }
+
+    userRoleToggle() {
+        this.roleOpen = !this.roleOpen;
     }
 }
 

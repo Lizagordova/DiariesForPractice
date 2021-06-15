@@ -15,6 +15,11 @@ class UserStore {
             authorized: observable,
             users: observable
         });
+        this.setInitialState();
+    }
+
+    setInitialState() {
+        this.getUsers();
     }
     
     async authorize(user: UserReadModel): Promise<number> {
@@ -78,7 +83,11 @@ class UserStore {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                user//todo: опять же - не знаю, сработает ли это
+                id: user.id, firstName: user.firstName,
+                lastName: user.lastName, secondName: user.secondName,
+                email: user.email, token: user.token,
+                login: user.login, password: user.password,
+                phone: user.phone, role: user.role
             })
         });
         if(response.status === 200) {
@@ -90,8 +99,24 @@ class UserStore {
     
     async getUsers() {
         const response = await fetch("/getusers");
-  
         this.users = await response.json();
+    }
+
+    async removeUser(userId: number): Promise<number> {
+        const response = await fetch("/removeuser", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                id: userId
+            })
+        });
+        if(response.status === 200) {
+            this.getUsers();
+        }
+
+        return response.status;
     }
 }
 

@@ -25,11 +25,12 @@ class UsersPage extends Component<UsersPageProps> {
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Роли</th>
+                        <th>Контрол</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users.map((user, index) => {
-                        this.renderUser(user)
+                        return this.renderUser(user)
                     })}
                 </tbody>
             </Table>

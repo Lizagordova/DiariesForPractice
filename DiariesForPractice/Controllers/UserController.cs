@@ -4,7 +4,6 @@ using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Services.Users;
 using DiariesForPractice.ReadModels;
-using DiariesForPractice.ReadModels.Queries;
 using DiariesForPractice.Services;
 using DiariesForPractice.Services.Mapper;
 using DiariesForPractice.ViewModels;
@@ -33,14 +32,6 @@ namespace DiariesForPractice.Controllers
 			_mapper = mapper;
 			_logService = logService;
 			_logger = logger;
-		}
-
-		[HttpPost]
-		[Route("/getusers")]
-		public ActionResult GetStudents([FromBody]UserQueryReadModel userQuery)
-		{
-			
-			return new OkResult();
 		}
 
 		[HttpGet]
@@ -99,5 +90,23 @@ namespace DiariesForPractice.Controllers
 				return new StatusCodeResult(500);
 			}
 		}
+		[HttpPost]
+		[Route("/removeuser")]
+		public ActionResult RemoveUser([FromBody]UserReadModel userReadModel)
+		{
+			try
+			{
+				 _userEditor.RemoveUser(userReadModel.Id);
+
+				return new OkResult();
+			}
+			catch (Exception e)
+			{
+				_logService.AddOrUpdateUserLog(_logger, e, LogType.Base);
+
+				return new StatusCodeResult(500);
+			}
+		}
+		
 	}
 }

@@ -7,5 +7,6 @@ namespace DiariesForPractice.Domain.Services.Users
     {
         IReadOnlyCollection<int> AddOrUpdateUsers(IReadOnlyCollection<User> users);
         int AddOrUpdateUser(User student);
+        void RemoveUser(int userId);
     }
 }

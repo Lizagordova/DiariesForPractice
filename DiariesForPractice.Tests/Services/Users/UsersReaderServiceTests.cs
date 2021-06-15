@@ -31,7 +31,7 @@ namespace DiariesForPractice.Tests.Services.Users
             var users = _userReader.GetUsers();
             foreach (var user in users)
             {
-                Console.WriteLine($"Id={user.Id}; FullName={user.FullName}; Email={user.Email}; Login={user.Login}");
+                Console.WriteLine($"Id={user.Id}; FullName={user.FullName}; Email={user.Email}; Login={user.Login}; Role={user.Role}");
             }
         }
         

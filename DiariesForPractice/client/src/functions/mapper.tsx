@@ -45,7 +45,10 @@ export function mapUserReadModel(userViewModel: UserViewModel): UserReadModel {
     user.firstName = userViewModel.firstName;
     user.lastName = userViewModel.lastName;
     user.secondName = userViewModel.secondName;
-    return new UserReadModel();
+    user.role = userViewModel.role;
+    user.phone = userViewModel.phone;
+    
+    return user;
 }
 
 export function mapToPracticeDetailsReadModel(practiceViewModel: PracticeViewModel): PracticeReadModel {

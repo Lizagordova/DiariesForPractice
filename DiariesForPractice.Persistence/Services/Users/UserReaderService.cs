@@ -25,6 +25,10 @@ namespace DiariesForPractice.Persistence.Services.Users
         public List<User> GetUsers()
         {
             var users = _userRepository.GetUsers();
+            foreach (var user in users)
+            {
+                user.Role = _userRepository.GetUserRole(user.Id);
+            }
 
             return users;
         }

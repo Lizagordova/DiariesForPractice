@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-social/bootstrap-social.css';
+import 'font-awesome/css/font-awesome.min.css';
 import "./styles/custom.css";
 import AuthorizationPage from "./components/Authorization/AuthorizationPage";
 import { UserViewModel } from "./Typings/viewModels/UserViewModel";

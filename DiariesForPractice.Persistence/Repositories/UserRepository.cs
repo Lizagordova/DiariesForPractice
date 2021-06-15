@@ -20,6 +20,8 @@ namespace DiariesForPractice.Persistence.Repositories
         private const string GetUsersByIdsSp = "UserRepository_GetUsersByIds";
         private const string AuthorizeSp = "UserRepository_Authorize";
         private const string AddOrUpdateUserRoleSp = "UserRepository_AddOrUpdateUserRole";
+        private const string GetUserRoleSp = "UserRepository_GetUserRole";
+        private const string RemoveUserSp = "UserRepository_RemoveUser";
         
         private readonly MapperService _mapper;
         public UserRepository(
@@ -31,7 +33,7 @@ namespace DiariesForPractice.Persistence.Repositories
         public User GetUserById(int userId)
         {
             var conn = DatabaseHelper.OpenConnection();
-            var param = GetIdParam(userId);
+            var param = GetUserIdParam(userId);
             var response = conn
                 .QueryMultiple(GetUserByIdSp, param, commandType: CommandType.StoredProcedure);
             var user = _mapper.Map<UserUdt, User>(response.Read<UserUdt>().FirstOrDefault());
@@ -98,6 +100,26 @@ namespace DiariesForPractice.Persistence.Repositories
             DatabaseHelper.CloseConnection(conn);
         }
 
+        public UserRole GetUserRole(int userId)
+        {
+            var conn = DatabaseHelper.OpenConnection();
+            var param = GetUserIdParam(userId);
+            var userRole = (UserRole)conn
+                .Query<int>(GetUserRoleSp, param, commandType: CommandType.StoredProcedure)
+                .FirstOrDefault();
+            DatabaseHelper.CloseConnection(conn);
+
+            return userRole;
+        }
+
+        public void RemoveUser(int userId)
+        {
+            var conn = DatabaseHelper.OpenConnection();
+            var param = GetUserIdParam(userId);
+            conn.Query(RemoveUserSp, param, commandType: CommandType.StoredProcedure);
+            DatabaseHelper.CloseConnection(conn);
+        }
+
         private DynamicTvpParameters GetUserRoleParams(int userId, UserRole userRole)
         {
             var param = new DynamicTvpParameters();
@@ -135,7 +157,7 @@ namespace DiariesForPractice.Persistence.Repositories
             return param;
         }
 
-        private DynamicTvpParameters GetIdParam(int userId)
+        private DynamicTvpParameters GetUserIdParam(int userId)
         {
             var param = new DynamicTvpParameters();
             param.Add("userId", userId);

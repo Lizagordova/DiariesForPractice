@@ -12,5 +12,7 @@ namespace DiariesForPractice.Domain.Repositories
         List<User> GetUsersByIds(List<int> ids);
         int Authorize(User user);
         void AddOrUpdateUserRole(int userId, UserRole userRole);
+        UserRole GetUserRole(int userId);
+        void RemoveUser(int userId);
     }
 }
