@@ -21,7 +21,7 @@ namespace DiariesForPractice.Services.Mapper
                     .ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.Token))
                     .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.Login))
                     .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
-                    .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.Roles));//todo: возможно это так не работает
+                    .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role));
             });
             
             AddMapping<User, UserViewModel>(cfg =>
@@ -33,7 +33,7 @@ namespace DiariesForPractice.Services.Mapper
                     .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
                     .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                     .ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.Token))
-                    .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.Roles));//todo: возможно это так не работает
+                    .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role));
             });
         }
     }

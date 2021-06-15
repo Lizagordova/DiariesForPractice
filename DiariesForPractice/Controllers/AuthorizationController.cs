@@ -52,11 +52,11 @@ namespace DiariesForPractice.Controllers
         
         [HttpPost]
         [Route("/register")]
-        public ActionResult Register([FromBody]UserReadModel userViewModel)
+        public ActionResult Register([FromBody]UserReadModel userReadModel)
         {
             try
             {
-                var user = _mapper.Map<UserReadModel, User>(userViewModel);
+                var user = _mapper.Map<UserReadModel, User>(userReadModel);
                 var userId = _authorizationService.Register(user);
 
                 return new JsonResult(userId);

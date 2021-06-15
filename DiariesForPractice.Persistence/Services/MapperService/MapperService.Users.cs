@@ -21,7 +21,7 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.Login))
                     .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                     .ForMember(dest => dest.EmailConfirmed, opt => opt.MapFrom(src => src.EmailConfirmed))
-                    .ForMember(dest => dest.Roles, opt => opt.Ignore());
+                    .ForMember(dest => dest.Role, opt => opt.Ignore());
             });
             
             AddMapping<User, UserUdt>(cfg =>

@@ -14,5 +14,5 @@ export class UserViewModel
 	public email: string;
 	public phone: string;
 	public token: string;
-	public roles: UserRole[] = [];
+	public role: UserRole;
 }

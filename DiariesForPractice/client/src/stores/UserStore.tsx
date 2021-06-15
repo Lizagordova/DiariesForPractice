@@ -24,12 +24,17 @@ class UserStore {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                user//todo: опять же - не знаю, сработает ли это
+                id: user.id, firstName: user.firstName,
+                lastName: user.lastName, secondName: user.secondName,
+                email: user.email, token: user.token,
+                login: user.login, password: user.password,
+                phone: user.phone,
             })
         });
         if(response.status === 200) {
             let userId = await response.json();
             this.getUserById(userId);
+            this.authorized = true;
         }
         
         return response.status;
@@ -42,7 +47,11 @@ class UserStore {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                user//todo: опять же - не знаю, сработает ли это
+                id: user.id, firstName: user.firstName,
+                lastName: user.lastName, secondName: user.secondName,
+                email: user.email, token: user.token,
+                login: user.login, password: user.password,
+                phone: user.phone, roles: user.roles
             })
         });
         if(response.status === 200) {

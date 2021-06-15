@@ -1,4 +1,5 @@
-﻿using DiariesForPractice.Domain.Models;
+﻿using System.Linq;
+using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Repositories;
 using DiariesForPractice.Domain.Services.Authorization;
 using DiariesForPractice.Persistence.Helpers;
@@ -27,6 +28,7 @@ namespace DiariesForPractice.Persistence.Services.Authorization
         {
             user.Password = user.Password.GetPasswordHash();
             var userId = _userRepository.AddOrUpdateUser(user);
+            _userRepository.AddOrUpdateUserRole(userId, user.Role);
 
             return userId;
         }

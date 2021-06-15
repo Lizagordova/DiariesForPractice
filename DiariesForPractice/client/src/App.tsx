@@ -21,7 +21,6 @@ interface AppProps {
 @observer
 class App extends Component<AppProps> {
     renderPage(store: RootStore) {
-        console.log("i am here....", store);
         return(
             <>
                 {!store.userStore.authorized && <AuthorizationPage store={store} />}

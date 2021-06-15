@@ -1,11 +1,12 @@
 ﻿import React, { Component } from "react";
 import { RootStore } from "../../stores/RootStore";
 import { observer } from "mobx-react";
-import {makeObservable, observable} from "mobx";
-import {UserReadModel} from "../../Typings/readModels/UserReadModel";
-import {Alert, Button, Input, Label} from "reactstrap";
-import {mapUserReadModel} from "../../functions/mapper";
-import {AuthorizationMode} from "../../consts/AuthorizationMode";
+import { makeObservable, observable } from "mobx";
+import { UserReadModel } from "../../Typings/readModels/UserReadModel";
+import { Alert, Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input, Label } from "reactstrap";
+import { AuthorizationMode } from "../../consts/AuthorizationMode";
+import { translateUserRole } from "../../functions/translater";
+import {UserRole} from "../../Typings/enums/UserRole";
 
 class RegistrationWindowProps {
     store: RootStore;
@@ -16,12 +17,14 @@ class RegistrationWindowProps {
 class RegistrationWindow extends Component<RegistrationWindowProps> {
     user: UserReadModel = new UserReadModel();
     notRegistered: boolean;
+    roleOpen: boolean;
     
     constructor(props: RegistrationWindowProps) {
         super(props);
         makeObservable(this, {
           user: observable,
-            notRegistered: observable
+          notRegistered: observable,
+          roleOpen: observable,
         });
     }
 
@@ -136,6 +139,35 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
             </div>
         );
     }
+
+    renderRole(userRole: UserRole) {
+        return (
+            <div className="row justify-content-center">
+                <Dropdown isOpen={this.roleOpen} toggle={() => this.userRoleToggle()}>
+                    <DropdownToggle caret>
+                        {translateUserRole(userRole)}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem
+                            key={1}
+                            onClick={() => this.chooseRole(UserRole.Student)}>
+                            {translateUserRole(UserRole.Student)}
+                        </DropdownItem>
+                        <DropdownItem
+                            key={2}
+                            onClick={() => this.chooseRole(UserRole.Teacher)}>
+                            {translateUserRole(UserRole.Teacher)}
+                        </DropdownItem>
+                        <DropdownItem
+                            key={3}
+                            onClick={() => this.chooseRole(UserRole.Admin)}>
+                            {translateUserRole(UserRole.Admin)}
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
+        );
+    }
     
     renderButton() {
         return (
@@ -144,7 +176,7 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
                     className="authButton"
                     outline color="secondary"
                     onClick={() => this.register()}>
-                    Войти
+                    Зарегистрироваться
                 </Button>
             </div>
         );
@@ -160,6 +192,7 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
                 {this.renderLastNameInput()}
                 {this.renderPasswordInput()}
                 {this.renderPhoneInput()}
+                {this.renderRole(UserRole.User)}
                 {this.renderButton()}
             </div>
         );
@@ -203,6 +236,14 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
                     this.notRegistered = true;
                 }
             });
+    }
+    
+    chooseRole(role: UserRole) {
+        this.user.roles.push(role);
+    }
+
+    userRoleToggle() {
+        this.roleOpen = !this.roleOpen;
     }
 }
 

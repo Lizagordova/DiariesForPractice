@@ -9,7 +9,7 @@ import {StaffDataType} from "../consts/StaffDataType";
 export function translateUserRole(userRole: UserRole): string {
     let role = "";
     if(userRole === UserRole.User) {
-        role = "Пользователь";
+        role = "Не выбрано";//todo: костыль
     } else if(userRole === UserRole.Admin) {
         role = "Администратор";
     } else if(userRole === UserRole.Teacher) {

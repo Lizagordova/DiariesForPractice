@@ -13,10 +13,9 @@ namespace DiariesForPractice.ViewModels
 		public string LastName { get; set; }
 
 		public string FIO => $"{FirstName} {SecondName} {LastName}";
-
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public string Token { get; set; }
-		public List<UserRole> Roles { get; set; }
+		public UserRole Role { get; set; }
 	}
 }

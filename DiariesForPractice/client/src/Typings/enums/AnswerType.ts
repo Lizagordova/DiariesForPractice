@@ -3,6 +3,7 @@
 //     the code is regenerated.
 
 export enum AnswerType { 
-	Yes = 0, 
-	No = 1
+	None = 0, 
+	Yes = 1, 
+	No = 2
 }

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using Dapper;
+using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Repositories;
 using DiariesForPractice.Persistence.DTO.UDT;
@@ -17,11 +18,12 @@ namespace DiariesForPractice.Persistence.Repositories
         private const string GetUsersSp = "UserRepository_GetUsers";
         private const string AddOrUpdateUserSp = "UserRepository_AddOrUpdateUser";
         private const string GetUsersByIdsSp = "UserRepository_GetUsersByIds";
+        private const string AuthorizeSp = "UserRepository_Authorize";
+        private const string AddOrUpdateUserRoleSp = "UserRepository_AddOrUpdateUserRole";
         
         private readonly MapperService _mapper;
         public UserRepository(
-            MapperService mapper
-            )
+            MapperService mapper)
         {
             _mapper = mapper;
         }
@@ -30,10 +32,10 @@ namespace DiariesForPractice.Persistence.Repositories
         {
             var conn = DatabaseHelper.OpenConnection();
             var param = GetIdParam(userId);
-            var userUdt = conn
-                .Query<UserUdt>(GetUserByIdSp, param, commandType: CommandType.StoredProcedure)
-                .FirstOrDefault();
-            var user = _mapper.Map<UserUdt, User>(userUdt);
+            var response = conn
+                .QueryMultiple(GetUserByIdSp, param, commandType: CommandType.StoredProcedure);
+            var user = _mapper.Map<UserUdt, User>(response.Read<UserUdt>().FirstOrDefault());
+            user.Role = (UserRole) response.Read<int>().FirstOrDefault();
             DatabaseHelper.CloseConnection(conn);
 
             return user;
@@ -80,9 +82,37 @@ namespace DiariesForPractice.Persistence.Repositories
 
         public int Authorize(User user)
         {
-            throw new System.NotImplementedException();
+            var conn = DatabaseHelper.OpenConnection();
+            var param = GetUserParam(user);
+            var userId = conn.Query<int>(AuthorizeSp, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            DatabaseHelper.CloseConnection(conn);
+
+            return userId;
         }
 
+        public void AddOrUpdateUserRole(int userId, UserRole userRole)
+        {
+            var conn = DatabaseHelper.OpenConnection();
+            var param = GetUserRoleParams(userId, userRole);
+            conn.Query<int>(AddOrUpdateUserRoleSp, param, commandType: CommandType.StoredProcedure);
+            DatabaseHelper.CloseConnection(conn);
+        }
+
+        private DynamicTvpParameters GetUserRoleParams(int userId, UserRole userRole)
+        {
+            var param = new DynamicTvpParameters();
+            var tvp = new TableValuedParameter("userRole", "UDT_User_Role");
+            var udt = new UserRoleUdt()
+            {
+                UserId = userId,
+                Role = (int) userRole
+            };
+            tvp.AddObjectAsRow(udt);
+            param.Add(tvp);
+
+            return param; 
+        }
+        
         private DynamicTvpParameters GetUsersByIdsParam(List<int> ids)
         {
             var param = new DynamicTvpParameters();

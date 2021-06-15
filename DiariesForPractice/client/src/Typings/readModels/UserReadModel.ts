@@ -15,5 +15,5 @@ export class UserReadModel
 	public login: string;
 	public password: string;
 	public phone: string;
-	public roles: UserRole[];
+	public role: UserRole;
 }

@@ -81,7 +81,7 @@ class AuthorizationPage extends Component<AuthorizationPageProps> {
         );
     }
 
-    authorizationModeToggle(authorizationMode: AuthorizationMode) {
+    authorizationModeToggle = (authorizationMode: AuthorizationMode) => {
         this.authorizationMode = authorizationMode;
     }
 }
