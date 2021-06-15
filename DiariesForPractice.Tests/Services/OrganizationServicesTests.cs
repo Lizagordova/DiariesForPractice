@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace DiariesForPractice.Tests.Services
 {
+    [TestFixture]
     public class OrganizationServicesTests
     {
         private readonly OrganizationReaderService _organizationReader;

@@ -1,4 +1,5 @@
 ﻿using System;
+using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Persistence.Repositories;
 using DiariesForPractice.Persistence.Services.MapperService;
@@ -20,16 +21,31 @@ namespace DiariesForPractice.Tests.Services
         }
         
         [Test]
-        public void AddOrUpdateOrganization_Test()
+        public void AddOrUpdatePracticeDetails_Test()
         {
             var practiceDetails = new PracticeDetails()
             {
+                Student = new User() { Id = 1 },
+                Organization = new Organization() { Id = 1 },
+                ReportingForm = ReportingForm.Dogovor,
+                ContractNumber = "123456789",
+                PracticeType = PracticeType.Production,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(25),
+                StructuralDivision = "Android development",
                 
             };
-            var organizationId = _practiceEditor.AddOrUpdatePracticeDetails(practiceDetails);
-            var result = organizationId != 0;
-            Console.WriteLine($"organizationId={organizationId}");
+            var practiceDetailsId = _practiceEditor.AddOrUpdatePracticeDetails(practiceDetails);
+            var result = practiceDetailsId != 0;
+            Console.WriteLine($"practiceDetailsId={practiceDetailsId}");
             Assert.That(result == true);
+        }
+        
+        [Test]
+        public void GetPracticeDetails_Test()
+        {
+            var practiceDetails = _practiceReader.GetPracticeDetails(1);
+            Console.WriteLine($"practiceDetailsId={practiceDetails.Id}, {practiceDetails.StartDate};{practiceDetails.StructuralDivision}");
         }
     }
 }

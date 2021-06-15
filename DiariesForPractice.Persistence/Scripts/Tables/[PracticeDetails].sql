@@ -1,5 +1,4 @@
-﻿
-CREATE TABLE [PracticeDetails]
+﻿CREATE TABLE [PracticeDetails]
 (
     [Id] INT PRIMARY KEY IDENTITY,
     [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
@@ -12,7 +11,7 @@ CREATE TABLE [PracticeDetails]
     [StartDate] DATETIME2,
     [EndDate] DATETIME2,
     [StructuralDivision] NVARCHAR(MAX),
-    [OrderId] INT REFERENCES [Order]([Id]),
+    [OrderId] INT,
     [StudentCharacteristicId] INT,
     [StudentTaskId] INT
 );

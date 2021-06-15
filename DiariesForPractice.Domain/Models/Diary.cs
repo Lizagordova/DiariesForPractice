@@ -11,9 +11,9 @@ namespace DiariesForPractice.Domain.Models
 		public bool Send { get; set; }
 		public bool Perceived { get; set; }
 		public bool Approved { get; set; }
-		public DateTime SendDate { get; set; }
-		public DateTime GeneratedDate { get; set; }
-		public DateTime PerceivedDate { get; set; }
+		public DateTime SendDate { get; set; } = DateTime.Now;
+		public DateTime GeneratedDate { get; set; } = DateTime.Now;
+		public DateTime PerceivedDate { get; set; } = DateTime.Now;
 		public string Completion { get; set; }
 		public string Comment { get; set; }
 		public Signatures Signatures { get; set; }

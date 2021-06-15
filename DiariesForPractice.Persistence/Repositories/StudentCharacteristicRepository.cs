@@ -26,7 +26,7 @@ namespace DiariesForPractice.Persistence.Repositories
             var conn = DatabaseHelper.OpenConnection();
             var param = GetStudentCharacteristicParam(studentCharacteristic, practiceDetailsId);
             var studentId = conn
-                .Query(AddOrUpdateStudentCharacteristicSp, param, commandType: CommandType.StoredProcedure)
+                .Query<int>(AddOrUpdateStudentCharacteristicSp, param, commandType: CommandType.StoredProcedure)
                 .FirstOrDefault();
             DatabaseHelper.CloseConnection(conn);
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using DiariesForPractice.Domain.enums;
 
 namespace DiariesForPractice.Persistence.DTO.UDT
 {
@@ -12,12 +11,11 @@ namespace DiariesForPractice.Persistence.DTO.UDT
 		public string ContractNumber { get; set; }
 		public int ResponsibleForStudent { get; set; }
 		public int SignsTheContract { get; set; }
-		public PracticeType PracticeType { get; set; }
+		public int PracticeType { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
 		public string StructuralDivision { get; set; }
 		public int OrderId { get; set; }
-		public int CalendarPlanId { get; set; }
 		public int StudentCharacteristicId { get; set; }
 		public int StudentTaskId { get; set; }
 	}

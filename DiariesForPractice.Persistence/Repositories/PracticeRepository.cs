@@ -50,12 +50,21 @@ namespace DiariesForPractice.Persistence.Repositories
 
 		public void AttachDataToPracticeDetails(int dataId, int practiceDetailsId, PracticeDetailsDataType type)
 		{
-			throw new NotImplementedException();
+			var conn = DatabaseHelper.OpenConnection();
+			DatabaseHelper.CloseConnection(conn);
 		}
 
 		public PracticeDetails GetPracticeDetails(int studentId)
 		{
-			throw new NotImplementedException();
+			var conn = DatabaseHelper.OpenConnection();
+			var param = GetPracticeDetailsParam(new PracticeDetailsQuery() {StudentId = studentId});
+			var practiceDetailsUdt = conn
+				.Query <PracticeDetailsUdt>(GetPracticeDetailsSp, param, commandType: CommandType.StoredProcedure)
+				.FirstOrDefault();
+			var practiceDetails = _mapper.Map<PracticeDetailsUdt, PracticeDetails>(practiceDetailsUdt);
+			DatabaseHelper.CloseConnection(conn);
+
+			return practiceDetails;
 		}
 
 		private DynamicTvpParameters GetAddOrUpdatePracticeDetailsParam(PracticeDetails practiceDetails)

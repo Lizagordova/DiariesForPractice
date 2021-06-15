@@ -33,13 +33,13 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.Organization, opt => opt.MapFrom(src => new Organization() { Id = src.OrganizationId }))
                     .ForMember(dest => dest.ReportingForm, opt => opt.MapFrom(src => src.ReportingForm))
                     .ForMember(dest => dest.ContractNumber, opt => opt.MapFrom(src => src.ContractNumber))
-                    .ForMember(dest => dest.ResponsibleForStudent, opt => opt.MapFrom(src => src.ResponsibleForStudent))
-                    .ForMember(dest => dest.SignsTheContract, opt => opt.MapFrom(src => src.SignsTheContract))
+                    .ForMember(dest => dest.ResponsibleForStudent, opt => opt.MapFrom(src => new Staff() { Id = src.ResponsibleForStudent }))
+                    .ForMember(dest => dest.SignsTheContract, opt => opt.MapFrom(src => new Staff() { Id = src.SignsTheContract }))
                     .ForMember(dest => dest.PracticeType, opt => opt.MapFrom(src => src.PracticeType))
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.StructuralDivision, opt => opt.MapFrom(src => src.StructuralDivision))
-                    .ForMember(dest => dest.Order, opt => opt.Ignore());
+                    .ForMember(dest => dest.Order, opt => opt.MapFrom(src => new Order() { Id = src.OrderId }));
             });
             
             AddMapping<CalendarPlanUdt, CalendarPlan>(cfg =>
