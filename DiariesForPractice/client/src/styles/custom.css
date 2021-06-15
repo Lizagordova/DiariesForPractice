@@ -32,7 +32,11 @@ footer {
     margin-top: 5px;
     width: 100%;
     height: 50px;
-    background-color: #F0F0F0;
+    background-color: black;
+}
+
+.nav {
+    background-color: black;  
 }
 
 .nav-link {
@@ -99,7 +103,7 @@ footer {
 }
 
 .authorizationForm {
-    background-color: #282c34;
+    background-color: black;
     color: #F0F0F0;
 }
 
@@ -121,4 +125,18 @@ footer {
     color: white;
     background-color: #2E74B5;
     width: 80%;
+}
+
+.dropdownMenu {
+    width: 80%;
+}
+
+.dropdownToggle {
+    width: 100%;
+    color: black;
+    background-color: #F0F0F0;
+}
+
+.exit {
+    margin-left: 5px;
 }

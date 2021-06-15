@@ -1,11 +1,11 @@
-﻿import React, { Component } from "react";
-import { RootStore } from "../../stores/RootStore";
-import { observer } from "mobx-react";
-import { makeObservable, observable } from "mobx";
-import { UserReadModel } from "../../Typings/readModels/UserReadModel";
-import { Alert, Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input, Label } from "reactstrap";
-import { AuthorizationMode } from "../../consts/AuthorizationMode";
-import { translateUserRole } from "../../functions/translater";
+﻿import React, {Component} from "react";
+import {RootStore} from "../../stores/RootStore";
+import {observer} from "mobx-react";
+import {makeObservable, observable} from "mobx";
+import {UserReadModel} from "../../Typings/readModels/UserReadModel";
+import {Alert, Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input, Label} from "reactstrap";
+import {AuthorizationMode} from "../../consts/AuthorizationMode";
+import {translateUserRole} from "../../functions/translater";
 import {UserRole} from "../../Typings/enums/UserRole";
 
 class RegistrationWindowProps {
@@ -26,8 +26,13 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
           notRegistered: observable,
           roleOpen: observable,
         });
+        this.setDefault();
     }
 
+    setDefault() {
+        this.user.role = UserRole.User;
+    }
+    
     renderWarnings() {
         setTimeout(() => {
             this.notRegistered = false;
@@ -141,13 +146,17 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
     }
 
     renderRole(userRole: UserRole) {
+        console.log("userRole", userRole);
         return (
             <div className="row justify-content-center dataBlock">
-                <Dropdown isOpen={this.roleOpen} toggle={() => this.userRoleToggle()} style={{width: "70%"}}>
-                    <DropdownToggle caret>
+                <Label className="dataLabel">
+                    Роль
+                </Label>
+                <Dropdown isOpen={this.roleOpen} toggle={() => this.userRoleToggle()} className="dropdownMenu">
+                    <DropdownToggle caret className="dropdownToggle">
                         {translateUserRole(userRole)}
                     </DropdownToggle>
-                    <DropdownMenu>
+                    <DropdownMenu className="">
                         <DropdownItem
                             key={1}
                             onClick={() => this.chooseRole(UserRole.Student)}>

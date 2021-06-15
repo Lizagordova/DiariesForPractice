@@ -38,4 +38,8 @@ export class RootStore {
         this.commentStore = new CommentStore();
         this.notificationStore = new NotificationStore();
     }
+
+    reset() {
+        this.setInitialState();
+    }
 }

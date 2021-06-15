@@ -16,6 +16,6 @@ namespace DiariesForPractice.ReadModels
         public string Login { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }
-        public UserRole Role { get; set; }
+        public UserRole Role { get; set; } = UserRole.User;
     }
 }

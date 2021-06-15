@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { MainProps } from "../../models/MainProps";
 import { observer } from "mobx-react";
-import { Nav, NavItem } from "reactstrap";
+import {Button, Nav, NavItem} from "reactstrap";
 import { NavLink, Redirect, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage/HomePage";
 import UserProfile from "../Common/UserProfile";
@@ -34,6 +34,12 @@ class StudentMain extends Component<MainProps> {
                         <i className="fas fa-user" />
                     </NavLink>
                 </NavItem>
+                <Button
+                    className="nav-link exit"
+                    outline color="primary"
+                    onClick={() => this.exit()}>
+                    Выйти
+                </Button>
             </Nav>
         );
     }
@@ -51,6 +57,10 @@ class StudentMain extends Component<MainProps> {
                 </Switch>
             </>
         );
+    }
+
+    async exit() {
+        this.props.store.reset();
     }
 }
 
