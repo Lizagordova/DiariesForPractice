@@ -31,7 +31,7 @@ namespace DiariesForPractice.Tests.Services
                 Name = "Яндекс",
                 LegalAddress = "Москва"
             };
-            var organizationId = _organizationEditor.AddOrUpdateOrganization(organization);
+            var organizationId = _organizationEditor.AddOrUpdateOrganization(organization, 1);
             var result = organizationId != 0;
             Console.WriteLine($"organizationId={organizationId}");
             Assert.That(result == true);

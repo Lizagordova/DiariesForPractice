@@ -20,14 +20,18 @@ class DiaryPreview extends Component<DiaryPreviewProps> {
         });
         this.diary = this.props.diary;
     }
-
-   
     
-    renderDiaryPreview(diary: DiaryViewModel) {
+    renderWord(diary: DiaryViewModel) {
         return (
-            <embed src={diary.path}>
-                {diary.path}
-            </embed>
+            <div id="content">
+                <div style={{height: "800px"}}>
+                    <iframe id="optomaFeed" 
+                            src="Content/test.htm" scrolling="yes"
+                            frameBorder="0" height="100%" width="100%"
+                            style={{position: "absolute", clip: "rect(190px,1100px,800px,250px)"}}
+                    />
+                </div>
+            </div>
         );
     }
     
@@ -35,7 +39,7 @@ class DiaryPreview extends Component<DiaryPreviewProps> {
         return (
             <>
                 <div className="row justify-content-center">
-                    {this.renderDiaryPreview(this.diary)}
+                    {this.renderWord(this.diary)}
                 </div>
             </>
         );

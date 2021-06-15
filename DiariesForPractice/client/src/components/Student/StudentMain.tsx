@@ -24,14 +24,14 @@ class StudentMain extends Component<MainProps> {
                         Главная
                     </NavLink>
                 </NavItem>
-                <i className="fas fa-bell" />
+                <i className="fa fa-bell" />
                 <NavItem>
                     <NavLink
                         to="/userprofile"
                         exact className="nav-link"
                         style={{fontSize: "1.5em"}}
                         activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
-                        <i className="fas fa-user" />
+                        <i className="fa fa-user" />
                     </NavLink>
                 </NavItem>
                 <Button

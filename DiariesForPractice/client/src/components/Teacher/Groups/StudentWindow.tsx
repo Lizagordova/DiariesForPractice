@@ -45,7 +45,7 @@ class StudentWindow extends Component<StudentWindowProps> {
             return (
                 <i
                     onClick={() => this.chatToggle()}
-                    className="fas fa-comment fa-2x" />
+                    className="fa fa-comment fa-2x" />
             );
         }
     }

@@ -140,3 +140,21 @@ footer {
 .exit {
     margin-left: 5px;
 }
+
+.studentInfoInput {
+    width: 80%;
+    margin-left: 5%;
+}
+
+.studentInfoTitleLabel {
+    font-size: 2em;
+}
+
+.studentInfoDataLabel {
+    text-align: left;
+}
+
+.studentInfoBlock {
+    margin-left: 5%;
+    margin-top: 5%;
+}

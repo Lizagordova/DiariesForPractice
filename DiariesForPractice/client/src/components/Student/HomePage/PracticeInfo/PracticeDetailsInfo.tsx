@@ -88,9 +88,10 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     renderContractNumber(contractNumber: string, edit: boolean) {
         return(
             <>
-                <Label>Номер договора: </Label>
+                <Label className="dataLabel">Номер договора: </Label>
                 {edit && <span>{contractNumber}</span>}
                 {!edit && <Input
+                    className="studentInfoInput"
                     placeholder="Номер договора"
                     value={this.practiceDetails.contractNumber}
                     onChange={(event) => this.changePracticeDetails(event, PracticeDetailsType.ContractNumber)}>
@@ -125,7 +126,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     renderStartDate(date: Date) {
         return (
             <>
-                <Label>Начало практики:</Label>
+                <Label className="dataLabel">Начало практики:</Label>
                 <i className="far fa-calendar-alt" onClick={() => this.toggle(ToggleType.StartDate)}/>
                 {this.startDateOpen &&  <Calendar
                     value={date}
@@ -138,7 +139,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     renderEndDate(date: Date) {
         return (
             <>
-                <Label>Окончание практики:</Label>
+                <Label className="dataLabel">Окончание практики:</Label>
                 <i className="far fa-calendar-alt" onClick={() => this.toggle(ToggleType.EndDate)}/>
                 {this.startDateOpen &&  <Calendar
                     value={date}
@@ -151,20 +152,15 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     renderStructuralDivision(structuralDivision: string, edit: boolean) {
         return (
             <>
-                <Label>Структурное подразделение:</Label>
+                <Label className="dataLabel">Структурное подразделение:</Label>
                 {!edit && <span>{structuralDivision}</span>}
                 {edit && <Input
+                    className="studentInfoInput"
                     placeholder="Структурное подразделение"
                     value={structuralDivision}
                     onChange={(event) => this.changePracticeDetails(event, PracticeDetailsType.StructuralDivision)}
                 />}
             </>
-        );
-    }
-
-    renderOrderOfPassingPractice() {
-        return (
-            <></>
         );
     }
     
@@ -180,8 +176,8 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     renderHeader() {
         return (
             <>
-                <Label>Детали практики</Label>
-                {!this.edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.toggle(ToggleType.Edit)} />}
+                <Label className="studentInfoTitleLabel">Детали практики</Label>
+                {!this.edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.toggle(ToggleType.Edit)} />}
                 {this.renderSectionProgress()}
             </>
         );
@@ -223,9 +219,6 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                 </div>
                 <div className="row justify-content-center">
                     {this.renderCalendarPlan(this.practiceDetails.calendarPlan)}
-                </div>
-                <div className="row justify-content-center">
-                    {this.renderOrderOfPassingPractice()}
                 </div>
             </>
         );

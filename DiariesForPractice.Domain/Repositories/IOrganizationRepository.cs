@@ -9,5 +9,7 @@ namespace DiariesForPractice.Domain.Repositories
 		int AddOrUpdateOrganization(Organization organization);
 		int AddOrUpdateStaff(Staff staff);
 		IReadOnlyCollection<Organization> GetOrganizations();
+		Organization GetOrganization(int organizationId);
+		Staff GetStaff(int staffId);
 	}
 }

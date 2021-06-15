@@ -164,14 +164,14 @@ class AddOrUpdateGroupWindow extends Component<InstituteEntityProps> {
                                     {`${student.firstName} ${student.secondName} ${student.lastName}`}
                                 </th>
                                 <th>
-                                    <i className="fas fa-trash-alt" onClick={() => this.deleteStudentFromGroup(student)}/>
+                                    <i className="fa fa-trash-alt" onClick={() => this.deleteStudentFromGroup(student)}/>
                                 </th>
                             </tr>
                         );
                     })}
                     </tbody>
                 </Table>
-                <i className="fas fa-plus-circle fa-3x" onClick={() => this.addStudentToGroup()}/>
+                <i className="fa fa-plus-circle fa-3x" onClick={() => this.addStudentToGroup()}/>
             </div>
         );
     }

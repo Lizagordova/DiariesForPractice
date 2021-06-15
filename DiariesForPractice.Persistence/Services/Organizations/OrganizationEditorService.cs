@@ -17,9 +17,10 @@ namespace DiariesForPractice.Persistence.Services.Organizations
 			_practiceRepository = practiceRepository;
 		}
 
-		public int AddOrUpdateOrganization(Organization organization)
+		public int AddOrUpdateOrganization(Organization organization, int practiceDetaislId)
 		{
 			var organizationId = _organizationRepository.AddOrUpdateOrganization(organization);
+			_practiceRepository.AttachDataToPracticeDetails(organizationId, practiceDetaislId, PracticeDetailsDataType.Organization);
 
 			return organizationId;
 		}

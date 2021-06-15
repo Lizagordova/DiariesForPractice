@@ -79,7 +79,7 @@ class GroupDetails extends Component<GroupDetailsProps> {
         if(edit) {
             return (
                 <Button
-                    outline color="secondary"
+                    className="authButton"
                     onClick={() => this.save()}>
                     Сохранить
                 </Button>

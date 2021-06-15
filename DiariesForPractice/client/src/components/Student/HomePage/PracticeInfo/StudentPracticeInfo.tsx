@@ -5,13 +5,14 @@ import OrganizationInfo from "./OrganizationInfo/OrganizationInfo";
 import StaffInfo from "./OrganizationInfo/StaffInfo";
 import {StaffRole} from "../../../../Typings/enums/StaffRole";
 import {PracticeViewModel} from "../../../../Typings/viewModels/PracticeViewModel";
-import {makeObservable, observable} from "mobx";
-import {OrganizationViewModel} from "../../../../Typings/viewModels/OrganizationViewModel";
+import {makeObservable, observable, toJS} from "mobx";
+import { OrganizationViewModel} from "../../../../Typings/viewModels/OrganizationViewModel";
 import {StaffViewModel} from "../../../../Typings/viewModels/StaffViewModel";
 import PracticeDetailsInfo from "./PracticeDetailsInfo";
 import StudentTask from "./StudentTask";
 import StudentCharacteristics from "./StudentCharacteristic/StudentCharacteristics";
 import CalendarPlan from "./CalendarPlan/CalendarPlan";
+import { renderSpinner } from "../../../../functions/renderSpinner";
 
 class StudentPracticeInfoProps {
     store: RootStore;
@@ -21,12 +22,14 @@ class StudentPracticeInfoProps {
 class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
     practiceDetails: PracticeViewModel = new PracticeViewModel();
     update: boolean;
+    loaded: boolean = false;
     
     constructor(props: StudentPracticeInfoProps) {
         super(props);
         makeObservable(this, {
            practiceDetails: observable,
-           update: observable 
+           update: observable,
+            loaded: observable
         });
         this.setPracticeDetails();
     }
@@ -37,6 +40,7 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
             .getPracticeDetails(studentId)
             .then((practiceDetails) => {
                 this.practiceDetails = practiceDetails;
+                this.loaded = true;
             });
     }
     
@@ -104,7 +108,7 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
         );
     }
     
-    render() {
+    renderStudentInfo() {
         return (
             <>
                 {this.renderOrganizationInfo(this.update)}
@@ -117,8 +121,17 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
             </>
         );
     }
+    
+    render() {
+        return (
+            <>
+                {this.loaded && this.renderStudentInfo()}
+                {!this.loaded && renderSpinner()}
+            </>
+        );
+    }
 
-    updateOrganization(organization: OrganizationViewModel) {
+    updateOrganization = (organization: OrganizationViewModel) => {
         this.practiceDetails.organization = organization;
     }
 }

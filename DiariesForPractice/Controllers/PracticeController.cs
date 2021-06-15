@@ -56,7 +56,7 @@ namespace DiariesForPractice.Controllers
         }
         
         [HttpGet]
-        [Route("/getpracticedetailsbystudentid")]//todo: мб и не так это делается для get
+        [Route("/getpracticedetailsbystudentid")]
         public ActionResult GetPracticeDetails([FromQuery]PracticeReadModel practiceReadModel)
         {
             var query = new PracticeDetailsQuery()

@@ -17,7 +17,11 @@ namespace DiariesForPractice.Tests.Services
             var mapper = new MapperService();
             var practiceRepository = new PracticeRepository(mapper);
             _practiceEditor = new PracticeEditorService(practiceRepository);
-            _practiceReader = new PracticeReaderService(practiceRepository);
+            _practiceReader = new PracticeReaderService(practiceRepository,
+                new OrganizationRepository(mapper),
+                new StudentCharacteristicRepository(mapper),
+                new StudentTaskRepository(mapper),
+                new CalendarPlanRepository(mapper));
         }
         
         [Test]

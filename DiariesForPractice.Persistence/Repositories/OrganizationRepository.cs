@@ -19,6 +19,8 @@ namespace DiariesForPractice.Persistence.Repositories
         private readonly string AddOrUpdateOrganizationSp = "OrganizationRepository_AddOrUpdateOrganization";
         private readonly string AddOrUpdateStaffSp = "OrganizationRepository_AddOrUpdateStaff";
         private readonly string GetOrganizationsSp = "OrganizationRepository_GetOrganizations";
+        private readonly string GetOrganizationSp = "OrganizationRepository_GetOrganization";
+        private readonly string GetStaffSp = "OrganizationRepository_GetStaff";
         public OrganizationRepository(
             MapperService mapper)
         {
@@ -75,6 +77,30 @@ namespace DiariesForPractice.Persistence.Repositories
             DatabaseHelper.CloseConnection(conn);
 
             return organizations;
+        }
+
+        public Organization GetOrganization(int organizationId)
+        {
+            var conn = DatabaseHelper.OpenConnection();
+            var param = new DynamicTvpParameters();
+            param.Add("organizationId", organizationId);
+            var organizationUdt = conn.Query<OrganizationUdt>(GetOrganizationSp, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var organization = _mapper.Map<OrganizationUdt, Organization>(organizationUdt);
+            DatabaseHelper.CloseConnection(conn);
+
+            return organization;
+        }
+
+        public Staff GetStaff(int staffId)
+        {
+            var conn = DatabaseHelper.OpenConnection();
+            var param = new DynamicTvpParameters();
+            param.Add("staffId", staffId);
+            var staffUdt = conn.Query<StaffUdt>(GetStaffSp, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var staff = _mapper.Map<StaffUdt, Staff>(staffUdt);
+            DatabaseHelper.CloseConnection(conn);
+
+            return staff;
         }
     }
 }

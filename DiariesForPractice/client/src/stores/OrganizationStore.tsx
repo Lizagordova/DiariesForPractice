@@ -14,7 +14,8 @@ class OrganizationStore {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                organization: organization//todo: всё ещё не знаю, можно ли так
+                id: organization.id, name: organization.name,
+                legalAddress: organization.legalAddress, practiceDetailsId: organization.practiceDetailsId
             })
         });
         if(response.status === 200) {
@@ -42,10 +43,13 @@ class OrganizationStore {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                staff: staff//todo: всё ещё не знаю, можно ли так
+                id: staff.id, organizationId: staff.organizationId,
+                job: staff.job, phone: staff.phone, email: staff.email,
+                fullName: staff.fullName, practiceDetailsId: staff.practiceDetailsId
             })
         });
         if(response.status === 200) {
+            
             staffId = await response.json();
         }
 

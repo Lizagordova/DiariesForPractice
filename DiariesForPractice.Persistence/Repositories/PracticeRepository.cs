@@ -19,6 +19,7 @@ namespace DiariesForPractice.Persistence.Repositories
 		private readonly MapperService _mapper;
 		private const string AddOrUpdatePracticeDetailsSp = "PracticeRepository_AddOrUpdatePracticeDetails";
 		private const string GetPracticeDetailsSp = "PracticeRepository_GetPracticeDetails";
+		private const string AttachDataToPracticeDetailsSp = "PracticeRepository_AttachDataToPracticeDetails";
 
 		public PracticeRepository(
 			MapperService mapper)
@@ -51,9 +52,38 @@ namespace DiariesForPractice.Persistence.Repositories
 		public void AttachDataToPracticeDetails(int dataId, int practiceDetailsId, PracticeDetailsDataType type)
 		{
 			var conn = DatabaseHelper.OpenConnection();
+			var param = GetDataPracticeParam(dataId, practiceDetailsId, type);
+			conn.Query(AttachDataToPracticeDetailsSp, param, commandType: CommandType.StoredProcedure);
 			DatabaseHelper.CloseConnection(conn);
 		}
 
+		private DynamicTvpParameters GetDataPracticeParam(int dataId, int practiceDetailsId, PracticeDetailsDataType type)
+		{
+			var param = new DynamicTvpParameters();
+			param.Add("practiceDetailsId", practiceDetailsId);
+			if (type == PracticeDetailsDataType.Organization)
+			{
+				param.Add("organizationId", dataId);
+			}
+			if (type == PracticeDetailsDataType.ResponsibleForStudent)
+			{
+				param.Add("responsibleForStudentId", dataId);
+			}
+			if (type == PracticeDetailsDataType.SignsTheContract)
+			{
+				param.Add("signsTheContractId", dataId);
+			}
+			if (type == PracticeDetailsDataType.StudentCharacteristic)
+			{
+				param.Add("studentCharacteristicId", dataId);
+			}
+			if (type == PracticeDetailsDataType.StudentTask)
+			{
+				param.Add("studentTaskId", dataId);
+			}
+			return param;
+		}
+		
 		public PracticeDetails GetPracticeDetails(int studentId)
 		{
 			var conn = DatabaseHelper.OpenConnection();

@@ -69,12 +69,18 @@ class StaffInfo extends Component<StaffInfoProps> {
     renderData(data: string, type: StaffDataType, edit: boolean) {
         return (
             <>
-                <Label>{translateStaffInfoType(type)}</Label>
-                {edit && <span>{data}</span>}
-                {!edit && <Input
-                    value={data}
-                    onChange={(event) => this.inputStaffData(event, type)}
-                />}
+                <div className="col-lg-3 col-md-3 col-sm-12">
+                    <Label className="studentInfoDataLabel">{translateStaffInfoType(type)} :</Label>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+                    {!edit && <span>{data}</span>}
+                    {edit && <Input
+                        className="studentInfoInput"
+                        value={data}
+                        onChange={(event) => this.inputStaffData(event, type)}
+                    />}
+                </div>
+                
             </>
         );
     }
@@ -89,8 +95,8 @@ class StaffInfo extends Component<StaffInfoProps> {
     renderHeader(staffRole: StaffRole) {
         return (
             <>
-                <Label>{translateStaffRole(staffRole)}</Label>
-                {!this.edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
+                <Label className="studentInfoTitleLabel">{translateStaffRole(staffRole)}</Label>
+                {!this.edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
                 {this.renderSectionProgress()}
             </>
         );
@@ -102,16 +108,16 @@ class StaffInfo extends Component<StaffInfoProps> {
                 <div className="row justify-content-center">
                     {this.renderHeader(this.props.role)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderData(this.staff.fullName, StaffDataType.FullName, edit)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderData(this.staff.job, StaffDataType.Job, edit)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderData(this.staff.email, StaffDataType.Email, edit)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderData(this.staff.phone, StaffDataType.Phone, edit)}
                 </div>
             </>
@@ -121,7 +127,7 @@ class StaffInfo extends Component<StaffInfoProps> {
     renderSaveButton() {
         return (
             <Button
-                outline color="success"
+                className="authButton"
                 onClick={() => this.save()}
             >
                 Сохранить

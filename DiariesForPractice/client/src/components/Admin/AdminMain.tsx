@@ -48,7 +48,7 @@ class AdminMain extends Component<MainProps> {
                         exact className="nav-link"
                         style={{fontSize: "1.5em"}}
                         activeStyle={{backgroundColor: "black", color: "white", textDecoration: "none"}}>
-                        <i className="fas fa-user" />
+                        <i className="fa fa-user fa-2x" />
                     </NavLink>
                 </NavItem>
                 <Button

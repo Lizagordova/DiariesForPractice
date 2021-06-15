@@ -88,7 +88,7 @@ class CalendarPlan extends Component<CalendarPlanProps> {
         return(
             <>
                 <Label>Календарный план</Label>
-                {!this.edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
+                {!this.edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
                 {this.renderSectionProgress()}
             </>
         );
@@ -97,7 +97,7 @@ class CalendarPlan extends Component<CalendarPlanProps> {
     renderSaveButton() {
         return (
             <Button
-                outline color="primary"
+                className="authButton"
                 onClick={() => this.save()}>
                 Сохранить
             </Button>

@@ -80,6 +80,7 @@
 		<None Include="client\src\consts\StudentCharacteristicType.tsx" />
 		<None Include="client\src\consts\WarningType.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
+		<None Include="client\src\functions\renderSpinner.tsx" />
 		<None Include="client\src\functions\translater.tsx" />
 		<None Include="client\src\functions\warningTypeRenderer.tsx" />
 		<None Include="client\src\models\InstituteEnitityProps.tsx" />

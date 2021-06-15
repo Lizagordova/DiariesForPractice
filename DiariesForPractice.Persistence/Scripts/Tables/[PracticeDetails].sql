@@ -2,7 +2,7 @@
 (
     [Id] INT PRIMARY KEY IDENTITY,
     [StudentId] INT REFERENCES [User]([Id]) ON DELETE CASCADE,
-    [OrganizationId] INT REFERENCES [Organization]([Id]) ON DELETE CASCADE,
+    [OrganizationId] INT,
     [ReportingForm] INT,
     [ContractNumber] NVARCHAR(100),
     [ResponsibleForStudent] INT,

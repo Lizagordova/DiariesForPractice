@@ -65,7 +65,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
         return(
             <>
                 <Label>Характеристика студента</Label>
-                {!this.edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
+                {!this.edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
                 {this.renderSectionProgress()}
             </>
         );
@@ -74,6 +74,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     renderSaveButton() {
         return (
             <Button
+                className="authButton"
                 onClick={() => this.save()}>
                 Сохранить
             </Button>

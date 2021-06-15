@@ -39,7 +39,7 @@ namespace DiariesForPractice.Controllers
             try
             {
                 var organization = _mapper.Map<OrganizationReadModel, Organization>(organizationReadModel);
-                var organizationId = _organizationEditor.AddOrUpdateOrganization(organization);
+                var organizationId = _organizationEditor.AddOrUpdateOrganization(organization, organizationReadModel.PracticeDetailsId);
 
                 return new JsonResult(organizationId);
             }

@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
 import { Input, Label, Button, Alert } from "reactstrap";
 import { OrganizationViewModel } from "../../../../../Typings/viewModels/OrganizationViewModel";
-import { ProgressBar } from "react-bootstrap";
+import { Progress } from "reactstrap";
 import { RootStore } from "../../../../../stores/RootStore";
 import {mapToOrganizationReadModel} from "../../../../../functions/mapper";
 
@@ -52,9 +52,10 @@ class OrganizationInfo extends Component<OrganizationProps> {
     renderOrganizationName(organizationName: string, edit: boolean) {
         return (
             <>
-                <Label>Название организации</Label>
+                <Label className="studentInfoDataLabel">Название организации:</Label>
                 {!edit && <span>{organizationName}</span>}
                 {edit && <Input
+                    className="studentInfoInput"
                     value={organizationName}
                     onChange={(event) => this.inputData(event, OrganizationDataType.OrganizationName)}>
                     {organizationName}
@@ -66,11 +67,12 @@ class OrganizationInfo extends Component<OrganizationProps> {
     renderOrganizationLegalAddress(legalAddress: string, edit: boolean) {
         return (
             <>
-                <Label>Юридический адрес</Label>
+                <Label className="studentInfoDataLabel">Юридический адрес:</Label>
                 {!edit && <span>{legalAddress}</span>}
                 {edit && <Input
+                    className="studentInfoInput"
                     value={legalAddress}
-                    onChange={(event) => this.inputData(event, OrganizationDataType.OrganizationName)}>
+                    onChange={(event) => this.inputData(event, OrganizationDataType.OrganizationLegalAddress)}>
                     {legalAddress}
                 </Input>}
             </>
@@ -80,15 +82,15 @@ class OrganizationInfo extends Component<OrganizationProps> {
     renderSectionProgress() {
         let progress = this.computeProgress(this.organization);
         return (
-            <ProgressBar>{progress}</ProgressBar>
+            <Progress>{progress}</Progress>
         );
     }
 
     renderHeader(edit: boolean) {
         return (
             <>
-                <Label>Организация</Label>
-                {!edit && <i className="fas fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
+                <Label className="studentInfoTitleLabel">Организация</Label>
+                {!edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
                 {this.renderSectionProgress()}
             </>
         );
@@ -97,7 +99,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
     renderSaveButton() {
         return (
             <Button
-                outline color="success"
+                className="authButton"
                 onClick={() => this.save()}>
                 Сохранить
             </Button>
@@ -111,10 +113,10 @@ class OrganizationInfo extends Component<OrganizationProps> {
                 <div className="row justify-content-center">
                     {this.renderHeader(edit)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderOrganizationName(organization.name, this.edit)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderOrganizationLegalAddress(organization.legalAddress, edit)}
                 </div>
                 {this.edit && <div className="row justify-content-center">
@@ -126,7 +128,9 @@ class OrganizationInfo extends Component<OrganizationProps> {
 
     render() {
         return(
-            <></>
+            <>
+                {this.renderOrganizationInfo(this.organization, this.edit)}
+            </>
         );
     }
 
@@ -163,6 +167,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
                     this.notSaved = true;
                 } else {
                     this.saved = true;
+                    this.editToggle();
                     let organization = new OrganizationViewModel();
                     organization.id = organizationId;
                     this.organization = organization;

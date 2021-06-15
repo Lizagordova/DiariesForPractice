@@ -71,20 +71,6 @@ class App extends Component<AppProps> {
         );
     }
     
-    renderWord() {
-        return (
-            <div id="content">
-                <div style={{height: "800px"}}>
-                    <iframe id="optomaFeed" src="Content/doc00290620210604141114.html" scrolling="yes"
-                            frameBorder="0" height="100%" width="100%" 
-                            style={{position: "absolute", clip: "rect(190px,1100px,800px,250px)"}}
-                    />
-                </div>
-            </div>
-            
-        );
-    }
-    
     render() {
         const { store } = this.props;
         return (

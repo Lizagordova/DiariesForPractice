@@ -95,7 +95,7 @@ class GroupsPage extends Component<GroupsPageProps> {
                         {this.renderMyGroups(this.myGroups)}
                     </div>
                     <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <i className="fas fa-exchange-alt" onClick={() => this.tryToTransferGroup()} />
+                        <i className="fa fa-exchange-alt" onClick={() => this.tryToTransferGroup()} />
                     </div>
                     <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                         {this.renderRestGroups(this.restGroups)}
