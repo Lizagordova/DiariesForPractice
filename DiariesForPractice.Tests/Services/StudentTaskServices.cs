@@ -39,5 +39,15 @@ namespace DiariesForPractice.Tests.Services
             var studentTask = _studentTaskReader.GetStudentTask(1);
             Console.WriteLine($"Id={studentTask.Id};Mark={studentTask.Mark};Task={studentTask.Task};StudentId={studentTask.StudentId}");
         }
+        
+        [Test]
+        public void GetStudentTasks_Test()
+        {
+            var studentTasks = _studentTaskReader.GetStudentTasks();
+            foreach (var studentTask in studentTasks)
+            {
+                Console.WriteLine($"Id={studentTask.Id};Mark={studentTask.Mark};Task={studentTask.Task};StudentId={studentTask.StudentId}");
+            }
+        }
     }
 }

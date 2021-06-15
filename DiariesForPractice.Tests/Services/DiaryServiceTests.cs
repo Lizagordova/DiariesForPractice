@@ -1,5 +1,6 @@
 ﻿using System;
 using DiariesForPractice.Domain.Models;
+using DiariesForPractice.Domain.Queries;
 using DiariesForPractice.Persistence.Repositories;
 using DiariesForPractice.Persistence.Services.Diaries;
 using DiariesForPractice.Persistence.Services.MapperService;
@@ -40,6 +41,23 @@ namespace DiariesForPractice.Tests.Services
             var result = diaryId != 0;
             Console.WriteLine($"diaryId={diaryId}");
             Assert.That(result == true);
+        }
+        
+        [Test]
+        public void GetDiary_Test()
+        {
+            var diary = _diariesReader.GetDiary(1);
+            Console.WriteLine($"diaryId={diary.Id},Path={diary.Path}");
+        }
+        
+        [Test]
+        public void GetDiaries_Test()
+        {
+            var diaries = _diariesReader.GetDiaries(new DiaryQuery());
+            foreach (var diary in diaries)
+            {
+                Console.WriteLine($"diaryId={diary.Id},Path={diary.Path}");
+            }
         }
     }
 }
