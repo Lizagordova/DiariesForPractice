@@ -10,11 +10,11 @@ namespace DiariesForPractice.ViewModels
         public int Id { get; set; }
         public UserViewModel Student { get; set; } = new UserViewModel();
         public OrganizationViewModel Organization { get; set; } = new OrganizationViewModel();
-        public ReportingForm ReportingForm { get; set; }
+        public ReportingForm ReportingForm { get; set; } = ReportingForm.None;
         public string ContractNumber { get; set; }
         public StaffViewModel ResponsibleForStudent { get; set; } = new StaffViewModel();
         public StaffViewModel SignsTheContract { get; set; } = new StaffViewModel();
-        public PracticeType PracticeType { get; set; }
+        public PracticeType PracticeType { get; set; } = PracticeType.Production;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string StructuralDivision { get; set; }

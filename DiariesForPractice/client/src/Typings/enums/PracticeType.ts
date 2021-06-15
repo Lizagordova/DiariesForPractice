@@ -3,5 +3,7 @@
 //     the code is regenerated.
 
 export enum PracticeType { 
-	Production = 0
+	None = 0, 
+	Production = 1, 
+	Academic = 2
 }

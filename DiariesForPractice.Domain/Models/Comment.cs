@@ -8,6 +8,6 @@ namespace DiariesForPractice.Domain.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Text { get; set; }
-        public DateTime PublishDate { get; set; }
+        public DateTime PublishDate { get; set; } = DateTime.Now;
     }
 }

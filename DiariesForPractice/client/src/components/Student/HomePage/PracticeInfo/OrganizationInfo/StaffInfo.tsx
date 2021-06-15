@@ -69,18 +69,13 @@ class StaffInfo extends Component<StaffInfoProps> {
     renderData(data: string, type: StaffDataType, edit: boolean) {
         return (
             <>
-                <div className="col-lg-3 col-md-3 col-sm-12">
-                    <Label className="studentInfoDataLabel">{translateStaffInfoType(type)} :</Label>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12">
-                    {!edit && <span>{data}</span>}
-                    {edit && <Input
-                        className="studentInfoInput"
-                        value={data}
-                        onChange={(event) => this.inputStaffData(event, type)}
-                    />}
-                </div>
-                
+                <Label className="studentInfoDataLabel">{translateStaffInfoType(type)} :</Label>
+                {!edit && <span>{data}</span>}
+                {edit && <Input
+                    className="studentInfoInput"
+                    value={data}
+                    onChange={(event) => this.inputStaffData(event, type)}
+                />}
             </>
         );
     }

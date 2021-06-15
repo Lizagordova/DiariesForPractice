@@ -2,6 +2,8 @@
 {
     public enum PracticeType
     {
-        Production
+        None,
+        Production,
+        Academic
     }
 }

@@ -88,9 +88,9 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     renderContractNumber(contractNumber: string, edit: boolean) {
         return(
             <>
-                <Label className="dataLabel">Номер договора: </Label>
-                {edit && <span>{contractNumber}</span>}
-                {!edit && <Input
+                <Label className="studentInfoDataLabel">Номер договора: </Label>
+                {!edit && <span>{contractNumber}</span>}
+                {edit && <Input
                     className="studentInfoInput"
                     placeholder="Номер договора"
                     value={this.practiceDetails.contractNumber}
@@ -110,13 +110,13 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                 <DropdownMenu>
                     <DropdownItem
                         key={1}
-                        onClick={() => this.chooseReportingForm(ReportingForm.Spravka)}>
-                        {translateReportingForm(ReportingForm.Spravka)}
+                        onClick={() => this.choosePracticeType(PracticeType.Academic)}>
+                        {translatePracticeType(PracticeType.Academic)}
                     </DropdownItem>
                     <DropdownItem
                         key={2}
-                        onClick={() => this.chooseReportingForm(ReportingForm.Dogovor)}>
-                        {translateReportingForm(ReportingForm.Dogovor)}
+                        onClick={() => this.choosePracticeType(PracticeType.Production)}>
+                        {translatePracticeType(PracticeType.Production)}
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
@@ -126,8 +126,8 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     renderStartDate(date: Date) {
         return (
             <>
-                <Label className="dataLabel">Начало практики:</Label>
-                <i className="far fa-calendar-alt" onClick={() => this.toggle(ToggleType.StartDate)}/>
+                <Label className="studentInfoDataLabel">Начало практики:</Label>
+                <i className="fa fa-calendar-alt" onClick={() => this.toggle(ToggleType.StartDate)}/>
                 {this.startDateOpen &&  <Calendar
                     value={date}
                     onChange={(date) => this.inputDate(date, DateType.StartDate)}
@@ -139,8 +139,8 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     renderEndDate(date: Date) {
         return (
             <>
-                <Label className="dataLabel">Окончание практики:</Label>
-                <i className="far fa-calendar-alt" onClick={() => this.toggle(ToggleType.EndDate)}/>
+                <Label className="studentInfoDataLabel">Окончание практики:</Label>
+                <i className="fa fa-calendar-alt" onClick={() => this.toggle(ToggleType.EndDate)}/>
                 {this.startDateOpen &&  <Calendar
                     value={date}
                     onChange={(date) => this.inputDate(date, DateType.EndDate)}
@@ -152,7 +152,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     renderStructuralDivision(structuralDivision: string, edit: boolean) {
         return (
             <>
-                <Label className="dataLabel">Структурное подразделение:</Label>
+                <Label className="studentInfoDataLabel">Структурное подразделение:</Label>
                 {!edit && <span>{structuralDivision}</span>}
                 {edit && <Input
                     className="studentInfoInput"
@@ -177,7 +177,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
         return (
             <>
                 <Label className="studentInfoTitleLabel">Детали практики</Label>
-                {!this.edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.toggle(ToggleType.Edit)} />}
+                {!this.edit && <i className="fa fa-edit fa-2x" onClick={() => this.toggle(ToggleType.Edit)} />}
                 {this.renderSectionProgress()}
             </>
         );
@@ -199,25 +199,25 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                 <div className="row justify-content-center">
                     {this.renderHeader()}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderReportingForm(this.practiceDetails.reportingForm)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderContractNumber(this.practiceDetails.contractNumber, this.edit)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock-center">
                     {this.renderPracticeType(this.practiceDetails.practiceType)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderStartDate(this.practiceDetails.startDate)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderEndDate(this.practiceDetails.endDate)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderStructuralDivision(this.practiceDetails.structuralDivision, this.edit)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row studentInfoBlock">
                     {this.renderCalendarPlan(this.practiceDetails.calendarPlan)}
                 </div>
             </>
@@ -228,9 +228,16 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
         this.practiceDetails.reportingForm = reportingForm;
         this.toggle(ToggleType.Update);
     }
+
+    choosePracticeType(practiceType: PracticeType) {
+        this.practiceDetails.practiceType = practiceType;
+        this.toggle(ToggleType.Update);
+    }
     
     toggle(type: ToggleType) {
-        if(type === ToggleType.Update) {
+        if(type === ToggleType.Edit) {
+            this.edit = !this.edit;
+        } else if(type === ToggleType.Update) {
             this.update = !this.update;
         } else if(type === ToggleType.ReportingForm) {
             this.reportingFormOpen = !this.reportingFormOpen;

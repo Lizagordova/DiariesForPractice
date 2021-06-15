@@ -27,6 +27,8 @@ export function translateReportingForm(reportingForm: ReportingForm): string {
         form = "Договор";
     } else if(reportingForm === ReportingForm.Spravka) {
         form = "Справка";
+    } else if(reportingForm === ReportingForm.None) {
+        form = "Не выбрано";
     }
 
     return form;
@@ -60,7 +62,12 @@ export function translatePracticeType(practiceType: PracticeType): string {
     let type = "";
     if(practiceType === PracticeType.Production) {
         return "Производственная";
+    } else if(practiceType === PracticeType.Academic) {
+        return "Учебная";
+    } else if(practiceType === PracticeType.None) {
+        return "Не выбрано";
     }
+    
     return practiceType;
 }
 
