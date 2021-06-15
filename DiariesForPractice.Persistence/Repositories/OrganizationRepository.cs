@@ -84,7 +84,7 @@ namespace DiariesForPractice.Persistence.Repositories
             var conn = DatabaseHelper.OpenConnection();
             var param = new DynamicTvpParameters();
             param.Add("organizationId", organizationId);
-            var organizationUdt = conn.Query<OrganizationUdt>(GetOrganizationSp, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var organizationUdt = conn.Query<OrganizationUdt>(GetOrganizationSp, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
             var organization = _mapper.Map<OrganizationUdt, Organization>(organizationUdt);
             DatabaseHelper.CloseConnection(conn);
 
@@ -96,7 +96,7 @@ namespace DiariesForPractice.Persistence.Repositories
             var conn = DatabaseHelper.OpenConnection();
             var param = new DynamicTvpParameters();
             param.Add("staffId", staffId);
-            var staffUdt = conn.Query<StaffUdt>(GetStaffSp, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var staffUdt = conn.Query<StaffUdt>(GetStaffSp, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
             var staff = _mapper.Map<StaffUdt, Staff>(staffUdt);
             DatabaseHelper.CloseConnection(conn);
 

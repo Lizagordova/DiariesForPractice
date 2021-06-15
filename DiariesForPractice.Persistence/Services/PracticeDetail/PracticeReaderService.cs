@@ -50,12 +50,18 @@ namespace DiariesForPractice.Persistence.Services.PracticeDetail
 				practiceDetails.Id = _practiceRepository.AddOrUpdatePracticeDetails(practiceDetails);
 			}
 
-			practiceDetails.Organization = _organizationRepository.GetOrganization(practiceDetails.Organization.Id);
-			practiceDetails.ResponsibleForStudent = _organizationRepository.GetStaff(practiceDetails.ResponsibleForStudent.Id);
-			practiceDetails.SignsTheContract = _organizationRepository.GetStaff(practiceDetails.SignsTheContract.Id);
-			practiceDetails.CalendarPlan = _calendarPlanRepository.GetCalendarPlan(practiceDetails.CalendarPlan.Id);
-			practiceDetails.StudentCharacteristic = _studentCharacteristicRepository.GetStudentCharacteristic(practiceDetails.Student.Id);
-			practiceDetails.StudentTask = _studentTaskRepository.GetStudentTask(practiceDetails.Student.Id);
+			var organization = _organizationRepository.GetOrganization(practiceDetails.Organization.Id);
+			var responsibleForStudent = _organizationRepository.GetStaff(practiceDetails.ResponsibleForStudent.Id);
+			var signsTheContract = _organizationRepository.GetStaff(practiceDetails.SignsTheContract.Id);
+			var calendarPlan = new CalendarPlan();//_calendarPlanRepository.GetCalendarPlan(practiceDetails.CalendarPlan.Id);
+			var studentCharacteristic = _studentCharacteristicRepository.GetStudentCharacteristic(practiceDetails.Student.Id);
+			var studentTask = _studentTaskRepository.GetStudentTask(practiceDetails.Student.Id);
+			practiceDetails.Organization = organization ?? new Organization();
+			practiceDetails.ResponsibleForStudent = responsibleForStudent ?? new Staff();
+			practiceDetails.SignsTheContract = signsTheContract ?? new Staff();
+			practiceDetails.CalendarPlan = calendarPlan ?? new CalendarPlan();
+			practiceDetails.StudentCharacteristic = studentCharacteristic ?? new StudentCharacteristic();
+			practiceDetails.StudentTask = studentTask ?? new StudentTask();
 
 			return practiceDetails;
 		}
