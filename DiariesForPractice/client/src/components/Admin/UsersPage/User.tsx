@@ -23,13 +23,8 @@ class User extends Component<IUserProps> {
         });
     }
     
-    getRolesString(roles: UserRole[]): string {
-        let roleString = "";
-        {roles.map(role => {
-            roleString += `${translateUserRole(role)}; `;
-        })}
-        
-        return roleString;
+    getRolesString(role: UserRole): string {        
+        return translateUserRole(role);
     }
     
     renderUser(user: UserViewModel) {
@@ -39,7 +34,7 @@ class User extends Component<IUserProps> {
                 <th>{user.firstName} {user.secondName} {user.lastName}</th>
                 <th>{user.email}</th>
                 <th>{user.phone}</th>
-                <th>{this.getRolesString(user.roles)}</th>
+                <th>{this.getRolesString(user.role)}</th>
             </tr>
         );
     }

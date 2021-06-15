@@ -142,8 +142,8 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
 
     renderRole(userRole: UserRole) {
         return (
-            <div className="row justify-content-center">
-                <Dropdown isOpen={this.roleOpen} toggle={() => this.userRoleToggle()}>
+            <div className="row justify-content-center dataBlock">
+                <Dropdown isOpen={this.roleOpen} toggle={() => this.userRoleToggle()} style={{width: "70%"}}>
                     <DropdownToggle caret>
                         {translateUserRole(userRole)}
                     </DropdownToggle>
@@ -192,7 +192,7 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
                 {this.renderLastNameInput()}
                 {this.renderPasswordInput()}
                 {this.renderPhoneInput()}
-                {this.renderRole(UserRole.User)}
+                {this.renderRole(this.user.role)}
                 {this.renderButton()}
             </div>
         );
@@ -239,7 +239,7 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
     }
     
     chooseRole(role: UserRole) {
-        this.user.roles.push(role);
+        this.user.role = role;
     }
 
     userRoleToggle() {

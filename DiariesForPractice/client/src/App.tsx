@@ -30,19 +30,19 @@ class App extends Component<AppProps> {
     }
 
     renderMain(currentUser: UserViewModel, store: RootStore) {
-        if(currentUser.roles.includes(UserRole.Admin)) {
+        if(currentUser.role === UserRole.Admin) {
             return (
                 <AdminMain store={store} />
             );
-        } else if(currentUser.roles.includes(UserRole.Student)) {
+        } else if(currentUser.role === UserRole.Student) {
             return (
                 <StudentMain store={store} />
             );
-        } else if(currentUser.roles.includes(UserRole.Teacher)) {
+        } else if(currentUser.role === UserRole.Teacher) {
             return (
                 <TeacherMain store={store} />
             );
-        } else if(currentUser.roles.includes(UserRole.User)) {
+        } else if(currentUser.role === UserRole.User) {
             return (
                 <UserMain store={store} />
             );

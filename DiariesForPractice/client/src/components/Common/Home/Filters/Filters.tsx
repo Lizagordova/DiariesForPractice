@@ -134,7 +134,7 @@ class Filters extends Component<IFiltersProps> {
     }
 
     renderAddOrUpdateButton() {
-        if(this.props.store.userStore.currentUser.roles.includes(UserRole.Admin)) {
+        if(this.props.store.userStore.currentUser.role === UserRole.Admin) {
             //todo: потом сюда
         }
         return (

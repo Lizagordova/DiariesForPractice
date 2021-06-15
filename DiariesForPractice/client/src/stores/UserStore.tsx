@@ -28,7 +28,7 @@ class UserStore {
                 lastName: user.lastName, secondName: user.secondName,
                 email: user.email, token: user.token,
                 login: user.login, password: user.password,
-                phone: user.phone,
+                phone: user.phone, role: user.role
             })
         });
         if(response.status === 200) {
@@ -41,6 +41,7 @@ class UserStore {
     }
     
     async register(user: UserReadModel): Promise<number> {
+        console.log("user", user);
         const response = await fetch("/register", {
             method: "POST",
             headers: {
@@ -51,7 +52,7 @@ class UserStore {
                 lastName: user.lastName, secondName: user.secondName,
                 email: user.email, token: user.token,
                 login: user.login, password: user.password,
-                phone: user.phone, roles: user.roles
+                phone: user.phone, role: user.role
             })
         });
         if(response.status === 200) {
