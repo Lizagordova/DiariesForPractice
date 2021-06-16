@@ -2,11 +2,11 @@
 using Syncfusion.DocIO.DLS;
 using System.IO;
 using DiariesForPractice.DiariesGenerator.Builders.Pages;
-using DiariesForPractice.DiariesGenerator.Helpers;
-using DiariesForPractice.Domain.Models;
+using DiariesForPractice.DiaryGenerator.Builders.Pages;
+using DiariesForPractice.DiaryGenerator.Helpers;
 using Syncfusion.DocIO;
 
-namespace DiariesForPractice.DiariesGenerator.Builders
+namespace DiariesForPractice.DiaryGenerator.Builders
 {
     public class DiaryBuilder : IDiaryBuilder
     {

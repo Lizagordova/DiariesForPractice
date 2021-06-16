@@ -1,4 +1,4 @@
-﻿namespace DiariesForPractice.DiariesGenerator.Helpers
+﻿namespace DiariesForPractice.DiaryGenerator.Helpers
 {
     public static class PathHelper
     {

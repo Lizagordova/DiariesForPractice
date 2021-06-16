@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "DiariesForPractice.DiaryGenerator": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

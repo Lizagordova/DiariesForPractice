@@ -1,29 +1,32 @@
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DiariesForPractice.DiariesGenerator.Generators;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using DiariesForPractice.DiaryGenerator.Builders;
+using DiariesForPractice.DiaryGenerator.Generators;
 
-namespace DiariesForPractice.DiariesGenerator
+namespace DiariesForPractice.DiaryGenerator
 {
     public class DiaryWorker : BackgroundService
     {
         private readonly ILogger<DiaryWorker> _logger;
-        private readonly DiaryGenerator _diaryGenerator;
+        private readonly IDiaryGenerator _diaryGenerator;
 
         public DiaryWorker(ILogger<DiaryWorker> logger,
-            DiaryGenerator diaryGenerator)
+            IDiaryGenerator diaryGenerator)
         {
             _logger = logger;
+            _diaryGenerator = diaryGenerator;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                _diaryGenerator.GenerateDiaries();  
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 await Task.Delay(1000, stoppingToken);
             }

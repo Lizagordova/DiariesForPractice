@@ -103,7 +103,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\DiariesForPractice.DiaryGenerator\DiariesForPractice.DiaryGenerator.csproj" />
 	  <ProjectReference Include="..\DiariesForPractice.Domain\DiariesForPractice.Domain.csproj" />
+	  <ProjectReference Include="..\DiariesForPractice.MailWorker\DiariesForPractice.MailWorker.csproj" />
 	  <ProjectReference Include="..\DiariesForPractice.Persistence\DiariesForPractice.Persistence.csproj" />
 	  <ProjectReference Include="..\DiariesForPractice.Worker\DiariesForPractice.Worker.csproj" />
 	</ItemGroup>

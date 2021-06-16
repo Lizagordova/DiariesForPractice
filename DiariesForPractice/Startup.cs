@@ -1,3 +1,5 @@
+using DiariesForPractice.DiaryGenerator;
+using DiariesForPractice.DiaryGenerator.Generators;
 using DiariesForPractice.Domain.Repositories;
 using DiariesForPractice.Domain.Services.Authorization;
 using DiariesForPractice.Domain.Services.CalendarPlans;
@@ -50,6 +52,7 @@ namespace DiariesForPractice
 			services.AddControllersWithViews();
 			AddRepositories(services);
 			AddServices(services);
+			AddWorkers(services);
 			// In production, the React files will be served from this directory
 			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "client/build"; });
 		}
@@ -111,7 +114,6 @@ namespace DiariesForPractice
 
 		private void AddServices(IServiceCollection services)
 		{
-			//services.AddHostedService<LoaderWorker>();
 			services.AddSingleton<IInstituteDetailsEditorService, InstituteDetailsEditorService>();
 			services.AddSingleton<IInstituteDetailsReaderService, InstituteDetailsReaderService>();
 			services.AddSingleton<INotificationEditorService, NotificationEditorService>();
@@ -137,6 +139,12 @@ namespace DiariesForPractice
 			services.AddSingleton<MapperService>();
 			services.AddSingleton<LogService>();
 			services.AddSingleton<MapHelper>();
+		}
+		
+		private void AddWorkers(IServiceCollection services)
+		{
+			services.AddSingleton<IDiaryGenerator, DiaryGenerator.Generators.DiaryGenerator>();
+			services.AddHostedService<DiaryWorker>();
 		}
 	}
 }

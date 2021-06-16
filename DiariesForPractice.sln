@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiariesForPractice.Domain",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiariesForPractice.Persistence", "DiariesForPractice.Persistence\DiariesForPractice.Persistence.csproj", "{D6D1EA8B-8447-403B-90F5-AAEE969C8672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiariesForPractice.MailWorker", "DiariesForPractice.MailWorker\DiariesForPractice.MailWorker.csproj", "{8872FF26-0F7E-4114-BFF9-29D23C4C6501}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiariesForPractice.MailWorker", "DiariesForPractice.MailWorker\DiariesForPractice.MailWorker.csproj", "{8872FF26-0F7E-4114-BFF9-29D23C4C6501}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiariesForPractice.MonitoringWorker", "DiariesForPractice.MonitoringWorker\DiariesForPractice.MonitoringWorker.csproj", "{1D235B3D-D031-43DA-9B7B-316888DA9831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiariesForPractice.MonitoringWorker", "DiariesForPractice.MonitoringWorker\DiariesForPractice.MonitoringWorker.csproj", "{1D235B3D-D031-43DA-9B7B-316888DA9831}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiariesForPractice.DiariesGenerator", "DiariesForPractice.DiariesGenerator\DiariesForPractice.DiariesGenerator.csproj", "{3DD6B37E-C697-4F0D-A749-FEAA8AEA024B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiariesForPractice.Tests", "DiariesForPractice.Tests\DiariesForPractice.Tests.csproj", "{78E12416-D8DC-4264-AE7D-269396D2C027}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiariesForPractice.Tests", "DiariesForPractice.Tests\DiariesForPractice.Tests.csproj", "{78E12416-D8DC-4264-AE7D-269396D2C027}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiariesForPractice.DiaryGenerator", "DiariesForPractice.DiaryGenerator\DiariesForPractice.DiaryGenerator.csproj", "{D3536965-1DE8-4AB7-818C-D6CFD41038AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +43,14 @@ Global
 		{1D235B3D-D031-43DA-9B7B-316888DA9831}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D235B3D-D031-43DA-9B7B-316888DA9831}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D235B3D-D031-43DA-9B7B-316888DA9831}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3DD6B37E-C697-4F0D-A749-FEAA8AEA024B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3DD6B37E-C697-4F0D-A749-FEAA8AEA024B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3DD6B37E-C697-4F0D-A749-FEAA8AEA024B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DD6B37E-C697-4F0D-A749-FEAA8AEA024B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78E12416-D8DC-4264-AE7D-269396D2C027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78E12416-D8DC-4264-AE7D-269396D2C027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78E12416-D8DC-4264-AE7D-269396D2C027}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78E12416-D8DC-4264-AE7D-269396D2C027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3536965-1DE8-4AB7-818C-D6CFD41038AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3536965-1DE8-4AB7-818C-D6CFD41038AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3536965-1DE8-4AB7-818C-D6CFD41038AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3536965-1DE8-4AB7-818C-D6CFD41038AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

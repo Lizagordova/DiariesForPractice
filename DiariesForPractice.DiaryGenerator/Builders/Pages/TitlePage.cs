@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using DiariesForPractice.DiariesGenerator.Helpers;
+using DiariesForPractice.DiaryGenerator.Helpers;
 using DiariesForPractice.Domain.Models.Data;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;

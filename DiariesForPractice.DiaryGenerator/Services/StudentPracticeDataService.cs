@@ -7,7 +7,7 @@ using DiariesForPractice.Domain.Services.PracticeDetail;
 using DiariesForPractice.Domain.Services.StudentTasks;
 using DiariesForPractice.Domain.StudentCharacteristics;
 
-namespace DiariesForPractice.DiariesGenerator.Services
+namespace DiariesForPractice.DiaryGenerator.Services
 {
     public class StudentPracticeDataService
     {

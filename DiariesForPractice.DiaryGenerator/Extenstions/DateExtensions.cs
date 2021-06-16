@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DiariesForPractice.DiariesGenerator.Extenstions
+namespace DiariesForPractice.DiaryGenerator.Extenstions
 {
     public static class DateExtensions
     {

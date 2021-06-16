@@ -1,7 +1,7 @@
 ﻿using DiariesForPractice.Domain.Models.Data;
 using Syncfusion.DocIO.DLS;
 
-namespace DiariesForPractice.DiariesGenerator.Builders
+namespace DiariesForPractice.DiaryGenerator.Builders
 {
     public interface IDiaryBuilder
     {

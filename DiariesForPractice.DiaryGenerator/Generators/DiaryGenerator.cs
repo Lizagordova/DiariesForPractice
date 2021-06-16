@@ -1,10 +1,10 @@
-﻿using DiariesForPractice.DiariesGenerator.Services;
+﻿using DiariesForPractice.DiaryGenerator.Services;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Services.InstituteDetails;
 
-namespace DiariesForPractice.DiariesGenerator.Generators
+namespace DiariesForPractice.DiaryGenerator.Generators
 {
-    public class DiaryGenerator
+    public class DiaryGenerator : IDiaryGenerator
     {
         private readonly IInstituteDetailsReaderService _instituteDetailsReader;
         private readonly StudentPracticeDataService _studentPracticeDataService;

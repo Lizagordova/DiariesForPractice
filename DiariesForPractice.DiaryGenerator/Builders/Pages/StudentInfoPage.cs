@@ -1,10 +1,10 @@
-﻿using DiariesForPractice.DiariesGenerator.Helpers;
+﻿using DiariesForPractice.DiaryGenerator.Helpers;
 using DiariesForPractice.Domain.Models.Data;
 using Syncfusion.DocIO.DLS;
 
-namespace DiariesForPractice.DiariesGenerator.Builders.Pages
+namespace DiariesForPractice.DiaryGenerator.Builders.Pages
 {
-    public static class StudentInfoPage
+    public static class DiaryGeneratorStudentInfoPage
     {
         public static void AddStudentInfoPage(this IWTable table, PracticeData data)
         {

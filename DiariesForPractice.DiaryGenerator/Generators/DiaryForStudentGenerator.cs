@@ -1,8 +1,9 @@
 ﻿using DiariesForPractice.DiariesGenerator.Builders;
+using DiariesForPractice.DiaryGenerator.Builders;
 using DiariesForPractice.Domain.Models.Data;
 using DiariesForPractice.Domain.Services.Diaries;
 
-namespace DiariesForPractice.DiariesGenerator.Generators
+namespace DiariesForPractice.DiaryGenerator.Generators
 {
     public class DiaryForStudentGenerator
     {

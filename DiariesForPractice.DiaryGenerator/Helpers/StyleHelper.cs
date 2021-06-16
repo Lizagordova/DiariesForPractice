@@ -1,7 +1,7 @@
 ﻿using Syncfusion.DocIO.DLS;
 using Syncfusion.Drawing;
 
-namespace DiariesForPractice.DiariesGenerator.Helpers
+namespace DiariesForPractice.DiaryGenerator.Helpers
 {
     public static class StyleHelper
     {
