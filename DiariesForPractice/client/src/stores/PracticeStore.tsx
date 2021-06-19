@@ -5,6 +5,7 @@ import { StudentTaskReadModel } from "../Typings/readModels/StudentTaskReadModel
 import { StudentCharacteristicViewModel } from "../Typings/viewModels/StudentCharacteristicViewModel";
 import { CalendarPlanReadModel } from "../Typings/readModels/CalendarPlanReadModel";
 import { CalendarPlanViewModel } from "../Typings/viewModels/CalendarPlanViewModel";
+import {StudentCharacteristicReadModel} from "../Typings/readModels/StudentCharacteristicReadModel";
 
 class PracticeStore {
     constructor() {
@@ -71,7 +72,8 @@ class PracticeStore {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                studentTask //todo: опять хз сработает или нет
+                studentTask: studentTask.id, studentId: studentTask.studentId,
+                task: studentTask.task, practiceDetailsId: studentTask.practiceDetailsId,
             })
         });
         
@@ -79,7 +81,7 @@ class PracticeStore {
     }
 
     async getStudentCharacteristic(studentId: number): Promise<StudentCharacteristicViewModel> {
-        const response = await fetch("/getstudencharacteristic", {
+        const response = await fetch("/getstudentcharacteristics", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -98,14 +100,17 @@ class PracticeStore {
         return studentCharacteristic;
     }
 
-    async addOrUpdateStudentCharacteristic(studentCharacteristic: StudentCharacteristicViewModel): Promise<number> {
-        const response = await fetch("/addorupdatestudentcharacteristic", {
+    async addOrUpdateStudentCharacteristic(studentCharacteristic: StudentCharacteristicReadModel): Promise<number> {
+        const response = await fetch("/addorupdatestudentcharacteristics", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                studentCharacteristic //todo: опять хз сработает или нет
+                id: studentCharacteristic.id, studentId: studentCharacteristic.studentId,
+                descriptionByHead: studentCharacteristic.descriptionByHead, descriptionByCafedraHead: studentCharacteristic.descriptionByCafedraHead,
+                missedDaysWithReason: studentCharacteristic.missedDaysWithReason, missedDaysWithoutReason: studentCharacteristic.missedDaysWithoutReason,
+                practiceDetailsId: studentCharacteristic.practiceDetailsId 
             })
         });
 
@@ -119,7 +124,8 @@ class PracticeStore {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                calendarPlan //todo: опять хз сработает или нет
+                id: calendarPlan.id, pr: calendarPlan.practiceDetailsId,
+                calendarWeekPlans: calendarPlan.calendarWeekPlans
             })
         });
         

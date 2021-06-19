@@ -14,9 +14,9 @@ namespace DiariesForPractice.Persistence.Services.StudentTasks
             _studentTaskRepository = studentTaskRepository;
         }
         
-        public int AddOrUpdateStudentTask(StudentTask studentTask)
+        public int AddOrUpdateStudentTask(StudentTask studentTask, int practiceDetailsId)
         {
-            var studentTaskId = _studentTaskRepository.AddOrUpdateStudentTask(studentTask);
+            var studentTaskId = _studentTaskRepository.AddOrUpdateStudentTask(studentTask, practiceDetailsId);
 
             return studentTaskId;
         }

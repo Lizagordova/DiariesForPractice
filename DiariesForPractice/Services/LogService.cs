@@ -107,6 +107,12 @@ namespace DiariesForPractice.Services
             AddLog(logger, exception, customMessage, logType);
         }
         
+        public void AddOrUpdateStudentTaskLog(ILogger logger, Exception exception, LogType logType)
+        {
+            var customMessage = $"Не удалось добавить или обновить данные об индивидуальном задании для студента";
+            AddLog(logger, exception, customMessage, logType);
+        }
+        
         public void AddOrUpdateCalendarPlanLog(ILogger logger, Exception exception, LogType logType, int practiceDetailsId)
         {
             var customMessage = $"Не удалось добавить или обновить календарный план для practiceDetailsId={practiceDetailsId}";
