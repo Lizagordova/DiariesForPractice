@@ -1,5 +1,7 @@
 using DiariesForPractice.DiaryGenerator;
+using DiariesForPractice.DiaryGenerator.Builders;
 using DiariesForPractice.DiaryGenerator.Generators;
+using DiariesForPractice.DiaryGenerator.Services;
 using DiariesForPractice.Domain.Repositories;
 using DiariesForPractice.Domain.Services.Authorization;
 using DiariesForPractice.Domain.Services.CalendarPlans;
@@ -144,6 +146,9 @@ namespace DiariesForPractice
 		private void AddWorkers(IServiceCollection services)
 		{
 			services.AddSingleton<IDiaryGenerator, DiaryGenerator.Generators.DiaryGenerator>();
+			services.AddSingleton<IDiaryBuilder, DiaryBuilder>();
+			services.AddSingleton<DiaryForStudentGenerator>();
+			services.AddSingleton<StudentPracticeDataService>();
 			services.AddHostedService<DiaryWorker>();
 		}
 	}

@@ -24,7 +24,6 @@ class StudentMain extends Component<MainProps> {
                         Главная
                     </NavLink>
                 </NavItem>
-                <i className="fa fa-bell" />
                 <NavItem>
                     <NavLink
                         to="/userprofile"
@@ -34,6 +33,9 @@ class StudentMain extends Component<MainProps> {
                         <i className="fa fa-user" />
                     </NavLink>
                 </NavItem>
+                <Button style={{backgroundColor: "black"}}>
+                    <i className="fa fa-bell" />
+                </Button>
                 <Button
                     className="nav-link exit"
                     outline color="primary"

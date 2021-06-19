@@ -1,15 +1,16 @@
 ﻿import React, {Component} from "react";
-import { observer } from "mobx-react";
-import { makeObservable, observable } from "mobx";
-import {Input, Label, Button, Alert} from "reactstrap";
-import { StaffViewModel } from "../../../../../Typings/viewModels/StaffViewModel";
-import { StaffRole } from "../../../../../Typings/enums/StaffRole";
-import { translateStaffInfoType, translateStaffRole } from "../../../../../functions/translater";
-import { StaffDataType } from "../../../../../consts/StaffDataType";
-import { ProgressBar } from "react-bootstrap";
+import {observer} from "mobx-react";
+import {makeObservable, observable} from "mobx";
+import {Alert, Input, Label } from "reactstrap";
+import {StaffViewModel} from "../../../../../Typings/viewModels/StaffViewModel";
+import {StaffRole} from "../../../../../Typings/enums/StaffRole";
+import {translateStaffInfoType, translateStaffRole} from "../../../../../functions/translater";
+import {StaffDataType} from "../../../../../consts/StaffDataType";
 import OrganizationStore from "../../../../../stores/OrganizationStore";
-import { mapToStaffReadModel } from "../../../../../functions/mapper";
+import {mapToStaffReadModel} from "../../../../../functions/mapper";
 import {StaffReadModel} from "../../../../../Typings/readModels/StaffReadModel";
+import {ToggleType} from "../../../../../consts/ToggleType";
+import {renderProgress} from "../../../../../functions/progress";
 
 class StaffInfoProps {
     staff: StaffViewModel;
@@ -26,6 +27,7 @@ class StaffInfo extends Component<StaffInfoProps> {
     saved: boolean;
     notSaved: boolean;
     notOrganizationInfo: boolean;
+    updateProgressBar: boolean;
 
     constructor(props: StaffInfoProps) {
         super(props);
@@ -34,7 +36,8 @@ class StaffInfo extends Component<StaffInfoProps> {
             edit: observable,
             saved: observable,
             notSaved: observable,
-            notOrganizationInfo: observable
+            notOrganizationInfo: observable,
+            updateProgressBar: observable,
         });
         this.setStaff();
     }
@@ -66,67 +69,73 @@ class StaffInfo extends Component<StaffInfoProps> {
         );
     }
     
-    renderData(data: string, type: StaffDataType, edit: boolean) {
+    renderData(data: string, type: StaffDataType) {
         return (
             <>
-                <Label className="studentInfoDataLabel">{translateStaffInfoType(type)} :</Label>
-                {!edit && <span>{data}</span>}
-                {edit && <Input
-                    className="studentInfoInput"
-                    value={data}
-                    onChange={(event) => this.inputStaffData(event, type)}
-                />}
+                <div className="col-lg-3 col-md-3 col-sm-12">
+                    <Label className="studentInfoDataLabel">{translateStaffInfoType(type)} :</Label>
+                </div>
+                <div className="col-lg-9 col-md-9 col-sm-12">
+                    <Input
+                        onInput={() => this.editToggle(ToggleType.on)}
+                        className="studentInfoInput"
+                        value={data}
+                        onChange={(event) => this.inputStaffData(event, type)}>
+                        {data}
+                    </Input>
+                </div>
             </>
         );
     }
 
-    renderSectionProgress() {
+    componentDidMount() {
+        {this.updateProgress()}
+    }
+
+    updateProgress() {
         let progress = this.computeProgress(this.staff);
-        return (
-            <ProgressBar>{progress}</ProgressBar>
-        );
+        console.log("this.refs", this.refs)
+        let progressBar = this.refs["progress1"];
+        console.log("progressBar", progressBar)
+        //@ts-ignore
+        progressBar.style.width = 25;
+        this.updateProgressBar = !this.updateProgressBar;
     }
     
-    renderHeader(staffRole: StaffRole) {
+    renderHeader(staffRole: StaffRole, edit: boolean) {
         return (
             <>
                 <Label className="studentInfoTitleLabel">{translateStaffRole(staffRole)}</Label>
-                {!this.edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
-                {this.renderSectionProgress()}
+                {!edit && <i className="fa fa-edit fa-2x icon" onClick={() =>  this.editToggle(ToggleType.on)} />}
+                {edit && <i className="fa fa-save fa-2x icon" onClick={() => this.save()}/>}
+                {edit && <i className="fa fa-window-close fa-2x icon" onClick={() => this.editToggle(ToggleType.off)} />}
             </>
         );
     }
     
-    renderStaffInfo(edit: boolean) {
+    renderStaffInfo() {
         return (
             <>
                 <div className="row justify-content-center">
-                    {this.renderHeader(this.props.role)}
+                    {this.renderHeader(this.props.role, this.edit)}
+                </div>
+                <div className="row justify-content-center">
+                    {renderProgress(this.updateProgressBar)}
                 </div>
                 <div className="row studentInfoBlock">
-                    {this.renderData(this.staff.fullName, StaffDataType.FullName, edit)}
+                    {this.renderData(this.staff.fullName, StaffDataType.FullName)}
                 </div>
                 <div className="row studentInfoBlock">
-                    {this.renderData(this.staff.job, StaffDataType.Job, edit)}
+                    {this.renderData(this.staff.job, StaffDataType.Job)}
                 </div>
                 <div className="row studentInfoBlock">
-                    {this.renderData(this.staff.email, StaffDataType.Email, edit)}
+                    {this.renderData(this.staff.email, StaffDataType.Email)}
                 </div>
                 <div className="row studentInfoBlock">
-                    {this.renderData(this.staff.phone, StaffDataType.Phone, edit)}
+                    {this.renderData(this.staff.phone, StaffDataType.Phone)}
                 </div>
+                
             </>
-        );
-    }
-
-    renderSaveButton() {
-        return (
-            <Button
-                className="authButton"
-                onClick={() => this.save()}
-            >
-                Сохранить
-            </Button>
         );
     }
     
@@ -134,16 +143,16 @@ class StaffInfo extends Component<StaffInfoProps> {
         return (
             <>
                 {this.renderWarnings()}
-                {this.renderStaffInfo(this.edit)}
-                {this.edit && <div className="row justify-content-center">
-                    {this.renderSaveButton()}
-                </div>}
+                {this.renderStaffInfo()}
             </>
         );
     }
 
     inputStaffData(event: React.ChangeEvent<HTMLInputElement>, dataType: StaffDataType) {
         let value = event.currentTarget.value;
+        if(value === null) {
+            value = "";
+        }
         if(dataType === StaffDataType.FullName) {
             this.staff.fullName = value;
         } else if(dataType === StaffDataType.Job) {
@@ -155,12 +164,12 @@ class StaffInfo extends Component<StaffInfoProps> {
         }
     }
 
-    editToggle() {
-        this.edit = !this.edit;
+    editToggle(type: ToggleType) {
+        this.edit = type === ToggleType.on;
     }
 
-    computeProgress(staff: StaffViewModel) {
-        let progress = "";
+    computeProgress(staff: StaffViewModel): number {
+        let progress = 0;
         if(staff.fullName !== "") {
             progress += 25;
         }

@@ -5,6 +5,7 @@ import {StaffRole} from "../Typings/enums/StaffRole";
 import {PracticeType} from "../Typings/enums/PracticeType";
 import {StudentCharacteristicType} from "../consts/StudentCharacteristicType";
 import {StaffDataType} from "../consts/StaffDataType";
+import {OrganizationDataType} from "../consts/OrganizationDataType";
 
 export function translateUserRole(userRole: UserRole): string {
     let role = "";
@@ -98,5 +99,16 @@ export function translateStaffInfoType(staffInfoType: StaffDataType): string {
         type = "Должность";
     }
 
+    return type;
+}
+
+export function translateOrganizationType(organizationType: OrganizationDataType) {
+    let type = "";
+    if(organizationType === OrganizationDataType.OrganizationLegalAddress) {
+        type = "Юридический адрес:";
+    } else if(organizationType === OrganizationDataType.OrganizationName) {
+        type = "Название организации:";
+    }
+    
     return type;
 }

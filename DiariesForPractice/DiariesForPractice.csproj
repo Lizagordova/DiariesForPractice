@@ -76,10 +76,13 @@
 		<None Include="client\src\consts\ActionType.tsx" />
 		<None Include="client\src\consts\AuthorizationMode.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
+		<None Include="client\src\consts\OrganizationDataType.tsx" />
 		<None Include="client\src\consts\StaffDataType.tsx" />
 		<None Include="client\src\consts\StudentCharacteristicType.tsx" />
+		<None Include="client\src\consts\ToggleType.tsx" />
 		<None Include="client\src\consts\WarningType.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
+		<None Include="client\src\functions\progress.tsx" />
 		<None Include="client\src\functions\renderSpinner.tsx" />
 		<None Include="client\src\functions\translater.tsx" />
 		<None Include="client\src\functions\warningTypeRenderer.tsx" />

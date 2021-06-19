@@ -1,11 +1,13 @@
-﻿import React, { Component}  from "react";
-import { observer } from "mobx-react";
-import { makeObservable, observable } from "mobx";
-import { Input, Label, Button, Alert } from "reactstrap";
-import { OrganizationViewModel } from "../../../../../Typings/viewModels/OrganizationViewModel";
-import { Progress } from "reactstrap";
-import { RootStore } from "../../../../../stores/RootStore";
+﻿import React, {Component} from "react";
+import {observer} from "mobx-react";
+import {makeObservable, observable} from "mobx";
+import {Alert, Input, Label, Progress} from "reactstrap";
+import {OrganizationViewModel} from "../../../../../Typings/viewModels/OrganizationViewModel";
+import {RootStore} from "../../../../../stores/RootStore";
 import {mapToOrganizationReadModel} from "../../../../../functions/mapper";
+import {OrganizationDataType} from "../../../../../consts/OrganizationDataType";
+import {translateOrganizationType} from "../../../../../functions/translater";
+import {ToggleType} from "../../../../../consts/ToggleType";
 
 class OrganizationProps {
     organization: OrganizationViewModel;
@@ -48,33 +50,24 @@ class OrganizationInfo extends Component<OrganizationProps> {
             </>
         );
     }
-    
-    renderOrganizationName(organizationName: string, edit: boolean) {
-        return (
-            <>
-                <Label className="studentInfoDataLabel">Название организации:</Label>
-                {!edit && <span>{organizationName}</span>}
-                {edit && <Input
-                    className="studentInfoInput"
-                    value={organizationName}
-                    onChange={(event) => this.inputData(event, OrganizationDataType.OrganizationName)}>
-                    {organizationName}
-                </Input>}
-            </>
-        );
-    }
 
-    renderOrganizationLegalAddress(legalAddress: string, edit: boolean) {
+    renderOrganizationData(data: string, organizationType: OrganizationDataType) {
         return (
             <>
-                <Label className="studentInfoDataLabel">Юридический адрес:</Label>
-                {!edit && <span>{legalAddress}</span>}
-                {edit && <Input
-                    className="studentInfoInput"
-                    value={legalAddress}
-                    onChange={(event) => this.inputData(event, OrganizationDataType.OrganizationLegalAddress)}>
-                    {legalAddress}
-                </Input>}
+                <div className="col-lg-3 col-md-3 col-sm-12">
+                    <Label className="studentInfoDataLabel">{translateOrganizationType(organizationType)}</Label>
+                </div>
+                <div className="col-lg-9 col-md-9 col-sm-12">
+                    <Input
+                        onInput={() => this.editToggle(ToggleType.on)}
+                        className="studentInfoInput"
+                        value={data}
+                        defaultValue={data}
+                        onChange={(event) => this.inputData(event, organizationType)}
+                    >
+                        {data}
+                    </Input>
+                </div>
             </>
         );
     }
@@ -90,22 +83,13 @@ class OrganizationInfo extends Component<OrganizationProps> {
         return (
             <>
                 <Label className="studentInfoTitleLabel">Организация</Label>
-                {!edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
-                {this.renderSectionProgress()}
+                {!edit && <i className="fa fa-edit fa-2x icon" onClick={() =>  this.editToggle(ToggleType.on)} />}
+                {edit && <i className="fa fa-save fa-2x icon" onClick={() => this.save()}/>}
+                {edit && <i className="fa fa-window-close fa-2x icon" onClick={() => this.editToggle(ToggleType.off)} />}
             </>
         );
     }
 
-    renderSaveButton() {
-        return (
-            <Button
-                className="authButton"
-                onClick={() => this.save()}>
-                Сохранить
-            </Button>
-        );
-    }
-    
     renderOrganizationInfo(organization: OrganizationViewModel, edit: boolean) {
         return (
             <>
@@ -113,15 +97,15 @@ class OrganizationInfo extends Component<OrganizationProps> {
                 <div className="row justify-content-center">
                     {this.renderHeader(edit)}
                 </div>
-                <div className="row studentInfoBlock">
-                    {this.renderOrganizationName(organization.name, this.edit)}
+                <div className="row justify-content-center">
+                    {this.renderSectionProgress()}
                 </div>
                 <div className="row studentInfoBlock">
-                    {this.renderOrganizationLegalAddress(organization.legalAddress, edit)}
+                    {this.renderOrganizationData(organization.name, OrganizationDataType.OrganizationName)}
                 </div>
-                {this.edit && <div className="row justify-content-center">
-                    {this.renderSaveButton()}
-                </div>}
+                <div className="row studentInfoBlock">
+                    {this.renderOrganizationData(organization.legalAddress, OrganizationDataType.OrganizationLegalAddress)}
+                </div>
             </>
         );
     }
@@ -155,8 +139,8 @@ class OrganizationInfo extends Component<OrganizationProps> {
         return progress;
     }
 
-    editToggle() {
-        this.edit = !this.edit;
+    editToggle(type: ToggleType) {
+        this.edit = type === ToggleType.on;
     }
 
     save() {
@@ -167,7 +151,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
                     this.notSaved = true;
                 } else {
                     this.saved = true;
-                    this.editToggle();
+                    this.editToggle(ToggleType.off);
                     let organization = new OrganizationViewModel();
                     organization.id = organizationId;
                     this.organization = organization;
@@ -178,8 +162,3 @@ class OrganizationInfo extends Component<OrganizationProps> {
 }
 
 export default OrganizationInfo;
-
-enum OrganizationDataType {
-    OrganizationName,
-    OrganizationLegalAddress
-}
