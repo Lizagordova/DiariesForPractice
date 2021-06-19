@@ -1,13 +1,16 @@
-﻿import React, { Component } from "react";
-import { observer } from "mobx-react";
-import { StudentTaskViewModel } from "../../../../Typings/viewModels/StudentTaskViewModel";
-import { makeObservable, observable } from "mobx";
+﻿import React, {Component} from "react";
+import {observer} from "mobx-react";
+import {StudentTaskViewModel} from "../../../../Typings/viewModels/StudentTaskViewModel";
+import {makeObservable, observable} from "mobx";
 import PracticeStore from "../../../../stores/PracticeStore";
-import { Button, Alert, Input, Label } from "reactstrap";
-import { mapToStudentTaskReadModel } from "../../../../functions/mapper";
+import {Button, Input, Label} from "reactstrap";
+import {mapToStudentTaskReadModel} from "../../../../functions/mapper";
 import {ProgressBar} from "react-bootstrap";
 import {WarningType} from "../../../../consts/WarningType";
 import {warningTypeRenderer} from "../../../../functions/warningTypeRenderer";
+import {ToggleType} from "../../../../consts/ToggleType";
+import {renderProgress} from "../../../../functions/progress";
+import {translateStaffInfoType} from "../../../../functions/translater";
 
 class StudentTaskProps {
     practiceStore: PracticeStore;
@@ -40,14 +43,18 @@ class IndividualTask extends Component<StudentTaskProps> {
     renderStudentTask(task: string) {
         return (
             <>
-                {!this.edit && <span>{task}</span>}
-                {this.edit && <>
-                    <Label>Задание</Label>
+                <div className="col-lg-3 col-md-3 col-sm-12">
+                    <Label className="studentInfoDataLabel">Задание:</Label>
+                </div>
+                <div className="col-lg-9 col-md-9 col-sm-12">
                     <Input
-                    value={task}
-                    placeholder="Индивидуальное задание"
-                    onChange={(event) => this.changeStudentTask(event)} />
-                    </>}
+                        onInput={() => this.editToggle(ToggleType.on)}
+                        className="studentInfoInput"
+                        value={task}
+                        onChange={(event) => this.changeStudentTask(event)}>
+                        {task}
+                    </Input>
+                </div>
             </>
         )
     }
@@ -65,16 +72,6 @@ class IndividualTask extends Component<StudentTaskProps> {
         );
     }
 
-    renderSaveButton(edit: boolean) {
-        return (
-            <Button
-                className="authButton"
-                onClick={() => this.save()}>
-                Сохранить
-            </Button>
-        );
-    }
-
     renderSectionProgress() {
         let progress = this.computeProgress();
         return (
@@ -82,12 +79,12 @@ class IndividualTask extends Component<StudentTaskProps> {
         );
     }
     
-    renderHeader() {
+    renderHeader(edit: boolean) {
         return (
             <>
-                <Label>Индивидуальное задание</Label>
-                {!this.edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
-                {this.renderSectionProgress()}
+                <Label className="studentInfoTitleLabel">Индивидуальное задание</Label>
+                {edit && <i className="fa fa-save fa-2x icon" onClick={() => this.save()}/>}
+                {edit && <i className="fa fa-window-close fa-2x icon" onClick={() => this.editToggle(ToggleType.off)} />}
             </>
         );
     }
@@ -97,20 +94,20 @@ class IndividualTask extends Component<StudentTaskProps> {
             <>
                 {this.renderWarnings()}
                 <div className="row justify-content-center">
-                    {this.renderHeader()}
+                    {this.renderHeader(this.edit)}
                 </div>
-                <div className="row justify-content-center">
+                <div className="row justify-content-center studentInfoBlock">
+                    {renderProgress(true)}
+                </div>
+                <div className="row justify-content-center studentInfoBlock">
                     {this.renderStudentTask(this.studentTask.task)}
                 </div>
-                {this.edit && <div className="row justify-content-center">
-                    {this.renderSaveButton(this.edit)}
-                </div>}
             </>
         );
     }
 
-    editToggle() {
-        this.edit = !this.edit;
+    editToggle(type: ToggleType) {
+        this.edit = type === ToggleType.on;
     }
 
     changeStudentTask(event: React.ChangeEvent<HTMLInputElement>) {

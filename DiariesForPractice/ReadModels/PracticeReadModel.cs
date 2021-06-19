@@ -18,7 +18,7 @@ namespace DiariesForPractice.ReadModels
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string StructuralDivision { get; set; }
-        public string OrderOfPassingPractice { get; set; }
+        public string OrderId { get; set; }
         public CalendarPlanReadModel CalendarPlan { get; set; }
         public StudentCharacteristicReadModel StudentCharacteristic { get; set; }
         public StudentTaskReadModel StudentTask { get; set; }

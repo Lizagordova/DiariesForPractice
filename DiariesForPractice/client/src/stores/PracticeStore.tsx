@@ -1,23 +1,29 @@
 ﻿import { PracticeReadModel } from "../Typings/readModels/PracticeReadModel";
 import { PracticeViewModel } from "../Typings/viewModels/PracticeViewModel";
-import {StudentTaskViewModel} from "../Typings/viewModels/StudentTaskViewModel";
-import {StudentTaskReadModel} from "../Typings/readModels/StudentTaskReadModel";
-import {StudentCharacteristicViewModel} from "../Typings/viewModels/StudentCharacteristicViewModel";
-import {CalendarPlanReadModel} from "../Typings/readModels/CalendarPlanReadModel";
-import {CalendarPlanViewModel} from "../Typings/viewModels/CalendarPlanViewModel";
+import { StudentTaskViewModel } from "../Typings/viewModels/StudentTaskViewModel";
+import { StudentTaskReadModel } from "../Typings/readModels/StudentTaskReadModel";
+import { StudentCharacteristicViewModel } from "../Typings/viewModels/StudentCharacteristicViewModel";
+import { CalendarPlanReadModel } from "../Typings/readModels/CalendarPlanReadModel";
+import { CalendarPlanViewModel } from "../Typings/viewModels/CalendarPlanViewModel";
 
 class PracticeStore {
     constructor() {
     }   
     
    async addOrUpdatePracticeDetails(practiceDetails: PracticeReadModel): Promise<number> {
-       const response = await fetch("/addorupdatestudenttask", {
+       const response = await fetch("/addorupdatepracticedetails", {
            method: "POST",
            headers: {
                'Content-Type': 'application/json;charset=utf-8'
            },
            body: JSON.stringify({
-               practiceDetails //todo: опять хз сработает или нет
+               id: practiceDetails.id, studentId: practiceDetails.studentId,
+               organization: practiceDetails.organization, reportingForm: practiceDetails.reportingForm,
+               contractNumber: practiceDetails.contractNumber, responsibleForStudent: practiceDetails.responsibleForStudent,
+               signsTheContract: practiceDetails.signsTheContract, practiceType: practiceDetails.practiceType,
+               startDate: practiceDetails.startDate, endDate: practiceDetails.endDate,
+               calendarPlan: practiceDetails.calendarPlan, studentCharacteristic: practiceDetails.studentCharacteristic,
+               practiceDetails: practiceDetails.studentTask, structuralDivision: practiceDetails.structuralDivision
            })
        });
        let id = 0;

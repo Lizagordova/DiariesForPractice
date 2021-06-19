@@ -152,11 +152,11 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
                 <Label className="dataLabel">
                     Роль
                 </Label>
-                <Dropdown isOpen={this.roleOpen} toggle={() => this.userRoleToggle()} className="dropdownMenu">
+                <Dropdown isOpen={this.roleOpen} toggle={() => this.userRoleToggle()} className="dropdown">
                     <DropdownToggle caret className="dropdownToggle">
                         {translateUserRole(userRole)}
                     </DropdownToggle>
-                    <DropdownMenu className="">
+                    <DropdownMenu className="dropdownMenu">
                         <DropdownItem
                             key={1}
                             onClick={() => this.chooseRole(UserRole.Student)}>

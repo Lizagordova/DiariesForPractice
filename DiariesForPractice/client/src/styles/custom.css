@@ -127,14 +127,19 @@ footer {
     width: 80%;
 }
 
-.dropdownMenu {
+.dropdown {
     width: 80%;
+    margin-left: 5%;
 }
 
-.dropdownToggle {
+.dropdownToggle, .dropdownToggle:hover, .dropdownToggle:active {
     width: 100%;
-    color: black;
-    background-color: #F0F0F0;
+    color: white;
+    background-color: black;
+}
+
+.dropdownMenu {
+    width: 100%;
 }
 
 .exit {
@@ -185,4 +190,8 @@ footer {
     background-color: #337AB7;
     border-radius: 4px;
     width: 0%;
+}
+
+.blockWithDropdown {
+    margin-top: 1%;
 }

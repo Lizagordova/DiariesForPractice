@@ -83,7 +83,6 @@ class OrganizationInfo extends Component<OrganizationProps> {
         return (
             <>
                 <Label className="studentInfoTitleLabel">Организация</Label>
-                {!edit && <i className="fa fa-edit fa-2x icon" onClick={() =>  this.editToggle(ToggleType.on)} />}
                 {edit && <i className="fa fa-save fa-2x icon" onClick={() => this.save()}/>}
                 {edit && <i className="fa fa-window-close fa-2x icon" onClick={() => this.editToggle(ToggleType.off)} />}
             </>

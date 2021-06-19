@@ -1,13 +1,15 @@
-﻿import React, { Component } from "react";
-import { observer } from "mobx-react";
-import { makeObservable, observable } from "mobx";
-import { Label, Input, Button } from "reactstrap";
-import { ProgressBar } from "react-bootstrap";
+﻿import React, {Component} from "react";
+import {observer} from "mobx-react";
+import {makeObservable, observable} from "mobx";
+import {Button, Input, Label} from "reactstrap";
+import {ProgressBar} from "react-bootstrap";
 import PracticeStore from "../../../../../stores/PracticeStore";
-import { StudentCharacteristicViewModel } from "../../../../../Typings/viewModels/StudentCharacteristicViewModel";
-import { StudentCharacteristicType } from "../../../../../consts/StudentCharacteristicType";
-import { translateStudentCharacteristicType } from "../../../../../functions/translater";
+import {StudentCharacteristicViewModel} from "../../../../../Typings/viewModels/StudentCharacteristicViewModel";
+import {StudentCharacteristicType} from "../../../../../consts/StudentCharacteristicType";
+import {translateStudentCharacteristicType} from "../../../../../functions/translater";
 import {mapToStudentCharacteristicReadModel} from "../../../../../functions/mapper";
+import {ToggleType} from "../../../../../consts/ToggleType";
+import {renderProgress} from "../../../../../functions/progress";
 
 class StudentCharacteristicsProps {
     practiceStore: PracticeStore;
@@ -46,64 +48,92 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
         );
     }
 
-    renderCharacteristic(edit: boolean, characteristic: string | number, characteristicType: StudentCharacteristicType) {
+    renderCharacteristicWithTextArea(characteristic: string | number, characteristicType: StudentCharacteristicType) {
+        console.log("characteristic", characteristic, "characteristicType", characteristicType);
+        if(characteristic === null || characteristic === undefined) {
+            characteristic = "";
+        }
         let type = translateStudentCharacteristicType(characteristicType);
         return (
             <>
-                <Label>{type}</Label>
-                {!edit && <span>{characteristic}</span>}
-                {edit && <Input
-                    placeholder={type}
-                    value={characteristic}
-                    onChange={(event) => this.inputChange(event, characteristicType)}
-                />}
+                <div className="col-lg-3 col-md-3 col-sm-12">
+                    <Label className="studentInfoDataLabel">{type}:</Label>
+                </div>
+                <div className="col-lg-9 col-md-9 col-sm-12">
+                    <textarea
+                        onInput={() => this.editToggle(ToggleType.on)}
+                        className="studentInfoInput"
+                        value={characteristic}
+                        onChange={(event) => this.textAreaChange(event, characteristicType)}/>
+                </div>
             </>
         );
     }
 
-    renderHeader() {
-        return(
-            <>
-                <Label>Характеристика студента</Label>
-                {!this.edit && <i className="fa fa-edit fa-2x" onClick={() =>  this.editToggle()} />}
-                {this.renderSectionProgress()}
-            </>
-        );
-    }
-
-    renderSaveButton() {
+    renderCharacteristicWithInput(characteristic: string | number, characteristicType: StudentCharacteristicType) {
+        console.log("characteristic", characteristic, "characteristicType", characteristicType);
+        if(characteristic === null || characteristic === undefined) {
+            characteristic = "";
+        }
+        let type = translateStudentCharacteristicType(characteristicType);
         return (
-            <Button
-                className="authButton"
-                onClick={() => this.save()}>
-                Сохранить
-            </Button>
+            <>
+                <div className="col-lg-3 col-md-3 col-sm-12">
+                    <Label className="studentInfoDataLabel">{type}:</Label>
+                </div>
+                <div className="col-lg-9 col-md-9 col-sm-12">
+                    <Input
+                        onInput={() => this.editToggle(ToggleType.on)}
+                        className="studentInfoInput"
+                        value={characteristic}
+                        onChange={(event) => this.inputChange(event, characteristicType)}/>
+                </div>
+            </>
         );
     }
     
+    renderHeader(edit: boolean) {
+        return(
+            <>
+                <Label className="studentInfoTitleLabel">Характеристика студента</Label>
+                {edit && <i className="fa fa-save fa-2x icon" onClick={() => this.save()}/>}
+                {edit && <i className="fa fa-window-close fa-2x icon" onClick={() => this.editToggle(ToggleType.off)} />}
+
+            </>
+        );
+    }
+
     render() {
         return (
             <>
                 <div className="row justify-content-center">
-                    {this.renderHeader()}
+                    {this.renderHeader(this.edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderCharacteristic(this.edit, this.studentCharacteristics.descriptionByCafedraHead, StudentCharacteristicType.DescriptionByCafedraHead)}
+                    {renderProgress(true)}
                 </div>
-                <div className="row justify-content-center">
-                    {this.renderCharacteristic(this.edit, this.studentCharacteristics.descriptionByHead, StudentCharacteristicType.DescriptionByHead)}
+                <div className="row justify-content-center studentInfoBlock">
+                    {this.renderCharacteristicWithTextArea(this.studentCharacteristics.descriptionByCafedraHead, StudentCharacteristicType.DescriptionByCafedraHead)}
                 </div>
-                <div className="row justify-content-center">
-                    {this.renderCharacteristic(this.edit, this.studentCharacteristics.missedDaysWithReason, StudentCharacteristicType.MissedDaysWithReason)}
+                <div className="row justify-content-center studentInfoBlock">
+                    {this.renderCharacteristicWithTextArea(this.studentCharacteristics.descriptionByHead, StudentCharacteristicType.DescriptionByHead)}
                 </div>
-                <div className="row justify-content-center">
-                    {this.renderCharacteristic(this.edit, this.studentCharacteristics.missedDaysWithoutReason, StudentCharacteristicType.MissedDaysWithoutReason)}
+                <div className="row justify-content-center studentInfoBlock">
+                    {this.renderCharacteristicWithInput(this.studentCharacteristics.missedDaysWithReason, StudentCharacteristicType.MissedDaysWithReason)}
                 </div>
-                {this.edit && <div className="row justify-content-center">
-                    {this.renderSaveButton()}
-                </div>}
+                <div className="row justify-content-center studentInfoBlock">
+                    {this.renderCharacteristicWithInput(this.studentCharacteristics.missedDaysWithoutReason, StudentCharacteristicType.MissedDaysWithoutReason)}
+                </div>
             </>
         );
+    }
+
+    textAreaChange(event: React.ChangeEvent<HTMLTextAreaElement>, type: StudentCharacteristicType) {
+        let value = event.currentTarget.value;if (type === StudentCharacteristicType.DescriptionByCafedraHead) {
+            this.studentCharacteristics.descriptionByCafedraHead = value;
+        } else if (type === StudentCharacteristicType.DescriptionByHead) {
+            this.studentCharacteristics.descriptionByHead = value;
+        }
     }
 
     inputChange(event: React.ChangeEvent<HTMLInputElement>, type: StudentCharacteristicType) {
@@ -118,7 +148,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
             this.studentCharacteristics.descriptionByHead = value;
         }
     }
-
+    
     computeProgress(studentCharacteristic: StudentCharacteristicViewModel): number {
         let progress = 0;
         if(studentCharacteristic.descriptionByHead !== "") {
@@ -135,14 +165,17 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
         let studentCharacteristic = mapToStudentCharacteristicReadModel(this.studentCharacteristics, this.props.practiceDetailsId);
         this.props.practiceStore.addOrUpdateStudentCharacteristic(studentCharacteristic)
             .then((status) => {
-                this.saved = status === 200;
-                this.notSaved = status !== 200;
-                this.edit = status !== 200;
+                if(status === 200) {
+                    this.editToggle(ToggleType.off);
+                    this.saved = status === 200;
+                } else {
+                    this.notSaved = true;
+                }
             })
     }
 
-    editToggle() {
-        this.edit = !this.edit;
+    editToggle(type: ToggleType) {
+        this.edit = type === ToggleType.on;
     }
 }
 

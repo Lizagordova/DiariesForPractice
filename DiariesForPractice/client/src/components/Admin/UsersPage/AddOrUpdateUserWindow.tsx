@@ -72,7 +72,7 @@ class AddOrUpdateUserWindow extends Component<AddOrUpdateUserWindowProps> {
                     <DropdownToggle caret className="dropdownToggle">
                         {translateUserRole(userRole)}
                     </DropdownToggle>
-                    <DropdownMenu className="">
+                    <DropdownMenu className="dropdownMenu">
                         <DropdownItem
                             key={1}
                             onClick={() => this.chooseRole(UserRole.Student)}>

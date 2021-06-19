@@ -98,7 +98,7 @@ class StaffInfo extends Component<StaffInfoProps> {
         let progressBar = this.refs["progress1"];
         console.log("progressBar", progressBar)
         //@ts-ignore
-        progressBar.style.width = 25;
+        progressBar.style.width = progress;
         this.updateProgressBar = !this.updateProgressBar;
     }
     
@@ -106,7 +106,6 @@ class StaffInfo extends Component<StaffInfoProps> {
         return (
             <>
                 <Label className="studentInfoTitleLabel">{translateStaffRole(staffRole)}</Label>
-                {!edit && <i className="fa fa-edit fa-2x icon" onClick={() =>  this.editToggle(ToggleType.on)} />}
                 {edit && <i className="fa fa-save fa-2x icon" onClick={() => this.save()}/>}
                 {edit && <i className="fa fa-window-close fa-2x icon" onClick={() => this.editToggle(ToggleType.off)} />}
             </>

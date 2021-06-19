@@ -23,7 +23,7 @@ export class PracticeReadModel
 	public startDate: any;
 	public endDate: any;
 	public structuralDivision: string;
-	public orderOfPassingPractice: string;
+	public orderId: string;
 	public calendarPlan: CalendarPlanReadModel;
 	public studentCharacteristic: StudentCharacteristicReadModel;
 	public studentTask: StudentTaskReadModel;
