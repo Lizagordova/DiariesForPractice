@@ -9,7 +9,6 @@ import {ProgressBar} from "react-bootstrap";
 import {WarningType} from "../../../../consts/WarningType";
 import {warningTypeRenderer} from "../../../../functions/warningTypeRenderer";
 import {ToggleType} from "../../../../consts/ToggleType";
-import {renderProgress} from "../../../../functions/progress";
 
 class StudentTaskProps {
     practiceStore: PracticeStore;

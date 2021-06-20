@@ -44,7 +44,7 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
             });
     }
     
-    renderOrganizationInfo(update: boolean) {
+    renderOrganizationInfo() {
         return (
             <OrganizationInfo 
                 organization={this.practiceDetails.organization}
@@ -69,7 +69,7 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
         );
     }
 
-    renderPracticeDetails(update: boolean) {
+    renderPracticeDetails() {
         return (
             <PracticeDetailsInfo
                 practiceStore={this.props.store.practiceStore}
@@ -78,7 +78,7 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
         );
     }
 
-    renderStudentTask(update: boolean) {
+    renderStudentTask() {
         return (
             <StudentTask 
                 studentTask={this.practiceDetails.studentTask}
@@ -87,7 +87,7 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
         );
     }
 
-    renderStudentCharacteristic(update: boolean) {
+    renderStudentCharacteristic() {
         return (
             <StudentCharacteristics
                 practiceStore={this.props.store.practiceStore}
@@ -97,7 +97,7 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
         );
     }
 
-    renderCalendarPlan(update: boolean) {
+    renderCalendarPlan() {
         return (
             <CalendarPlan
                 practiceStore={this.props.store.practiceStore}
@@ -110,13 +110,13 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
     renderStudentInfo() {
         return (
             <>
-                {this.renderOrganizationInfo(this.update)}
+                {this.renderOrganizationInfo()}
                 {this.renderStaffInfo(this.practiceDetails.responsibleForStudent, StaffRole.Responsible)}
                 {this.renderStaffInfo(this.practiceDetails.signsTheContract, StaffRole.SignsTheContract)}
-                {this.renderPracticeDetails(this.update)}
-                {this.renderStudentTask(this.update)}
-                {this.renderStudentCharacteristic(this.update)}
-                {this.renderCalendarPlan(this.update)}
+                {this.renderPracticeDetails()}
+                {this.renderStudentTask()}
+                {this.renderStudentCharacteristic()}
+                {this.renderCalendarPlan()}
             </>
         );
     }
