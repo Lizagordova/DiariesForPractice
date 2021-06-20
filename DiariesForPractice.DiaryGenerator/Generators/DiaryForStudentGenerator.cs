@@ -41,37 +41,36 @@ namespace DiariesForPractice.DiaryGenerator.Generators
             var htmlPath = PathHelper.GenerateDocumentPath(practiceData, FormatType.Html);
             diary.Path = wordPath;
             _diariesEditor.AddOrUpdateDiary(diary);
-            SaveDocument(document, wordPath, FormatType.Docx);
-            SaveDocument(document, htmlPath, FormatType.Html);
+            SaveDocumentDocx(document, wordPath);
+            SaveDocumentXhtml(document, htmlPath);
+            document.Close();
         }
 
-        private void SaveDocument(WordDocument document, string path, FormatType type)
+        private void SaveDocumentDocx(WordDocument document, string path)
         {
             var memoryStream = new MemoryStream();
-            document.Save(memoryStream, type);
-            document.Close();
-            memoryStream.Position = 0;
-            if (type == FormatType.Html)
+            document.Save(memoryStream, FormatType.Docx);
+            using (var file = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
-                var export = new HTMLExport();
-                document.SaveOptions.HtmlExportHeadersFooters = true;
-                using (var file = new FileStream(path, FileMode.Create, FileAccess.Write))
-                {
-                    var bytes = new byte[memoryStream.Length];
-                    memoryStream.Read(bytes, 0, (int)memoryStream.Length);
-                    file.Write(bytes, 0, bytes.Length);
-                    export.SaveAsXhtml(document, file);
-                }
-                
+                var bytes = new byte[memoryStream.Length];
+                memoryStream.Read(bytes, 0, (int)memoryStream.Length);
+                file.Write(bytes, 0, bytes.Length);
             }
-            else
+            memoryStream.Close();
+        }
+        
+        private void SaveDocumentXhtml(WordDocument document, string path)
+        {
+            var memoryStream = new MemoryStream();
+            memoryStream.Position = 0;
+            var export = new HTMLExport();
+            document.Save(memoryStream, FormatType.Html);
+            export.SaveAsXhtml(document, memoryStream);
+            using (var file = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
-                using (var file = new FileStream(path, FileMode.Create, FileAccess.Write))
-                {
-                    var bytes = new byte[memoryStream.Length];
-                    memoryStream.Read(bytes, 0, (int)memoryStream.Length);
-                    file.Write(bytes, 0, bytes.Length);
-                }
+                var bytes = new byte[memoryStream.Length];
+                memoryStream.Read(bytes, 0, (int)memoryStream.Length);
+                file.Write(bytes, 0, bytes.Length);
             }
             memoryStream.Close();
         }
