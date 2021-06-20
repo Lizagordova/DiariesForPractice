@@ -37,7 +37,8 @@ namespace DiariesForPractice.DiaryGenerator.Generators
             //todo: дополнить
             diary.Generated = true;
             _diariesEditor.AddOrUpdateDiary(diary);
-            SaveDocument(document, @$"c:\d\tests\{practiceData.Student.FullName}.docx");
+            var path = GenerateDocumentPath(practiceData);
+            SaveDocument(document, path);
         }
 
         private void SaveDocument(WordDocument document, string path)
@@ -52,6 +53,30 @@ namespace DiariesForPractice.DiaryGenerator.Generators
                 memoryStream.Read(bytes, 0, (int)memoryStream.Length);
                 file.Write(bytes, 0, bytes.Length);
                 memoryStream.Close();
+            }
+        }
+
+        private string GenerateDocumentPath(PracticeData practiceData)
+        {
+           var path = @$"c:\diaries\";
+           path += $@"{practiceData.Institute.Name}";
+           AddIfNotExistsDirectory(path);
+           path += @$"\{practiceData.Cafedra.Name}";
+           AddIfNotExistsDirectory(path);
+           path += @$"\{practiceData.Direction.Name}";
+           AddIfNotExistsDirectory(path);
+           path += @$"\{practiceData.Group.Name}";
+           AddIfNotExistsDirectory(path);
+           path += @$"\{practiceData.Student.FullName}.docx";
+
+           return path;
+        }
+
+        private void AddIfNotExistsDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
             }
         }
     }
