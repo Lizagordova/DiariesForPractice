@@ -146,7 +146,6 @@ class RegistrationWindow extends Component<RegistrationWindowProps> {
     }
 
     renderRole(userRole: UserRole) {
-        console.log("userRole", userRole);
         return (
             <div className="row justify-content-center dataBlock">
                 <Label className="dataLabel">

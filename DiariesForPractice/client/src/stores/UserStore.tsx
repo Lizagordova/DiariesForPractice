@@ -46,7 +46,6 @@ class UserStore {
     }
     
     async register(user: UserReadModel): Promise<number> {
-        console.log("user", user);
         const response = await fetch("/register", {
             method: "POST",
             headers: {

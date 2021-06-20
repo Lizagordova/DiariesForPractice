@@ -17,6 +17,7 @@ import {CalendarPlanViewModel} from "../../../../Typings/viewModels/CalendarPlan
 import {ToggleType} from "../../../../consts/ToggleType";
 import {warningTypeRenderer} from "../../../../functions/warningTypeRenderer";
 import {WarningType} from "../../../../consts/WarningType";
+import {DateType} from "../../../../consts/DateType";
 
 class PracticeDetailsInfoProps {
     practiceStore: PracticeStore;
@@ -177,7 +178,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                 <div className="col-lg-9 col-md-9 col-sm-12">
                     <div className="row justify-content-center">
                         <i className="fa fa-calendar fa-2x" onClick={() => this.toggle(PracticeDetailsToggleType.EndDate)}/>
-                        {this.startDateOpen &&  <Calendar
+                        {this.endDateOpen &&  <Calendar
                             value={date}
                             onChange={(date) => this.inputDate(date, DateType.EndDate)}
                         />}
@@ -201,15 +202,6 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                         onChange={(event) =>  this.changePracticeDetails(event, PracticeDetailsType.StructuralDivision)} />
                 </div>
             </>
-        );
-    }
-    
-    renderSectionProgress() {
-        let progress = this.computeProgress(this.practiceDetails)
-        return (
-            <ProgressBar>
-                {progress}
-            </ProgressBar>
         );
     }
     
@@ -359,9 +351,4 @@ enum PracticeDetailsToggleType {
 enum PracticeDetailsType {
     StructuralDivision,
     ContractNumber    
-}
-
-enum DateType {
-    StartDate,
-    EndDate
 }

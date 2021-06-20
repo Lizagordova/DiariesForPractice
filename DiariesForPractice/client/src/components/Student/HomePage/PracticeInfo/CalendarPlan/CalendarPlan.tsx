@@ -88,7 +88,6 @@ class CalendarPlan extends Component<CalendarPlanProps> {
     }
     
     renderCalendarWeekPlans(calendarWeekPlans: CalendarWeekPlanViewModel[], update: boolean) {
-        console.log("calendarWeekPlans", calendarWeekPlans);
         return (
             <>
                 {calendarWeekPlans.map((plan, index) => {
@@ -114,7 +113,6 @@ class CalendarPlan extends Component<CalendarPlanProps> {
     }
     
     render() {
-        console.log("calendarPa", toJS(this.calendarPlan));
         return (
             <>
                 {this.renderWarnings()}

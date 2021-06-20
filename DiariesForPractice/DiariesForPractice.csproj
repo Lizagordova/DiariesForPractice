@@ -75,6 +75,7 @@
 		<None Include="client\src\components\User\UserMain.tsx" />
 		<None Include="client\src\consts\ActionType.tsx" />
 		<None Include="client\src\consts\AuthorizationMode.tsx" />
+		<None Include="client\src\consts\DateType.tsx" />
 		<None Include="client\src\consts\InstituteEntity.tsx" />
 		<None Include="client\src\consts\OrganizationDataType.tsx" />
 		<None Include="client\src\consts\StaffDataType.tsx" />

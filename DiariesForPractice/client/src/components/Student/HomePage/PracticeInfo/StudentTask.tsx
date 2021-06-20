@@ -139,7 +139,6 @@ class IndividualTask extends Component<StudentTaskProps> {
 
     computeProgress(): number {
         let progress = 0;
-        console.log("this studentTask", toJS(this.studentTask));
         if(this.studentTask.task !== "") {
             progress = 100;
         }
