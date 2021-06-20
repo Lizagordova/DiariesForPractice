@@ -63,6 +63,10 @@ namespace DiariesForPractice.DiaryGenerator.Builders
         {
             var section = document.AddSection();
             section.PageSetup.Orientation = PageOrientation.Landscape;
+            section.PageSetup.Margins.Left = 100;
+            section.PageSetup.Margins.Top = (float) 62.5;
+            section.PageSetup.Margins.Right = 50;
+            section.PageSetup.Margins.Bottom = 50;
 
             return section;
         }

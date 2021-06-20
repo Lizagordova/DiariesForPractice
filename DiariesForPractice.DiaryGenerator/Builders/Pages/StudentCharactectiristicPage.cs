@@ -18,15 +18,15 @@ namespace DiariesForPractice.DiaryGenerator.Builders.Pages
             var studentCharacteristicParagraph = table[0, 1].AddParagraph();
             studentCharacteristicParagraph.AddParagraphAlignment(HorizontalAlignment.Center);
             studentCharacteristicParagraph.ApplyStyle("commonData");
-            studentCharacteristicParagraph.AddLineBreaks(1);
+            studentCharacteristicParagraph.AddLineBreaks(2);
             studentCharacteristicParagraph.AppendText($"{data.Student.FullName}");
             studentCharacteristicParagraph.AddLineBreaks(2);
             studentCharacteristicParagraph.AppendText(data.PracticeDetails.StudentCharacteristic.DescriptionByHead);
             var studentCharacteristicFooter = table[0, 1].AddParagraph();
             studentCharacteristicFooter.AppendText("Число пропущенных дней за время практики:");
-            studentCharacteristicFooter.AddLineBreaks(1);
+            studentCharacteristicFooter.AddLineBreaks(2);
             studentCharacteristicFooter.AppendText($"а) по уважительной причине: {data.PracticeDetails.StudentCharacteristic.MissedDaysWithReason}");
-            studentCharacteristicFooter.AddLineBreaks(1);
+            studentCharacteristicFooter.AddLineBreaks(2);
             studentCharacteristicFooter.AppendText($"б) без уважительной причины. {data.PracticeDetails.StudentCharacteristic.MissedDaysWithoutReason}");
         }
         

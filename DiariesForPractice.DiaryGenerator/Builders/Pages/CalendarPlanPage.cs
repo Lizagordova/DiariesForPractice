@@ -31,11 +31,11 @@ namespace DiariesForPractice.DiaryGenerator.Builders.Pages
         {
             var signatureParagraph = table[0, 0].AddParagraph();
             signatureParagraph.ApplyStyle("normalStyle");
-            signatureParagraph.AddLineBreaks(1);
+            signatureParagraph.AddLineBreaks(2);
             signatureParagraph.AppendText("Подпись руководителей практики:");
-            signatureParagraph.AddLineBreaks(1);
+            signatureParagraph.AddLineBreaks(2);
             signatureParagraph.AppendText("от кафедры:");
-            signatureParagraph.AddLineBreaks(1);
+            signatureParagraph.AddLineBreaks(2);
             signatureParagraph.AppendText("от профильной организации:");
         }
     }
