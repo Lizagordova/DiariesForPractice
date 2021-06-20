@@ -45,7 +45,8 @@ class OrganizationStore {
             body: JSON.stringify({
                 id: staff.id, organizationId: staff.organizationId,
                 job: staff.job, phone: staff.phone, email: staff.email,
-                fullName: staff.fullName, practiceDetailsId: staff.practiceDetailsId
+                fullName: staff.fullName, practiceDetailsId: staff.practiceDetailsId,
+                role: staff.role
             })
         });
         if(response.status === 200) {

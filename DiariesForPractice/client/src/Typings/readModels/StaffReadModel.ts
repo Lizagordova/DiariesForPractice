@@ -2,6 +2,8 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
+import { StaffRole } from '../enums/StaffRole';
+
 export class StaffReadModel
 {
 	public id: number;
@@ -11,4 +13,5 @@ export class StaffReadModel
 	public email: string;
 	public phone: string;
 	public practiceDetailsId: number;
+	public role: StaffRole;
 }

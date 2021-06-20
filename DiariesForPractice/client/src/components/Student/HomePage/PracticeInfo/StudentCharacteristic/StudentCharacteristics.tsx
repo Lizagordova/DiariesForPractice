@@ -9,7 +9,9 @@ import {StudentCharacteristicType} from "../../../../../consts/StudentCharacteri
 import {translateStudentCharacteristicType} from "../../../../../functions/translater";
 import {mapToStudentCharacteristicReadModel} from "../../../../../functions/mapper";
 import {ToggleType} from "../../../../../consts/ToggleType";
-import {renderProgress} from "../../../../../functions/progress";
+import {renderProgress, updateProgress} from "../../../../../functions/progress";
+import {warningTypeRenderer} from "../../../../../functions/warningTypeRenderer";
+import {WarningType} from "../../../../../consts/WarningType";
 
 class StudentCharacteristicsProps {
     practiceStore: PracticeStore;
@@ -23,6 +25,8 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     edit: boolean;
     saved: boolean;
     notSaved: boolean;
+    progress: HTMLDivElement | null;
+    update: boolean;
 
     constructor(props: StudentCharacteristicsProps) {
         super(props);
@@ -30,11 +34,30 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
             studentCharacteristics: observable,
             edit: observable,
             saved: observable,
-            notSaved: observable
+            notSaved: observable,
+            progress: observable,
+            update: observable,
         });
         this.setStudentCharacteristics();
     }
 
+    componentDidMount() {
+        this.updateProgress();
+    }
+
+    renderWarnings() {
+        setTimeout(() => {
+            this.notSaved = false;
+            this.saved = false;
+        }, 6000)
+        return (
+            <>
+                {this.saved && warningTypeRenderer(WarningType.Saved)}
+                {this.notSaved && warningTypeRenderer(WarningType.NotSaved)}
+            </>
+        );
+    }
+    
     setStudentCharacteristics() {
         this.studentCharacteristics = this.props.studentCharacteristic;
     }
@@ -49,7 +72,6 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     }
 
     renderCharacteristicWithTextArea(characteristic: string | number, characteristicType: StudentCharacteristicType) {
-        console.log("characteristic", characteristic, "characteristicType", characteristicType);
         if(characteristic === null || characteristic === undefined) {
             characteristic = "";
         }
@@ -71,7 +93,6 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     }
 
     renderCharacteristicWithInput(characteristic: string | number, characteristicType: StudentCharacteristicType) {
-        console.log("characteristic", characteristic, "characteristicType", characteristicType);
         if(characteristic === null || characteristic === undefined) {
             characteristic = "";
         }
@@ -98,19 +119,46 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
                 <Label className="studentInfoTitleLabel">Характеристика студента</Label>
                 {edit && <i className="fa fa-save fa-2x icon" onClick={() => this.save()}/>}
                 {edit && <i className="fa fa-window-close fa-2x icon" onClick={() => this.editToggle(ToggleType.off)} />}
-
             </>
         );
     }
 
+    renderProgress(update: boolean) {
+        return (
+            <div id="prog-bar" className="progress">
+                <div id="progress-bar" className="progress-bar" ref={c => this.progress = c}>
+                </div>
+            </div>
+        );
+    }
+
+    updateProgress() {
+        console.log("this.progress", this.progress)
+        let progress = this.progress;
+        console.log("progress", progress)
+        if(progress !== null && progress !== undefined) {
+            console.log("before style width", progress.style.width);
+            console.log("before style", progress.style);
+            progress.style.width = "25%";
+            console.log("after style", progress.style.width);
+        }
+        this.progress = progress;
+        this.updateToggle();
+    }
+
+    updateToggle() {
+        this.update = !this.update;
+    }
+    
     render() {
         return (
             <>
+                {this.renderWarnings()}
                 <div className="row justify-content-center">
                     {this.renderHeader(this.edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {renderProgress(true)}
+                    {this.renderProgress(true)}
                 </div>
                 <div className="row justify-content-center studentInfoBlock">
                     {this.renderCharacteristicWithTextArea(this.studentCharacteristics.descriptionByCafedraHead, StudentCharacteristicType.DescriptionByCafedraHead)}
@@ -139,7 +187,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     inputChange(event: React.ChangeEvent<HTMLInputElement>, type: StudentCharacteristicType) {
         let value = event.currentTarget.value;
         if(type === StudentCharacteristicType.MissedDaysWithoutReason) {
-            this.studentCharacteristics.missedDaysWithReason = Number(value);
+            this.studentCharacteristics.missedDaysWithoutReason = Number(value);
         } else if (type === StudentCharacteristicType.MissedDaysWithReason) {
             this.studentCharacteristics.missedDaysWithReason = Number(value);
         } else if (type === StudentCharacteristicType.DescriptionByCafedraHead) {

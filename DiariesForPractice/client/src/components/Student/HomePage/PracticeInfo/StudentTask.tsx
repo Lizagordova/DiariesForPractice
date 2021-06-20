@@ -10,7 +10,6 @@ import {WarningType} from "../../../../consts/WarningType";
 import {warningTypeRenderer} from "../../../../functions/warningTypeRenderer";
 import {ToggleType} from "../../../../consts/ToggleType";
 import {renderProgress} from "../../../../functions/progress";
-import {translateStaffInfoType} from "../../../../functions/translater";
 
 class StudentTaskProps {
     practiceStore: PracticeStore;
@@ -51,9 +50,7 @@ class IndividualTask extends Component<StudentTaskProps> {
                         onInput={() => this.editToggle(ToggleType.on)}
                         className="studentInfoInput"
                         value={task}
-                        onChange={(event) => this.changeStudentTask(event)}>
-                        {task}
-                    </Input>
+                        onChange={(event) => this.changeStudentTask(event)}/>
                 </div>
             </>
         )

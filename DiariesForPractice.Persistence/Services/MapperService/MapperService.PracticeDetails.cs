@@ -16,8 +16,8 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.OrganizationId, opt => opt.MapFrom(src => src.Organization.Id))
                     .ForMember(dest => dest.ReportingForm, opt => opt.MapFrom(src => src.ReportingForm))
                     .ForMember(dest => dest.ContractNumber, opt => opt.MapFrom(src => src.ContractNumber))
-                    .ForMember(dest => dest.ResponsibleForStudent, opt => opt.MapFrom(src => src.ResponsibleForStudent))
-                    .ForMember(dest => dest.SignsTheContract, opt => opt.MapFrom(src => src.SignsTheContract))
+                    .ForMember(dest => dest.ResponsibleForStudent, opt => opt.MapFrom(src => src.ResponsibleForStudent.Id))
+                    .ForMember(dest => dest.SignsTheContract, opt => opt.MapFrom(src => src.SignsTheContract.Id))
                     .ForMember(dest => dest.PracticeType, opt => opt.MapFrom(src => src.PracticeType))
                     .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
@@ -31,8 +31,8 @@ namespace DiariesForPractice.Persistence.Services.MapperService
             {
                 cfg.CreateMap<PracticeDetailsUdt, PracticeDetails>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.Student, opt => opt.MapFrom(src => new User() {Id = src.StudentId}))
-                    .ForMember(dest => dest.Organization, opt => opt.MapFrom(src => new Organization() {Id = src.OrganizationId}))
+                    .ForMember(dest => dest.Student, opt => opt.MapFrom(src => new User {Id = src.StudentId}))
+                    .ForMember(dest => dest.Organization, opt => opt.MapFrom(src => new Organization {Id = src.OrganizationId}))
                     .ForMember(dest => dest.ReportingForm, opt => opt.MapFrom(src => src.ReportingForm))
                     .ForMember(dest => dest.ContractNumber, opt => opt.MapFrom(src => src.ContractNumber))
                     .ForMember(dest => dest.ResponsibleForStudent, opt => opt.MapFrom(src => new Staff() {Id = src.ResponsibleForStudent}))
@@ -42,9 +42,9 @@ namespace DiariesForPractice.Persistence.Services.MapperService
                     .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
                     .ForMember(dest => dest.StructuralDivision, opt => opt.MapFrom(src => src.StructuralDivision))
                     .ForMember(dest => dest.Order, opt => opt.MapFrom(src => new Order() {Id = src.OrderId}))
-                    .ForMember(dest => dest.StudentTask, opt => opt.MapFrom(src => new StudentTask() { Id = src.StudentTaskId }))
+                    .ForMember(dest => dest.StudentTask, opt => opt.MapFrom(src => new StudentTask() { Id = src.StudentTaskId, StudentId = src.StudentId }))
                     .ForMember(dest => dest.CalendarPlan, opt => opt.MapFrom(src => new CalendarPlan()))
-                    .ForMember(dest => dest.StudentCharacteristic, opt => opt.MapFrom(src => new StudentCharacteristic() { Id = src.StudentCharacteristicId }));
+                    .ForMember(dest => dest.StudentCharacteristic, opt => opt.MapFrom(src => new StudentCharacteristic() { Id = src.StudentCharacteristicId, StudentId = src.StudentId }));
             });
             
             AddMapping<CalendarPlanUdt, CalendarPlan>(cfg =>

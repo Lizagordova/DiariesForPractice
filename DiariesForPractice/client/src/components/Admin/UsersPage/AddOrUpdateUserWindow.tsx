@@ -62,7 +62,6 @@ class AddOrUpdateUserWindow extends Component<AddOrUpdateUserWindowProps> {
     }
     
     renderUserRole(userRole: UserRole) {
-        console.log("userRole", userRole);
         return (
             <div className="row justify-content-center dataBlock">
                 <Label className="dataLabel">

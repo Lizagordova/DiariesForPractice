@@ -33,6 +33,7 @@ namespace DiariesForPractice.Services.Mapper
                     .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FullName))
                     .ForMember(dest => dest.Job, opt => opt.MapFrom(src => src.Job))
                     .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                    .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
                     .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone));
             });
             

@@ -101,6 +101,7 @@ class PracticeStore {
     }
 
     async addOrUpdateStudentCharacteristic(studentCharacteristic: StudentCharacteristicReadModel): Promise<number> {
+        console.log("studen", studentCharacteristic);
         const response = await fetch("/addorupdatestudentcharacteristics", {
             method: "POST",
             headers: {
@@ -110,7 +111,7 @@ class PracticeStore {
                 id: studentCharacteristic.id, studentId: studentCharacteristic.studentId,
                 descriptionByHead: studentCharacteristic.descriptionByHead, descriptionByCafedraHead: studentCharacteristic.descriptionByCafedraHead,
                 missedDaysWithReason: studentCharacteristic.missedDaysWithReason, missedDaysWithoutReason: studentCharacteristic.missedDaysWithoutReason,
-                practiceDetailsId: studentCharacteristic.practiceDetailsId 
+                practiceDetailsId: studentCharacteristic.practiceDetailsId
             })
         });
 

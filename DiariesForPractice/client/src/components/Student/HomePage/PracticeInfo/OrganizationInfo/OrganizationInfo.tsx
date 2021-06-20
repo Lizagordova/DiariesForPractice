@@ -8,6 +8,8 @@ import {mapToOrganizationReadModel} from "../../../../../functions/mapper";
 import {OrganizationDataType} from "../../../../../consts/OrganizationDataType";
 import {translateOrganizationType} from "../../../../../functions/translater";
 import {ToggleType} from "../../../../../consts/ToggleType";
+import {warningTypeRenderer} from "../../../../../functions/warningTypeRenderer";
+import {WarningType} from "../../../../../consts/WarningType";
 
 class OrganizationProps {
     organization: OrganizationViewModel;
@@ -37,21 +39,24 @@ class OrganizationInfo extends Component<OrganizationProps> {
     setOrganization() {
         this.organization = this.props.organization;
     }
-    
+
     renderWarnings() {
         setTimeout(() => {
-            this.saved = false;
             this.notSaved = false;
-        });
+            this.saved = false;
+        }, 6000)
         return (
             <>
-                {this.saved && <Alert>Данные успешно сохранены!</Alert>}
-                {this.notSaved && <Alert>Что-то пошло не так и данные не сохранились.</Alert>}
+                {this.saved && warningTypeRenderer(WarningType.Saved)}
+                {this.notSaved && warningTypeRenderer(WarningType.NotSaved)}
             </>
         );
     }
 
     renderOrganizationData(data: string, organizationType: OrganizationDataType) {
+        if(data === null || data === undefined) {
+            data = "";
+        }
         return (
             <>
                 <div className="col-lg-3 col-md-3 col-sm-12">
@@ -64,9 +69,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
                         value={data}
                         defaultValue={data}
                         onChange={(event) => this.inputData(event, organizationType)}
-                    >
-                        {data}
-                    </Input>
+                    />
                 </div>
             </>
         );

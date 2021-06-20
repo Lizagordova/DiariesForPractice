@@ -1,4 +1,5 @@
 ﻿import React from "react";
+import ReactDOM from 'react-dom';
 
 export function renderProgress(update: boolean) {
     return (
@@ -11,7 +12,8 @@ export function renderProgress(update: boolean) {
 
 export function updateProgress(progress: number) {
     // @ts-ignore
-    
+    let progressBar = ReactDOM.findDOMNode(this);
+    console.log("progressBar", progressBar);
     if(progressBar !== null) {
         // @ts-ignore
         let bar = progressBar[0];

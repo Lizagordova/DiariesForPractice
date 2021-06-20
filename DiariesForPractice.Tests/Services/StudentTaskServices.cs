@@ -27,7 +27,7 @@ namespace DiariesForPractice.Tests.Services
                 StudentId = 1,
                 Task = "Задание всех выиграть!"
             };
-            var studentTaskId = _studentTaskEditor.AddOrUpdateStudentTask(studentTask);
+            var studentTaskId = _studentTaskEditor.AddOrUpdateStudentTask(studentTask, 1);
             var result = studentTaskId != 0;
             Console.WriteLine($"studentTaskId={studentTaskId}");
             Assert.That(result == true);

@@ -46,8 +46,8 @@ class CalendarPlan extends Component<CalendarPlanProps> {
         }, 6000)
         return (
             <>
-                {this.notSaved && warningTypeRenderer(WarningType.NotSaved)}
                 {this.saved && warningTypeRenderer(WarningType.Saved)}
+                {this.notSaved && warningTypeRenderer(WarningType.NotSaved)}
             </>
         );
     }

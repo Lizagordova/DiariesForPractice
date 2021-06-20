@@ -57,11 +57,11 @@ namespace DiariesForPractice.Persistence.Services.PracticeDetail
 			var studentCharacteristic = _studentCharacteristicRepository.GetStudentCharacteristic(practiceDetails.Student.Id);
 			var studentTask = _studentTaskRepository.GetStudentTask(practiceDetails.Student.Id);
 			practiceDetails.Organization = organization ?? new Organization();
-			practiceDetails.ResponsibleForStudent = responsibleForStudent ?? new Staff();
-			practiceDetails.SignsTheContract = signsTheContract ?? new Staff();
+			practiceDetails.ResponsibleForStudent = responsibleForStudent ?? new Staff { Role = StaffRole.Responsible };
+			practiceDetails.SignsTheContract = signsTheContract ?? new Staff { Role = StaffRole.SignsTheContract };
 			practiceDetails.CalendarPlan = calendarPlan ?? new CalendarPlan();
-			practiceDetails.StudentCharacteristic = studentCharacteristic ?? new StudentCharacteristic();
-			practiceDetails.StudentTask = studentTask ?? new StudentTask();
+			practiceDetails.StudentCharacteristic = studentCharacteristic ?? new StudentCharacteristic { StudentId = studentId };
+			practiceDetails.StudentTask = studentTask ?? new StudentTask { StudentId = studentId };
 
 			return practiceDetails;
 		}

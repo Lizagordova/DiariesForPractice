@@ -1,7 +1,7 @@
 ﻿import React, {Component} from "react";
 import {observer} from "mobx-react";
-import {makeObservable, observable} from "mobx";
-import {Alert, Input, Label } from "reactstrap";
+import {makeObservable, observable, toJS} from "mobx";
+import {Alert, Input, Label} from "reactstrap";
 import {StaffViewModel} from "../../../../../Typings/viewModels/StaffViewModel";
 import {StaffRole} from "../../../../../Typings/enums/StaffRole";
 import {translateStaffInfoType, translateStaffRole} from "../../../../../functions/translater";
@@ -70,6 +70,9 @@ class StaffInfo extends Component<StaffInfoProps> {
     }
     
     renderData(data: string, type: StaffDataType) {
+        if(data === null || data === undefined) {
+            data = "";
+        }
         return (
             <>
                 <div className="col-lg-3 col-md-3 col-sm-12">
@@ -80,9 +83,7 @@ class StaffInfo extends Component<StaffInfoProps> {
                         onInput={() => this.editToggle(ToggleType.on)}
                         className="studentInfoInput"
                         value={data}
-                        onChange={(event) => this.inputStaffData(event, type)}>
-                        {data}
-                    </Input>
+                        onChange={(event) => this.inputStaffData(event, type)} />
                 </div>
             </>
         );
@@ -94,9 +95,7 @@ class StaffInfo extends Component<StaffInfoProps> {
 
     updateProgress() {
         let progress = this.computeProgress(this.staff);
-        console.log("this.refs", this.refs)
         let progressBar = this.refs["progress1"];
-        console.log("progressBar", progressBar)
         //@ts-ignore
         progressBar.style.width = progress;
         this.updateProgressBar = !this.updateProgressBar;
@@ -195,6 +194,7 @@ class StaffInfo extends Component<StaffInfoProps> {
                     if(staffId !== 0) {
                         this.staff.id = staffId;
                         this.saved = true;
+                        this.editToggle(ToggleType.off)
                     } else {
                         this.notSaved = true;
                     }
@@ -205,6 +205,7 @@ class StaffInfo extends Component<StaffInfoProps> {
     getStaffReadModel(): StaffReadModel {
         let staff = mapToStaffReadModel(this.staff, this.props.practiceDetailsId);
         staff.practiceDetailsId = this.props.practiceDetailsId;
+        staff.role = this.props.role;
         
         return staff;
     }

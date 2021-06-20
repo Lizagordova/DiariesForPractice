@@ -2,9 +2,9 @@
 using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.StudentCharacteristics;
-using DiariesForPractice.Persistence.Services.MapperService;
 using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services;
+using DiariesForPractice.Services.Mapper;
 using DiariesForPractice.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -39,8 +39,7 @@ namespace DiariesForPractice.Controllers
         {
             try
             {
-                var studentCharacteristic =
-                    _mapper.Map<StudentCharacteristicReadModel, StudentCharacteristic>(studentCharacteristicReadModel);
+                var studentCharacteristic = _mapper.Map<StudentCharacteristicReadModel, StudentCharacteristic>(studentCharacteristicReadModel);
                 var studentCharacteristicId = _studentCharacteristicsEditor.AddOrUpdateStudentCharacteristic(studentCharacteristic, studentCharacteristicReadModel.PracticeDetailsId);
 
                 return new JsonResult(studentCharacteristicId);

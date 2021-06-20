@@ -83,8 +83,7 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
             <StudentTask 
                 studentTask={this.practiceDetails.studentTask}
                 practiceStore={this.props.store.practiceStore}
-                practiceDetailsId={this.practiceDetails.id}
-            />
+                practiceDetailsId={this.practiceDetails.id} />
         );
     }
 
@@ -94,7 +93,7 @@ class StudentPracticeInfo extends Component<StudentPracticeInfoProps> {
                 practiceStore={this.props.store.practiceStore}
                 practiceDetailsId={this.practiceDetails.id}
                 studentCharacteristic={this.practiceDetails.studentCharacteristic}
-            />
+                />
         );
     }
 

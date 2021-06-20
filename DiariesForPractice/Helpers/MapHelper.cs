@@ -38,6 +38,7 @@ namespace DiariesForPractice.Helpers
             practiceDetailsViewModel.ResponsibleForStudent = _mapper.Map<Staff, StaffViewModel>(practiceDetails.ResponsibleForStudent);
             practiceDetailsViewModel.SignsTheContract = _mapper.Map<Staff, StaffViewModel>(practiceDetails.SignsTheContract);
             practiceDetailsViewModel.StudentTask = _mapper.Map<StudentTask, StudentTaskViewModel>(practiceDetails.StudentTask);
+            practiceDetailsViewModel.StudentCharacteristic = _mapper.Map<StudentCharacteristic, StudentCharacteristicViewModel>(practiceDetails.StudentCharacteristic);
 
             return practiceDetailsViewModel;
         }

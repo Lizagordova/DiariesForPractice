@@ -6,9 +6,7 @@ import {Alert, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input, Labe
 import {ReportingForm} from "../../../../Typings/enums/ReportingForm";
 import {
     translatePracticeType,
-    translateReportingForm,
-    translateStaffInfoType,
-    translateStaffRole
+    translateReportingForm
 } from "../../../../functions/translater";
 import {PracticeType} from "../../../../Typings/enums/PracticeType";
 import Calendar from "react-calendar";
@@ -16,8 +14,9 @@ import PracticeStore from "../../../../stores/PracticeStore";
 import { mapToPracticeDetailsReadModel} from "../../../../functions/mapper";
 import {ProgressBar} from "react-bootstrap";
 import {CalendarPlanViewModel} from "../../../../Typings/viewModels/CalendarPlanViewModel";
-import CalendarPlan from "./CalendarPlan/CalendarPlan";
 import {ToggleType} from "../../../../consts/ToggleType";
+import {warningTypeRenderer} from "../../../../functions/warningTypeRenderer";
+import {WarningType} from "../../../../consts/WarningType";
 
 class PracticeDetailsInfoProps {
     practiceStore: PracticeStore;
@@ -55,16 +54,16 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     setPracticeDetails() {
         this.practiceDetails = this.props.practiceDetails;
     }
-    
+
     renderWarnings() {
         setTimeout(() => {
-            this.saved = false;
             this.notSaved = false;
-        }, 6000);
+            this.saved = false;
+        }, 6000)
         return (
             <>
-                {this.saved && <Alert>Данные успешно сохранились!</Alert>}
-                {this.notSaved && <Alert>Что-то пошло не так и данные не сохранились.</Alert>}
+                {this.saved && warningTypeRenderer(WarningType.Saved)}
+                {this.notSaved && warningTypeRenderer(WarningType.NotSaved)}
             </>
         );
     }
@@ -109,9 +108,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                         onInput={() => this.editToggle(ToggleType.on)}
                         className="studentInfoInput"
                         value={contractNumber}
-                        onChange={(event) =>  this.changePracticeDetails(event, PracticeDetailsType.ContractNumber)}>
-                        {contractNumber}
-                    </Input>
+                        onChange={(event) =>  this.changePracticeDetails(event, PracticeDetailsType.ContractNumber)} />
                 </div>
             </>
         );
@@ -143,12 +140,10 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                     </Dropdown>
                 </div>
             </>
-            
         );
     }
 
     renderStartDate(date: Date) {
-        console.log("start Date", date);
         return (
             <>
                 <div className="col-lg-3 col-md-3 col-sm-12">
@@ -197,9 +192,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
                         onInput={() => this.editToggle(ToggleType.on)}
                         className="studentInfoInput"
                         value={structuralDivision}
-                        onChange={(event) =>  this.changePracticeDetails(event, PracticeDetailsType.StructuralDivision)}>
-                        {structuralDivision}
-                    </Input>
+                        onChange={(event) =>  this.changePracticeDetails(event, PracticeDetailsType.StructuralDivision)} />
                 </div>
             </>
         );
@@ -319,10 +312,6 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
         }
        
         return progress;
-    }
-    
-    updateCalendarPlan(calendarPlan: CalendarPlanViewModel) {
-        this.practiceDetails.calendarPlan = calendarPlan;
     }
 
     editToggle(type: ToggleType) {
