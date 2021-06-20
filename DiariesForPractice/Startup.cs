@@ -11,6 +11,7 @@ using DiariesForPractice.Domain.Services.InstituteDetails;
 using DiariesForPractice.Domain.Services.Notifications;
 using DiariesForPractice.Domain.Services.Organizations;
 using DiariesForPractice.Domain.Services.PracticeDetail;
+using DiariesForPractice.Domain.Services.StudentCharacteristics;
 using DiariesForPractice.Domain.Services.StudentTasks;
 using DiariesForPractice.Domain.Services.Users;
 using DiariesForPractice.Domain.StudentCharacteristics;

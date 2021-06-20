@@ -24,14 +24,14 @@ namespace DiariesForPractice.Tests.Services
         {
             var user = new User()
             {
-                FirstName = "Лиза",
-                Login = "lizagordova",
-                SecondName = "Сергеевна",
-                LastName = "Гордова",
-                Email = "elizavetagordova1@gmail.com",
-                Phone = "89016957927",
-                Token = "23684t932ghenj",
-                Password = "newyorkdream",
+                FirstName = "Леша",
+                Login = "leshamakarov",
+                SecondName = "Евгеньевич",
+                LastName = "Макаров",
+                Email = "lesha@gmail.com",
+                Phone = "89237484299",
+                Token = "4837ygrb4sdjflk",
+                Password = "lesha",
                 EmailConfirmed = true
             };
             var userId = _authorizationService.Register(user);

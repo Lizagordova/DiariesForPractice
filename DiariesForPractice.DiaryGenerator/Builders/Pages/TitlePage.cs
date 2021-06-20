@@ -32,7 +32,7 @@ namespace DiariesForPractice.DiariesGenerator.Builders.Pages
             var minObrParagraph = table[0, 0].AddParagraph();
             minObrParagraph.AppendText("МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ");
             minObrParagraph.ParagraphFormat.HorizontalAlignment = HorizontalAlignment.Center;
-            minObrParagraph.ApplyStyle("normal");
+            minObrParagraph.ApplyStyle("normalStyle");
         }
         private static void AddFedUchrParagraph(IWTable table)
         {

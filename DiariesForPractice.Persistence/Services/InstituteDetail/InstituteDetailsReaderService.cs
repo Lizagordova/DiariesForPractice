@@ -50,6 +50,11 @@ namespace DiariesForPractice.Persistence.Services.InstituteDetail
 		public IReadOnlyCollection<Group> GetGroups()
 		{
 			var groups = _instituteDetailsRepository.GetGroups();
+			foreach (var group in groups)
+			{
+				group.Students = _instituteDetailsRepository.GetStudents(group.Id);
+			}
+			
 
 			return groups;
 		}

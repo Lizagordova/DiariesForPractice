@@ -1,6 +1,6 @@
 ﻿using DiariesForPractice.Domain.Models;
 
-namespace DiariesForPractice.Domain.StudentCharacteristics
+namespace DiariesForPractice.Domain.Services.StudentCharacteristics
 {
     public interface IStudentCharacteristicsReader
     {

@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using DiariesForPractice.Domain.Models;
+﻿using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Models.Data;
-using DiariesForPractice.Domain.Queries;
+using DiariesForPractice.Domain.Services.Diaries;
 using DiariesForPractice.Domain.Services.InstituteDetails;
 using DiariesForPractice.Domain.Services.PracticeDetail;
+using DiariesForPractice.Domain.Services.StudentCharacteristics;
 using DiariesForPractice.Domain.Services.StudentTasks;
-using DiariesForPractice.Domain.StudentCharacteristics;
 
 namespace DiariesForPractice.DiaryGenerator.Services
 {
@@ -15,19 +14,23 @@ namespace DiariesForPractice.DiaryGenerator.Services
         private readonly IPracticeReaderService _practiceReader;
         private readonly IStudentCharacteristicsReader _studentCharacteristicsReader;
         private readonly IStudentTaskReaderService _studentTaskReader;
+        private readonly IDiariesReaderService _diariesReader;
+        
         private readonly string _comment = "";
 
         public StudentPracticeDataService(
             IInstituteDetailsReaderService instituteDetailsReader,
             IPracticeReaderService practiceReader,
             IStudentCharacteristicsReader studentCharacteristicsReader,
-            IStudentTaskReaderService studentTaskReader
+            IStudentTaskReaderService studentTaskReader,
+            IDiariesReaderService diariesReader
             )
         {
             _instituteDetailsReader = instituteDetailsReader;
             _practiceReader = practiceReader;
             _studentTaskReader = studentTaskReader;
             _studentCharacteristicsReader = studentCharacteristicsReader;
+            _diariesReader = diariesReader;
         }
         
         public PracticeData GetPracticeDataForStudent(User student, Group group)
@@ -45,18 +48,16 @@ namespace DiariesForPractice.DiaryGenerator.Services
             practiceData.StudentCharacteristic = GetStudentCharacteristic(student.Id);
             practiceData.StudentTask = GetStudentTask(student.Id);
             practiceData.Comment = _comment;
+            practiceData.Order = GetOrder();
+            practiceData.Diary = GetDiary(student.Id);
 
             return practiceData;
         }
 
         private PracticeDetails GetPracticeDetailsForStudent(User student)
         {
-            var query = new PracticeDetailsQuery()
-            {
-                StudentId = student.Id
-            };
             //todo: здесь можно добавлять какие-то данные в комментарий
-            return _practiceReader.GetPracticeDetails(query).FirstOrDefault();
+            return _practiceReader.GetPracticeDetails(student.Id);
         }
 
         private Institute GetInstitute(int instituteId)
@@ -81,12 +82,41 @@ namespace DiariesForPractice.DiaryGenerator.Services
 
         private StudentCharacteristic GetStudentCharacteristic(int studentId)
         {
-           return _studentCharacteristicsReader.GetStudentCharacteristic(studentId);
+            var studentCharacteristic = _studentCharacteristicsReader.GetStudentCharacteristic(studentId) ?? new StudentCharacteristic { StudentId = studentId };
+
+            return studentCharacteristic;
         }
         
         private StudentTask GetStudentTask(int studentId)
         {
-            return _studentTaskReader.GetStudentTask(studentId);
+            var studentTask = _studentTaskReader.GetStudentTask(studentId) ??
+                new StudentTask
+                {
+                    StudentId = studentId
+                };
+            
+            return studentTask;
+        }
+
+        private Order GetOrder()
+        {
+            return new Order();
+        }
+
+        private Diary GetDiary(int studentId)
+        {
+            var diary = _diariesReader.GetDiary(studentId) ?? new Diary()
+            {
+                Student = new User { Id = studentId }
+            };
+            diary.Signatures = GetSignatures();
+
+            return diary;
+        }
+        
+        private Signatures GetSignatures()
+        {
+            return new Signatures();
         }
     }
 }

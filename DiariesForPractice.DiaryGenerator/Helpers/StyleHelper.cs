@@ -7,7 +7,7 @@ namespace DiariesForPractice.DiaryGenerator.Helpers
     {
         public static void AddNormalStyle(this WordDocument document)
         {
-            var style = document.AddParagraphStyle("normal");
+            var style = document.AddParagraphStyle("normalStyle");
             style.CharacterFormat.FontSize = 10f; 
             style.CharacterFormat.FontName = "Times New Roman";
         }

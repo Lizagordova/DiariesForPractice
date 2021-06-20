@@ -36,6 +36,7 @@ namespace DiariesForPractice.Persistence.Repositories
 		private const string GetCourseSp = "InstituteDetailsRepository_GetCourse";
 		private const string AttachStudentToGroupSp = "InstituteDetailsRepository_AttachStudentToGroup";
 		private const string RemoveStudentFromGroupSp = "InstituteDetailsRepository_RemoveStudentFromGroup";
+		private const string GetStudentsSp = "InstituteDetailsRepository_GetStudents";
 		public InstituteDetailsRepository(
 			MapperService mapper)
 		{
@@ -161,8 +162,17 @@ namespace DiariesForPractice.Persistence.Repositories
 
 		private IReadOnlyCollection<Group> MapGroups(GroupData groupData)
 		{
-
 			var groups = groupData.Groups.Select(_mapper.Map<GroupUdt, Group>).ToList();
+			foreach (var group in groups)
+			{
+				foreach (var studentGroup in groupData.StudentGroups)
+				{
+					if (studentGroup.GroupId == group.Id)
+					{
+						group.Students.Add(new User() { Id = studentGroup.StudentId });
+					}
+				}
+			}
 			// .Join(groupData.GroupsDetails,
 				// 	g => g.Id,
 				// 	gd => gd.GroupId,
@@ -239,6 +249,18 @@ namespace DiariesForPractice.Persistence.Repositories
 			DatabaseHelper.CloseConnection(conn);
 
 			return courses;
+		}
+
+		public List<User> GetStudents(int? groupId = null)
+		{
+			var conn = DatabaseHelper.OpenConnection();
+			var param = new DynamicTvpParameters();
+			param.Add("groupId", groupId);
+			var userUdts = conn.Query<UserUdt>(GetStudentsSp, param, commandType: CommandType.StoredProcedure);
+			var users = userUdts.Select(_mapper.Map<UserUdt, User>).ToList();
+			DatabaseHelper.CloseConnection(conn);
+
+			return users;
 		}
 
 		public Institute GetInstitute(int instituteId)

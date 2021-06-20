@@ -217,7 +217,7 @@ namespace DiariesForPractice.Tests.RepositoriesTests
         [Test]
         public void AttachStudentToGroup()
         {
-            _instituteDetailsRepository.AttachStudentToGroup(1, 1);
+            _instituteDetailsRepository.AttachStudentToGroup(9, 1);
         }
     }
 }

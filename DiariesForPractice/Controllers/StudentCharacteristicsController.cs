@@ -1,6 +1,7 @@
 ﻿using System;
 using DiariesForPractice.Domain.enums;
 using DiariesForPractice.Domain.Models;
+using DiariesForPractice.Domain.Services.StudentCharacteristics;
 using DiariesForPractice.Domain.StudentCharacteristics;
 using DiariesForPractice.ReadModels;
 using DiariesForPractice.Services;

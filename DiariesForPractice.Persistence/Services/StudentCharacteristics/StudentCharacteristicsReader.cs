@@ -1,5 +1,6 @@
 ﻿using DiariesForPractice.Domain.Models;
 using DiariesForPractice.Domain.Repositories;
+using DiariesForPractice.Domain.Services.StudentCharacteristics;
 using DiariesForPractice.Domain.StudentCharacteristics;
 
 namespace DiariesForPractice.Persistence.Services.StudentCharacteristics
@@ -16,8 +17,7 @@ namespace DiariesForPractice.Persistence.Services.StudentCharacteristics
         
         public StudentCharacteristic GetStudentCharacteristic(int studentId)
         {
-            var studentCharacteristics =
-                _studentCharacteristicRepository.GetStudentCharacteristic(studentId);
+            var studentCharacteristics = _studentCharacteristicRepository.GetStudentCharacteristic(studentId);
 
             return studentCharacteristics;
         }

@@ -18,7 +18,6 @@ namespace DiariesForPractice.Tests.Services.Users
             _userReader = new UserReaderService(userRepository);
         }
 
-        [Test]
         public void GetUserById_Test()
         {
             var user = _userReader.GetUserById(1);
