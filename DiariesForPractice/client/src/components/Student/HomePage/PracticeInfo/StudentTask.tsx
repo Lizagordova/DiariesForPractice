@@ -1,7 +1,7 @@
 ﻿import React, {Component} from "react";
 import {observer} from "mobx-react";
 import {StudentTaskViewModel} from "../../../../Typings/viewModels/StudentTaskViewModel";
-import {makeObservable, observable} from "mobx";
+import {makeObservable, observable, toJS} from "mobx";
 import PracticeStore from "../../../../stores/PracticeStore";
 import {Button, Input, Label} from "reactstrap";
 import {mapToStudentTaskReadModel} from "../../../../functions/mapper";
@@ -23,6 +23,7 @@ class IndividualTask extends Component<StudentTaskProps> {
     edit: boolean;
     notSaved: boolean;
     saved: boolean;
+    progress: HTMLDivElement | null;
     
     constructor(props: StudentTaskProps) {
         super(props);
@@ -31,6 +32,7 @@ class IndividualTask extends Component<StudentTaskProps> {
             edit: observable,
             notSaved: observable,
             saved: observable,
+            progress: observable,
         });
         this.setStudentTask();
     }
@@ -39,6 +41,10 @@ class IndividualTask extends Component<StudentTaskProps> {
         this.studentTask = this.props.studentTask;
     }
     
+    componentDidMount() {
+        this.updateProgress();
+    }
+
     renderStudentTask(task: string) {
         return (
             <>
@@ -69,11 +75,22 @@ class IndividualTask extends Component<StudentTaskProps> {
         );
     }
 
-    renderSectionProgress() {
-        let progress = this.computeProgress();
+    renderProgress() {
         return (
-            <ProgressBar>{progress}</ProgressBar>
+            <div id="prog-bar" className="progress">
+                <div id="progress-bar" className="progress-bar" ref={c => this.progress = c}>
+                </div>
+            </div>
         );
+    }
+
+    updateProgress() {
+        let progressPercentage = this.computeProgress();
+        let progress = this.progress;
+        if(progress !== null && progress !== undefined) {
+            progress.style.width = progressPercentage.toString() + "%";
+        }
+        this.progress = progress;
     }
     
     renderHeader(edit: boolean) {
@@ -94,7 +111,7 @@ class IndividualTask extends Component<StudentTaskProps> {
                     {this.renderHeader(this.edit)}
                 </div>
                 <div className="row justify-content-center studentInfoBlock">
-                    {renderProgress(true)}
+                    {this.renderProgress()}
                 </div>
                 <div className="row justify-content-center studentInfoBlock">
                     {this.renderStudentTask(this.studentTask.task)}
@@ -123,10 +140,11 @@ class IndividualTask extends Component<StudentTaskProps> {
 
     computeProgress(): number {
         let progress = 0;
+        console.log("this studentTask", toJS(this.studentTask));
         if(this.studentTask.task !== "") {
             progress = 100;
         }
-        
+        console.log(progress);
         return progress;
     }
 }

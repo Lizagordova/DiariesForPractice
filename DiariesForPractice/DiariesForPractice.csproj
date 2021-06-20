@@ -82,7 +82,6 @@
 		<None Include="client\src\consts\ToggleType.tsx" />
 		<None Include="client\src\consts\WarningType.tsx" />
 		<None Include="client\src\functions\mapper.tsx" />
-		<None Include="client\src\functions\progress.tsx" />
 		<None Include="client\src\functions\renderSpinner.tsx" />
 		<None Include="client\src\functions\translater.tsx" />
 		<None Include="client\src\functions\warningTypeRenderer.tsx" />

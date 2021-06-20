@@ -24,6 +24,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
     edit: boolean;
     notSaved: boolean;
     saved: boolean;
+    progress: HTMLDivElement | null;
 
     constructor(props: OrganizationProps) {
         super(props);
@@ -32,8 +33,13 @@ class OrganizationInfo extends Component<OrganizationProps> {
             edit: observable,
             notSaved: observable,
             saved: observable,
+            progress: observable,
         });
         this.setOrganization();
+    }
+
+    componentDidMount() {
+        this.updateProgress();
     }
 
     setOrganization() {
@@ -75,13 +81,24 @@ class OrganizationInfo extends Component<OrganizationProps> {
         );
     }
 
-    renderSectionProgress() {
-        let progress = this.computeProgress(this.organization);
+    renderProgress() {
         return (
-            <Progress>{progress}</Progress>
+            <div id="prog-bar" className="progress">
+                <div id="progress-bar" className="progress-bar" ref={c => this.progress = c}>
+                </div>
+            </div>
         );
     }
 
+    updateProgress() {
+        let progressPercentage = this.computeProgress(this.organization);
+        let progress = this.progress;
+        if(progress !== null && progress !== undefined) {
+            progress.style.width = progressPercentage.toString() + "%";
+        }
+        this.progress = progress;
+    }
+    
     renderHeader(edit: boolean) {
         return (
             <>
@@ -100,7 +117,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
                     {this.renderHeader(edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderSectionProgress()}
+                    {this.renderProgress()}
                 </div>
                 <div className="row studentInfoBlock">
                     {this.renderOrganizationData(organization.name, OrganizationDataType.OrganizationName)}
@@ -127,6 +144,7 @@ class OrganizationInfo extends Component<OrganizationProps> {
         } else if(organizationType === OrganizationDataType.OrganizationLegalAddress) {
             this.organization.legalAddress = value;
         }
+        this.updateProgress();
     }
 
     computeProgress(organization: OrganizationViewModel): number {

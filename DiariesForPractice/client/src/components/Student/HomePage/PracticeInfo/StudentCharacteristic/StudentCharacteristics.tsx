@@ -2,14 +2,12 @@
 import {observer} from "mobx-react";
 import {makeObservable, observable} from "mobx";
 import {Button, Input, Label} from "reactstrap";
-import {ProgressBar} from "react-bootstrap";
 import PracticeStore from "../../../../../stores/PracticeStore";
 import {StudentCharacteristicViewModel} from "../../../../../Typings/viewModels/StudentCharacteristicViewModel";
 import {StudentCharacteristicType} from "../../../../../consts/StudentCharacteristicType";
 import {translateStudentCharacteristicType} from "../../../../../functions/translater";
 import {mapToStudentCharacteristicReadModel} from "../../../../../functions/mapper";
 import {ToggleType} from "../../../../../consts/ToggleType";
-import {renderProgress, updateProgress} from "../../../../../functions/progress";
 import {warningTypeRenderer} from "../../../../../functions/warningTypeRenderer";
 import {WarningType} from "../../../../../consts/WarningType";
 
@@ -26,7 +24,6 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     saved: boolean;
     notSaved: boolean;
     progress: HTMLDivElement | null;
-    update: boolean;
 
     constructor(props: StudentCharacteristicsProps) {
         super(props);
@@ -35,8 +32,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
             edit: observable,
             saved: observable,
             notSaved: observable,
-            progress: observable,
-            update: observable,
+            progress: observable
         });
         this.setStudentCharacteristics();
     }
@@ -60,15 +56,6 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     
     setStudentCharacteristics() {
         this.studentCharacteristics = this.props.studentCharacteristic;
-    }
-
-    renderSectionProgress() {
-        let progress = this.computeProgress(this.studentCharacteristics);
-        return (
-            <ProgressBar>
-                {progress}
-            </ProgressBar>
-        );
     }
 
     renderCharacteristicWithTextArea(characteristic: string | number, characteristicType: StudentCharacteristicType) {
@@ -123,7 +110,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
         );
     }
 
-    renderProgress(update: boolean) {
+    renderProgress() {
         return (
             <div id="prog-bar" className="progress">
                 <div id="progress-bar" className="progress-bar" ref={c => this.progress = c}>
@@ -133,21 +120,12 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
     }
 
     updateProgress() {
-        console.log("this.progress", this.progress)
+        let progressPercentage = this.computeProgress(this.studentCharacteristics);
         let progress = this.progress;
-        console.log("progress", progress)
         if(progress !== null && progress !== undefined) {
-            console.log("before style width", progress.style.width);
-            console.log("before style", progress.style);
-            progress.style.width = "25%";
-            console.log("after style", progress.style.width);
+            progress.style.width = progressPercentage.toString() + "%";
         }
         this.progress = progress;
-        this.updateToggle();
-    }
-
-    updateToggle() {
-        this.update = !this.update;
     }
     
     render() {
@@ -158,7 +136,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
                     {this.renderHeader(this.edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {this.renderProgress(true)}
+                    {this.renderProgress()}
                 </div>
                 <div className="row justify-content-center studentInfoBlock">
                     {this.renderCharacteristicWithTextArea(this.studentCharacteristics.descriptionByCafedraHead, StudentCharacteristicType.DescriptionByCafedraHead)}
@@ -182,6 +160,7 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
         } else if (type === StudentCharacteristicType.DescriptionByHead) {
             this.studentCharacteristics.descriptionByHead = value;
         }
+        this.updateProgress();
     }
 
     inputChange(event: React.ChangeEvent<HTMLInputElement>, type: StudentCharacteristicType) {
@@ -190,11 +169,8 @@ class StudentCharacteristics extends Component<StudentCharacteristicsProps> {
             this.studentCharacteristics.missedDaysWithoutReason = Number(value);
         } else if (type === StudentCharacteristicType.MissedDaysWithReason) {
             this.studentCharacteristics.missedDaysWithReason = Number(value);
-        } else if (type === StudentCharacteristicType.DescriptionByCafedraHead) {
-            this.studentCharacteristics.descriptionByCafedraHead = value;
-        } else if (type === StudentCharacteristicType.DescriptionByHead) {
-            this.studentCharacteristics.descriptionByHead = value;
         }
+        this.updateProgress();
     }
     
     computeProgress(studentCharacteristic: StudentCharacteristicViewModel): number {

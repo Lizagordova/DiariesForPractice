@@ -34,6 +34,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
     endDateOpen: boolean;
     saved: boolean;
     notSaved: boolean;
+    progress: HTMLDivElement | null;
     
     constructor(props: PracticeDetailsInfoProps) {
         super(props);
@@ -46,13 +47,18 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
             startDateOpen: observable,
             endDateOpen: observable,
             saved: observable,
-            notSaved: observable
+            notSaved: observable,
+            progress: observable
         });
         this.setPracticeDetails();
     }
 
     setPracticeDetails() {
         this.practiceDetails = this.props.practiceDetails;
+    }
+    
+    componentDidMount() {
+        this.updateProgress();
     }
 
     renderWarnings() {
@@ -216,6 +222,24 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
             </>
         );
     }
+
+    renderProgress() {
+        return (
+            <div id="prog-bar" className="progress">
+                <div id="progress-bar" className="progress-bar" ref={c => this.progress = c}>
+                </div>
+            </div>
+        );
+    }
+
+    updateProgress() {
+        let progressPercentage = this.computeProgress(this.practiceDetails);
+        let progress = this.progress;
+        if(progress !== null && progress !== undefined) {
+            progress.style.width = progressPercentage.toString() + "%";
+        }
+        this.progress = progress;
+    }
     
     render() {
         return (
@@ -287,6 +311,7 @@ class PracticeDetailsInfo extends Component<PracticeDetailsInfoProps> {
         } else if(type === DateType.EndDate) {
             this.practiceDetails.endDate = date;
         }
+        this.updateProgress();
     }
     
     save() {

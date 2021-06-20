@@ -1,6 +1,6 @@
 ﻿import React, {Component} from "react";
 import {observer} from "mobx-react";
-import {makeObservable, observable, toJS} from "mobx";
+import { makeObservable, observable } from "mobx";
 import {Alert, Input, Label} from "reactstrap";
 import {StaffViewModel} from "../../../../../Typings/viewModels/StaffViewModel";
 import {StaffRole} from "../../../../../Typings/enums/StaffRole";
@@ -10,7 +10,6 @@ import OrganizationStore from "../../../../../stores/OrganizationStore";
 import {mapToStaffReadModel} from "../../../../../functions/mapper";
 import {StaffReadModel} from "../../../../../Typings/readModels/StaffReadModel";
 import {ToggleType} from "../../../../../consts/ToggleType";
-import {renderProgress} from "../../../../../functions/progress";
 
 class StaffInfoProps {
     staff: StaffViewModel;
@@ -28,6 +27,7 @@ class StaffInfo extends Component<StaffInfoProps> {
     notSaved: boolean;
     notOrganizationInfo: boolean;
     updateProgressBar: boolean;
+    progress: HTMLDivElement | null;
 
     constructor(props: StaffInfoProps) {
         super(props);
@@ -38,10 +38,11 @@ class StaffInfo extends Component<StaffInfoProps> {
             notSaved: observable,
             notOrganizationInfo: observable,
             updateProgressBar: observable,
+            progress: observable,
         });
         this.setStaff();
     }
-
+    
     componentDidUpdate(prevProps: Readonly<StaffInfoProps>, prevState: Readonly<{}>, snapshot?: any) {
         if(prevProps.organizationId !== this.props.organizationId) {
             this.staff.organizationId = this.props.organizationId;
@@ -90,15 +91,25 @@ class StaffInfo extends Component<StaffInfoProps> {
     }
 
     componentDidMount() {
-        {this.updateProgress()}
+        this.updateProgress();
+    }
+
+    renderProgress() {
+        return (
+            <div id="prog-bar" className="progress">
+                <div id="progress-bar" className="progress-bar" ref={c => this.progress = c}>
+                </div>
+            </div>
+        );
     }
 
     updateProgress() {
-        let progress = this.computeProgress(this.staff);
-        let progressBar = this.refs["progress1"];
-        //@ts-ignore
-        progressBar.style.width = progress;
-        this.updateProgressBar = !this.updateProgressBar;
+        let progressPercentage = this.computeProgress(this.staff);
+        let progress = this.progress;
+        if(progress !== null && progress !== undefined) {
+            progress.style.width = progressPercentage.toString() + "%";
+        }
+        this.progress = progress;
     }
     
     renderHeader(staffRole: StaffRole, edit: boolean) {
@@ -118,7 +129,7 @@ class StaffInfo extends Component<StaffInfoProps> {
                     {this.renderHeader(this.props.role, this.edit)}
                 </div>
                 <div className="row justify-content-center">
-                    {renderProgress(this.updateProgressBar)}
+                    {this.renderProgress()}
                 </div>
                 <div className="row studentInfoBlock">
                     {this.renderData(this.staff.fullName, StaffDataType.FullName)}
@@ -160,6 +171,7 @@ class StaffInfo extends Component<StaffInfoProps> {
         } else if(dataType === StaffDataType.Email) {
             this.staff.email = value;
         }
+        this.updateProgress();
     }
 
     editToggle(type: ToggleType) {
