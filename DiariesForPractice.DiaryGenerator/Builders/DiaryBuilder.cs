@@ -10,6 +10,7 @@ namespace DiariesForPractice.DiaryGenerator.Builders
 {
     public class DiaryBuilder : IDiaryBuilder
     {
+        private readonly string Comment = "";
         public DiaryBuilder()
         {
         }

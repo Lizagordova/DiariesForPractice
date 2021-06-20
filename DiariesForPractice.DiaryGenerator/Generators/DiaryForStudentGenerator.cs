@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using DiariesForPractice.DiaryGenerator.Builders;
+using DiariesForPractice.DiaryGenerator.Helpers;
 using DiariesForPractice.Domain.Models.Data;
 using DiariesForPractice.Domain.Services.Diaries;
 using Syncfusion.DocIO;
@@ -32,10 +34,12 @@ namespace DiariesForPractice.DiaryGenerator.Generators
         private void AddOrUpdateDiary(PracticeData practiceData, WordDocument document)
         {
             var diary = practiceData.Diary;
-            //todo: дополнить
             diary.Generated = true;
-            _diariesEditor.AddOrUpdateDiary(diary);
+            diary.GeneratedDate = DateTime.Now;
+            diary.Comment = CommentHelper.GenerateComment(practiceData);
             var path = GenerateDocumentPath(practiceData);
+            diary.Path = path;
+            _diariesEditor.AddOrUpdateDiary(diary);
             SaveDocument(document, path);
         }
 
