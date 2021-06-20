@@ -37,49 +37,43 @@ namespace DiariesForPractice.DiaryGenerator.Generators
             diary.Generated = true;
             diary.GeneratedDate = DateTime.Now;
             diary.Comment = CommentHelper.GenerateComment(practiceData);
-            var path = GenerateDocumentPath(practiceData);
-            diary.Path = path;
+            var wordPath = PathHelper.GenerateDocumentPath(practiceData, FormatType.Docx);
+            var htmlPath = PathHelper.GenerateDocumentPath(practiceData, FormatType.Html);
+            diary.Path = wordPath;
             _diariesEditor.AddOrUpdateDiary(diary);
-            SaveDocument(document, path);
+            SaveDocument(document, wordPath, FormatType.Docx);
+            SaveDocument(document, htmlPath, FormatType.Html);
         }
 
-        private void SaveDocument(WordDocument document, string path)
+        private void SaveDocument(WordDocument document, string path, FormatType type)
         {
             var memoryStream = new MemoryStream();
-            document.Save(memoryStream, FormatType.Docx);
+            document.Save(memoryStream, type);
             document.Close();
             memoryStream.Position = 0;
-            using (var file = new FileStream(path, FileMode.Create, FileAccess.Write))
+            if (type == FormatType.Html)
             {
-                var bytes = new byte[memoryStream.Length];
-                memoryStream.Read(bytes, 0, (int)memoryStream.Length);
-                file.Write(bytes, 0, bytes.Length);
-                memoryStream.Close();
+                var export = new HTMLExport();
+                document.SaveOptions.HtmlExportHeadersFooters = true;
+                using (var file = new FileStream(path, FileMode.Create, FileAccess.Write))
+                {
+                    var bytes = new byte[memoryStream.Length];
+                    memoryStream.Read(bytes, 0, (int)memoryStream.Length);
+                    file.Write(bytes, 0, bytes.Length);
+                    export.SaveAsXhtml(document, file);
+                }
+                
             }
-        }
-
-        private string GenerateDocumentPath(PracticeData practiceData)
-        {
-           var path = @$"c:\diaries\";
-           path += $@"{practiceData.Institute.Name}";
-           AddIfNotExistsDirectory(path);
-           path += @$"\{practiceData.Cafedra.Name}";
-           AddIfNotExistsDirectory(path);
-           path += @$"\{practiceData.Direction.Name}";
-           AddIfNotExistsDirectory(path);
-           path += @$"\{practiceData.Group.Name}";
-           AddIfNotExistsDirectory(path);
-           path += @$"\{practiceData.Student.FullName}.docx";
-
-           return path;
-        }
-
-        private void AddIfNotExistsDirectory(string path)
-        {
-            if (!Directory.Exists(path))
+            else
             {
-                Directory.CreateDirectory(path);
+                using (var file = new FileStream(path, FileMode.Create, FileAccess.Write))
+                {
+                    var bytes = new byte[memoryStream.Length];
+                    memoryStream.Read(bytes, 0, (int)memoryStream.Length);
+                    file.Write(bytes, 0, bytes.Length);
+                }
             }
+            memoryStream.Close();
         }
     }
 }
